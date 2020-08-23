@@ -12,7 +12,8 @@ This repositorory containt  the resources used on the course 2020-3 of parallel 
 ### test a base code 
 Create a compile a test_pthreads.c file with the following content 
 
-<code>
+
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -49,7 +50,8 @@ void *print_message_function( void *ptr )
      message = (char *) ptr;
      printf("%s \n", message);
 }
-</code>
+```
+
 
 <p> Compile the file 
 <code>
