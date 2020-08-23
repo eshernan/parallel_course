@@ -60,7 +60,7 @@ void *print_message_function( void *ptr )
 ```
 
 
-<p> Compile the file <br/>
+<p> Compile and run the file <br/>
 
 ```console
 > gcc test_pthreads.c -o test_pthreads
