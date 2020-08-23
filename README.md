@@ -4,10 +4,17 @@ This repositorory containt  the resources used on the course 2020-3 of parallel 
 ## prerequisites
 
  Install the gcc and g++ compiler a <br/>
-<code>
-> sudo apt install -y gcc g++   <br/>
-> gcc --version ; g++ --version 
-</code>
+```
+$> # for ubuntu base 
+$> sudo apt install -y gcc g++   <br/>
+$> gcc --version ; g++ --version 
+```
+
+
+```
+$># For Centos Base
+$> yum groupinstall "Development Tools"
+```
 
 ### test a base code 
 Create a compile a test_pthreads.c file with the following content 
@@ -53,8 +60,13 @@ void *print_message_function( void *ptr )
 ```
 
 
-<p> Compile the file 
-<code>
+<p> Compile the file <br/>
+
+```console
 > gcc test_pthreads.c -o test_pthreads
 > ./test_pthreads
-</code>
+Thread 1 
+Thread 2 
+Thread 1 returns: 0
+Thread 2 returns: 0
+```
