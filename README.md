@@ -63,10 +63,12 @@ void *print_message_function( void *ptr )
 <p> Compile and run the file <br/>
 
 ```console
-> gcc test_pthreads.c -o test_pthreads
+> gcc test_pthreads.c -o test_pthreads -pthread
 > ./test_pthreads
 Thread 1 
 Thread 2 
 Thread 1 returns: 0
 Thread 2 returns: 0
 ```
+
+## 
