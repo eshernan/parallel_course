@@ -1,15 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 void *print_message_function( void *ptr );
 
-main()
+void main()
 {
      pthread_t thread1, thread2;
      char *message1 = "Thread 1";
      char *message2 = "Thread 2";
      int  iret1, iret2;
+
+     pid_t pid = getpid();
+
+     printf("pid: %lun", pid);
 
     /* Create independent threads each of which will execute function */
 
