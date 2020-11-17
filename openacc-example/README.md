@@ -1,4 +1,3 @@
 # openacc-example
 
-To build this you need to have the PGI compiler installed.
-It is available at [http://www.pgroup.com/](http://www.pgroup.com/).
+To build this you need to have the Nvidia HPC SDK and CUDA 11 compiler installed.
