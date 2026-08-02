@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "id": "03_openmp_01_pi",
+  "topic": "03_openmp",
+  "title": "Integración numérica de pi con OpenMP",
+  "status": "active",
+  "language": "cxx",
+  "standard": "c++20",
+  "build": {
+    "system": "cmake",
+    "target": "exercise_openmp_pi",
+    "tests": true,
+    "configure_args": []
+  },
+  "requirements": {
+    "tools": ["cmake"],
+    "capabilities": ["cpu", "openmp"]
+  },
+  "platforms": {
+    "operating_systems": ["linux", "macos", "windows"],
+    "architectures": ["x86_64", "arm64"],
+    "cpu_vendors": ["any"],
+    "accelerator": "none"
+  },
+  "notes": "Sustituya los valores de esta plantilla por las condiciones verificadas del ejercicio."
+}

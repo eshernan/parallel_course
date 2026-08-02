@@ -1,0 +1,48 @@
+name: Ejercicios en hardware institucional
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Plataforma self-hosted que se encuentra disponible
+        required: true
+        type: choice
+        options:
+          - linux-intel
+          - linux-amd
+          - linux-arm64
+          - linux-nvidia-cuda
+          - linux-amd-rocm
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: ${{ inputs.target }}
+    runs-on: [self-hosted, linux, "${{ inputs.target }}"]
+    timeout-minutes: 90
+
+    steps:
+      - name: Obtener el repositorio
+        uses: actions/checkout@v4
+
+      - name: Ejecutar la comprobación previa en el hardware seleccionado
+        run: >-
+          python3 validation/preflight.py
+          --output-dir build/validation/${{ inputs.target }}
+          --profile ${{ inputs.target }}
+
+      - name: Conservar evidencia del hardware y de las pruebas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: exercise-hardware-${{ inputs.target }}
+          path: |
+            build/validation/${{ inputs.target }}/navigation.json
+            build/validation/${{ inputs.target }}/platform.json
+            build/validation/${{ inputs.target }}/harness.json
+            build/validation/${{ inputs.target }}/ejercicios.json
+            build/validation/${{ inputs.target }}/soluciones.json
+          if-no-files-found: error
+          retention-days: 90

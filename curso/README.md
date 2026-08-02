@@ -1,6 +1,8 @@
 # Organización del material docente
 
-Esta carpeta reúne el material preparado para la nueva versión de la asignatura y lo separa de los programas históricos que permanecen en la raíz. Cuando un ejemplo anterior resulta útil, se elabora aquí una versión revisada, con pruebas, documentación y referencia a su procedencia.
+Esta carpeta reúne el material docente de la edición 2026. La estructura relaciona cada explicación con fuentes compilables, actividades evaluables, soluciones docentes y evidencia reproducible de su ejecución.
+
+La navegación comienza en el [índice general del curso](../INDICE_CURSO.md), no recorriendo las carpetas de manera aislada. El índice conserva el orden de los temas y conduce a los notebooks o, mientras se incorporan, a la guía académica correspondiente.
 
 ## Carpetas
 
@@ -23,8 +25,4 @@ Esta carpeta reúne el material preparado para la nueva versión de la asignatur
 | `07` | Programación híbrida y perfilado |
 | `08` | Proyecto final |
 
-La [planeación de la asignatura](../docs/PLANEACION_CURSO.md) contiene el calendario, las evaluaciones y la bibliografía. El [panorama de C y C++](../docs/ESTANDARES_C_CPP.md) sustenta la comparación de estándares y compiladores de la primera semana. El [material de profundización](../topicos_avanzados/README.md) se organiza por fuera del semestre regular.
-
-## Incorporación de material histórico
-
-El código histórico no se traslada sin revisión. La versión docente se incorpora cuando compila con el entorno fijado, pasa las pruebas previstas, comprueba los errores de las APIs, produce resultados trazables y cuenta con un ejercicio asociado.
+La [planeación de la asignatura](../docs/PLANEACION_CURSO.md) contiene el calendario, las evaluaciones y la bibliografía. El [panorama de C y C++](../docs/ESTANDARES_C_CPP.md) sustenta la comparación de estándares y compiladores de la primera semana. El [protocolo de reproducibilidad](../docs/REPRODUCIBILIDAD_EJERCICIOS.md) establece cómo se registran y prueban los ejercicios. El [material de profundización](../topicos_avanzados/README.md) se organiza por fuera del semestre regular.

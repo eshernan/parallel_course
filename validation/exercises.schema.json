@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eshernan.github.io/parallel_course/schemas/exercise-1.0.json",
+  "title": "Manifiesto de ejercicio de Programación Paralela 2026",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "topic",
+    "title",
+    "status",
+    "language",
+    "standard",
+    "build",
+    "requirements",
+    "platforms"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+    },
+    "topic": {
+      "type": "string",
+      "pattern": "^[0-9]{2}_[a-z0-9_-]+$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 5
+    },
+    "status": {
+      "enum": ["active", "planned", "retired"]
+    },
+    "language": {
+      "enum": ["c", "cxx", "cuda", "hip", "sycl"]
+    },
+    "standard": {
+      "type": "string",
+      "minLength": 2
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["system", "target", "tests"],
+      "properties": {
+        "system": {
+          "const": "cmake"
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.+-]+$"
+        },
+        "tests": {
+          "type": "boolean"
+        },
+        "configure_args": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        }
+      }
+    },
+    "requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tools", "capabilities"],
+      "properties": {
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "enum": ["cpu", "pthreads", "openmp", "mpi", "openmp-target", "cuda", "hip", "sycl", "kokkos", "raja"]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "platforms": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operating_systems", "architectures", "cpu_vendors", "accelerator"],
+      "properties": {
+        "operating_systems": {
+          "type": "array",
+          "items": {
+            "enum": ["linux", "macos", "windows"]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "architectures": {
+          "type": "array",
+          "items": {
+            "enum": ["x86_64", "arm64", "arm32"]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "cpu_vendors": {
+          "type": "array",
+          "items": {
+            "enum": ["any", "intel", "amd", "apple", "arm"]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "accelerator": {
+          "enum": ["none", "nvidia", "amd", "any"]
+        }
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

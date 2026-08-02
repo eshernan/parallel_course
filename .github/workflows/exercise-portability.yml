@@ -1,0 +1,80 @@
+name: Portabilidad de ejercicios
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master, feature/actualizacion_2026]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: exercise-portability-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: ${{ matrix.platform }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: Linux-x86_64
+            runner: ubuntu-24.04
+            python: python3
+            operating_system: linux
+            architecture: x86_64
+          - platform: Linux-ARM64
+            runner: ubuntu-24.04-arm
+            python: python3
+            operating_system: linux
+            architecture: arm64
+          - platform: macOS-Intel
+            runner: macos-15-intel
+            python: python3
+            operating_system: macos
+            architecture: x86_64
+          - platform: macOS-ARM64
+            runner: macos-15
+            python: python3
+            operating_system: macos
+            architecture: arm64
+          - platform: Windows-x86_64
+            runner: windows-2025
+            python: python
+            operating_system: windows
+            architecture: x86_64
+          - platform: Windows-ARM64
+            runner: windows-11-arm
+            python: python
+            operating_system: windows
+            architecture: arm64
+
+    steps:
+      - name: Obtener el repositorio
+        uses: actions/checkout@v4
+
+      - name: Ejecutar la comprobación previa del usuario
+        run: >-
+          ${{ matrix.python }} validation/preflight.py
+          --output-dir build/validation/${{ matrix.platform }}
+          --expected-os ${{ matrix.operating_system }}
+          --expected-arch ${{ matrix.architecture }}
+
+      - name: Conservar manifiestos y registros de compilación
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: exercise-validation-${{ matrix.platform }}
+          path: |
+            build/validation/${{ matrix.platform }}/navigation.json
+            build/validation/${{ matrix.platform }}/platform.json
+            build/validation/${{ matrix.platform }}/harness.json
+            build/validation/${{ matrix.platform }}/ejercicios.json
+            build/validation/${{ matrix.platform }}/soluciones.json
+          if-no-files-found: error
+          retention-days: 30
