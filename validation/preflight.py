@@ -57,6 +57,16 @@ def main() -> int:
     profile = PROFILES[args.profile]
     python = sys.executable
 
+    hygiene_command = [
+        python,
+        str(repository / "validation" / "validate_repository_hygiene.py"),
+        "--report",
+        str(output / "repository-hygiene.json"),
+    ]
+    if run(hygiene_command, repository) != 0:
+        print("Preflight interrumpido: el repositorio contiene artefactos compilados rastreados.", file=sys.stderr)
+        return 1
+
     navigation_command = [
         python,
         str(repository / "validation" / "validate_navigation.py"),

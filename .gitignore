@@ -1,8 +1,9 @@
 # CMake y compilación
-/build/
+build/
 cmake-build-*/
 CMakeCache.txt
 CMakeFiles/
+cmake_install.cmake
 compile_commands.json
 *.o
 *.obj
@@ -12,6 +13,22 @@ compile_commands.json
 *.dll
 *.lib
 *.exe
+
+# Ejecutables históricos sin extensión
+/cpp_10/parallel_algorithms/for_each
+/cpp_10/parallel_algorithms/sort
+/cpp_10/parallel_algorithms/thread_check
+/mpi/MPI_PI/Trapezoid1/trapezoide
+/mpi/MPI_PI/Trapezoid1/trapezoide1
+/mpi/hello
+/mpi/ring
+/mpi/traffic/traffic/C-MPI/traffic
+/mpi/traffic/traffic/C-SER/traffic
+/openmp/hello-world
+/openmp/parallel_for
+/openmp/placement
+/shared_memory/cond_pthreads
+/shared_memory/test_pthreads
 
 # Resultados y perfiles
 *.nsys-rep
