@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "id": "validation_cxx20_smoke",
+  "topic": "00_entorno",
+  "title": "Prueba interna del compilador C++20",
+  "status": "active",
+  "language": "cxx",
+  "standard": "c++20",
+  "build": {
+    "system": "cmake",
+    "target": "validation_cxx20_smoke",
+    "tests": true,
+    "configure_args": []
+  },
+  "requirements": {
+    "tools": ["cmake"],
+    "capabilities": ["cpu"]
+  },
+  "platforms": {
+    "operating_systems": ["linux", "macos", "windows"],
+    "architectures": ["x86_64", "arm64"],
+    "cpu_vendors": ["any"],
+    "accelerator": "none"
+  }
+}

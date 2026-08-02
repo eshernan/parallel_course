@@ -1,5 +1,7 @@
 # Programación Paralela 2026
 
+[![Portabilidad de ejercicios](https://github.com/eshernan/parallel_course/actions/workflows/exercise-portability.yml/badge.svg)](https://github.com/eshernan/parallel_course/actions/workflows/exercise-portability.yml)
+
 Material docente para una asignatura universitaria de programación paralela. El curso estudia los fundamentos del área y su aplicación en CPU multinúcleo, clústeres y GPU, con énfasis en corrección, medición y análisis de rendimiento.
 
 **Autor:** [Esteban Hernández B., PhD.](https://eshernan.github.io/)
@@ -10,13 +12,17 @@ Material docente para una asignatura universitaria de programación paralela. El
 
 El mapa representa la secuencia de los módulos 01 a 08. El módulo 00 es transversal: establece los lenguajes, los compiladores y el entorno con los que se desarrollan los demás temas.
 
+## Navegación del curso
+
+Para navegar el material se debe seguir el **[Índice de navegación del curso](INDICE_CURSO.md)**. Allí se encuentran los temas en el orden de estudio, los notebooks definidos, los enlaces disponibles, los ejemplos, los ejercicios y el camino hacia el material de profundización. Cada notebook incorporado deberá ofrecer, al inicio y al cierre, un enlace de regreso a ese índice.
+
 ## Idioma de esta edición
 
 La actualización 2026 se desarrolla en español porque la experiencia docente que sustenta el curso corresponde principalmente a grupos de estudiantes hispanohablantes. Una vez consolidada esta edición académica se preparará una versión en inglés, con la misma estructura, programas, experimentos y referencias.
 
 ## Descripción
 
-La asignatura está organizada en 19 semanas, con dos sesiones semanales de hasta dos horas. Esto corresponde a 38 sesiones y 76 horas de trabajo presencial. Los laboratorios y el proyecto requieren, además, trabajo independiente por parte del estudiante.
+La actualización 2026 reestructura el material para que la relación entre conceptos, programas, ejercicios, pruebas y evidencia experimental sea explícita. La asignatura está organizada en 19 semanas, con dos sesiones semanales de hasta dos horas. Esto corresponde a 38 sesiones y 76 horas de trabajo presencial. Los laboratorios y el proyecto requieren, además, trabajo independiente por parte del estudiante.
 
 La secuencia comienza con modelos de costo y arquitectura de memoria. Luego se estudian Pthreads, concurrencia en C++20, OpenMP y MPI. El trabajo con aceleradores incluye OpenMP target y un módulo completo de CUDA C++. Las últimas semanas se dedican a programación híbrida, perfilado y desarrollo de un proyecto reproducible.
 
@@ -126,12 +132,36 @@ ctest --preset course-cuda
 
 La guía de variables `COURSE_CC`, `COURSE_CXX`, `COURSE_MPI_ROOT` y `COURSE_CUDA_ROOT` está en [`config/README.md`](config/README.md).
 
+Los presets anteriores comprueban el entorno fijado para dictar la asignatura. La validación de portabilidad utiliza, además, los compiladores nativos de Linux, macOS y Windows para detectar dependencias accidentales de una sola plataforma.
+
+## Validación de ejercicios y reproducibilidad
+
+Cada ejercicio activo debe declarar en `exercise.json` su lenguaje, estándar, dependencias, objetivo de CMake, sistemas operativos, arquitecturas y hardware requerido. El validador rechaza fuentes sin manifiesto, construye por separado cada objetivo, ejecuta sus pruebas CTest y produce un informe JSON acompañado por el inventario del equipo utilizado.
+
+La matriz automática de GitHub Actions cubre Linux, macOS y Windows en x86-64 y ARM64. Las ejecuciones que dependen de un fabricante o acelerador —CPU AMD, CUDA y ROCm/HIP— se realizan mediante runners institucionales conectados al hardware real. La etiqueta del runner se contrasta con la CPU o GPU detectada antes de aceptar el resultado.
+
+Antes de ejecutar cualquier ejercicio se realiza la comprobación previa desde la raíz del repositorio:
+
+```console
+python3 validation/preflight.py
+```
+
+El comando identifica la plataforma, comprueba C17/C++20 y construye los ejercicios compatibles. Si encuentra una arquitectura no admitida, una dependencia ausente, una fuente sin registrar o una prueba fallida, termina con un código de error y no autoriza continuar. Para un nodo específico se utiliza, por ejemplo, `--profile linux-intel`, `--profile linux-amd`, `--profile linux-arm64`, `--profile linux-nvidia-cuda` o `--profile linux-amd-rocm`.
+
+En el estado actual, las carpetas de ejercicios contienen la planeación temática, pero aún no tienen fuentes activas; por ello el informe correcto es **0 ejercicios activos, 0 compilados**. El flujo prueba su propio mecanismo con programas mínimos C17 y C++20, que no se contabilizan como ejercicios. A medida que se incorpora cada actividad, se agrega su manifiesto y se aumenta el mínimo exigido por la política. El [protocolo de reproducibilidad](docs/REPRODUCIBILIDAD_EJERCICIOS.md) presenta el procedimiento completo, los niveles de evidencia y la configuración para Intel, AMD, ARM, NVIDIA y AMD GPU.
+
+### Plataforma comprobada para esta revisión
+
+La revisión del 2 de agosto de 2026 se probó localmente en **macOS 26.5.2, ARM64, Apple M4 (10 núcleos)**, con Apple Clang 21.0.0 y CMake 3.31.5. Los controles C17 y C++20 compilaron y sus dos pruebas CTest terminaron satisfactoriamente. Esta evidencia acredita el mecanismo en esa plataforma; no se extiende por inferencia a Intel, AMD, Windows, Linux ni GPU. Las plataformas adicionales se incorporan al registro cuando finaliza el flujo de GitHub Actions o la prueba en el runner institucional correspondiente.
+
 ## Organización del repositorio
 
 ```text
 parallel_course/
+├── .github/workflows/               # Portabilidad y pruebas en hardware institucional
 ├── CMakeLists.txt
 ├── CMakePresets.json
+├── INDICE_CURSO.md                  # Punto de entrada y navegación por notebooks
 ├── config/                         # Versiones, toolchain y entorno Python
 ├── cmake/                          # Descubrimiento y validación de librerías
 ├── curso/
@@ -154,11 +184,9 @@ parallel_course/
 │   ├── notebooks/
 │   ├── ejemplos/
 │   └── ejercicios/soluciones/
-├── docs/                            # Planeación, estándares e imágenes
-└── <directorios históricos>         # Material 2020 pendiente de revisión
+├── docs/                            # Planeación, reproducibilidad, estándares e imágenes
+└── validation/                      # Manifiestos, inventario de plataforma y compilación verificable
 ```
-
-Los directorios históricos de la raíz se conservan como material de consulta. Para incorporar uno de esos programas a `curso/ejemplos/` se prepara una versión corregida, probada y documentada, con registro de su procedencia.
 
 ## Relación entre notebooks, ejemplos y ejercicios
 
@@ -187,7 +215,7 @@ Cada ejemplo incluye:
 
 ### Ejercicios
 
-Cada ejercicio incluye enunciado, resultados esperados, código inicial, un conjunto pequeño de datos, salida de referencia, pruebas públicas y rúbrica. La valoración del rendimiento procede cuando las pruebas de corrección han sido superadas.
+Cada ejercicio incluye enunciado, resultados esperados, código inicial, un conjunto pequeño de datos, salida de referencia, pruebas públicas, rúbrica y un manifiesto `exercise.json`. La valoración del rendimiento procede cuando las pruebas de corrección han sido superadas. La integración continua comprueba que el objetivo declarado construya en las plataformas admitidas.
 
 ### Respuestas y soluciones
 
@@ -212,21 +240,23 @@ Las gráficas cuantitativas se generan a partir de los datos del experimento, co
 - Planeación de 38 sesiones: completada.
 - Configuración global y presets: creados.
 - Estructura de notebooks, ejemplos, ejercicios y soluciones: creada.
+- Protocolo, manifiestos y flujos de validación multiplataforma: creados; el inventario actual contiene 0 ejercicios activos y la política se incrementará con cada actividad incorporada.
 - Edición en inglés: prevista después de consolidar y revisar la edición académica en español.
 - Material de profundización en ROCm/HIP, SYCL, Kokkos y RAJA: planeado y configurado; contenidos ejecutables pendientes.
-- Revisión e incorporación selectiva del material histórico: en progreso.
 - Desarrollo de todos los notebooks y soluciones: pendiente por tema.
 
 Documentos de referencia:
 
 - [Planeación semestral, evaluaciones y bibliografía](docs/PLANEACION_CURSO.md).
+- [Índice de navegación del curso](INDICE_CURSO.md).
+- [Protocolo de compilación y reproducibilidad de ejercicios](docs/REPRODUCIBILIDAD_EJERCICIOS.md).
 - [Estándares de C y C++ y soporte por plataforma](docs/ESTANDARES_C_CPP.md).
 - [Organización del material docente](curso/README.md).
 - [Planeación del material de profundización](topicos_avanzados/README.md).
 
 ## Política de mantenimiento documental
 
-Todo cambio de módulos, contenidos, semanas, tecnologías, notebooks, ejemplos, ejercicios o soluciones se acompaña de la actualización correspondiente en este README. Cuando se modifica la estructura académica, también se revisa la ilustración de cabecera y se genera una nueva versión si la anterior dejó de representar el curso.
+Todo cambio de módulos, contenidos, semanas, tecnologías, notebooks, ejemplos, ejercicios o soluciones se acompaña de la actualización correspondiente en este README y en `INDICE_CURSO.md`. Cuando se incorpora o retira un ejercicio también se ajustan su manifiesto y el mínimo de la política de validación. Cuando se modifica la estructura académica, se revisa la ilustración de cabecera y se genera una nueva versión si la anterior dejó de representar el curso.
 
 La revisión editorial utiliza español académico, directo y propio del contexto universitario colombiano. Esta es la edición principal mientras se prepara la versión en inglés. Se evitan eslóganes, fórmulas impersonales y afirmaciones generales que no estén respaldadas por el diseño del curso. Antes de cerrar un cambio se comprueban la suma de sesiones, la secuencia de semanas, los enlaces locales, la imagen referenciada y la correspondencia entre este resumen y `docs/PLANEACION_CURSO.md`.
 
@@ -237,4 +267,4 @@ La concepción académica, la selección de contenidos y la actualización 2026 
 - LinkedIn: [https://www.linkedin.com/in/hpccol/](https://www.linkedin.com/in/hpccol/)
 - Página personal: [https://eshernan.github.io/](https://eshernan.github.io/)
 
-El material histórico o de terceros conserva sus avisos y licencias correspondientes. Consulte [LICENSE](LICENSE) y la documentación de procedencia antes de redistribuir componentes externos.
+El material de terceros conserva sus avisos y licencias correspondientes. Consulte [LICENSE](LICENSE) y la documentación de procedencia antes de redistribuir componentes externos.

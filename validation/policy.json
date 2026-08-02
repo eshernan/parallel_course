@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0",
+  "minimum_active_exercises": 0,
+  "minimum_by_capability": {"cpu": 0, "mpi": 0, "cuda": 0, "hip": 0},
+  "source_extensions": [".c", ".cc", ".cpp", ".cxx", ".cu", ".hip"],
+  "excluded_directories": ["soluciones"]
+}

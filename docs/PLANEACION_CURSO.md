@@ -81,6 +81,7 @@ Cada tema se desarrolla en uno, dos o tres notebooks. Los programas completos pe
 11. Interpretación: costo, aceleración, eficiencia, saturación, error e incertidumbre.
 12. Errores frecuentes y ejercicio de depuración.
 13. Ejercicios, criterios de aceptación y bibliografía.
+14. Manifiesto de plataforma y evidencia de compilación/pruebas en el hardware declarado.
 
 La selección de gráficas depende de la pregunta experimental. Entre las representaciones previstas están:
 
@@ -93,6 +94,8 @@ La selección de gráficas depende de la pregunta experimental. Entre las repres
 - Línea base serial y techo ideal claramente identificados.
 
 ## 5. Organización de notebooks y fuentes
+
+La secuencia navegable se mantiene en el [índice general del curso](../INDICE_CURSO.md). Cada notebook enlaza ese documento en su primera y última celda Markdown, de modo que el estudiante pueda regresar al recorrido completo sin depender de la vista de carpetas del repositorio.
 
 | Tema | Notebooks previstos (máximo 3) | Ejemplos fuente |
 |---|---|---|
@@ -240,9 +243,11 @@ La bibliografía se selecciona por autoridad técnica, uso en docencia, vigencia
 - Los ejemplos presentados en los notebooks se almacenan como fuentes independientes en `curso/ejemplos/<tema>/`; el notebook los construye sin duplicar manualmente el código en las celdas.
 - Los ejercicios se ubican en `curso/ejercicios/<tema>/<id>/`, junto con el enunciado, la interfaz, datos pequeños y pruebas públicas.
 - Las soluciones de referencia se ubican en `curso/ejercicios/soluciones/<tema>/<id>/` y permanecen por fuera de la rama estudiantil durante el semestre.
+- Cada ejercicio y solución declara en `exercise.json` el estándar, el objetivo CMake, las dependencias, los sistemas operativos, las arquitecturas y el hardware requerido.
+- La matriz de GitHub Actions construye los ejercicios compatibles en Linux, macOS y Windows sobre x86-64 y ARM64. Las pruebas que requieren CPU AMD, MPI de clúster o aceleradores se ejecutan además en runners institucionales.
 - Las mediciones se realizan sobre programas que hayan superado las pruebas de corrección.
 - Los resultados de rendimiento se generan en `build/results/`. Solo se versionan conjuntos pequeños que sean necesarios como referencia.
-- Las fuentes de terceros se registran en `THIRD_PARTY_NOTICES.md` con origen, versión y licencia.
+- Las fuentes de terceros conservan su origen, versión y licencia en la documentación que las acompaña.
 
 ## 10. Condiciones para dictar un tema
 
@@ -251,12 +256,16 @@ Antes de incorporar un tema al calendario se comprueba que cuente con:
 - 1 a 3 notebooks ejecutados de principio a fin.
 - Ejemplos que construyen con el entorno fijado.
 - Prueba serial/paralela y manejo de errores.
+- Ejercicios y soluciones activos en el inventario, sin fuentes por fuera de un manifiesto.
+- Comprobación previa con `python3 validation/preflight.py` documentada como primer paso del laboratorio.
+- Compilación y CTest satisfactorios en todas las plataformas que declara cada ejercicio.
+- Manifiesto del sistema, la arquitectura, la CPU y los aceleradores utilizados; para MPI y GPU se conserva también evidencia del nodo real.
 - Gráficas regenerables y datos trazables.
 - Ejercicios, solución y rúbrica.
 - Bibliografía y enlaces normativos.
 - Tiempo de clase ensayado dentro de dos horas.
 
-Esta planeación establece el trabajo previsto para la nueva versión. Las carpetas creadas para organizar el material indican su ubicación, pero el tema se considera disponible cuando cumple las condiciones anteriores.
+Esta planeación establece el trabajo previsto para la edición 2026. Las carpetas creadas para organizar el material indican su ubicación, pero el tema se considera disponible cuando cumple las condiciones anteriores. El procedimiento y los criterios de evidencia están detallados en el [protocolo de compilación y reproducibilidad](REPRODUCIBILIDAD_EJERCICIOS.md).
 
 ## 11. Material de profundización
 

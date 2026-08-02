@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "id": "validation_c17_smoke",
+  "topic": "00_entorno",
+  "title": "Prueba interna del compilador C17",
+  "status": "active",
+  "language": "c",
+  "standard": "c17",
+  "build": {
+    "system": "cmake",
+    "target": "validation_c17_smoke",
+    "tests": true,
+    "configure_args": []
+  },
+  "requirements": {
+    "tools": ["cmake"],
+    "capabilities": ["cpu"]
+  },
+  "platforms": {
+    "operating_systems": ["linux", "macos", "windows"],
+    "architectures": ["x86_64", "arm64"],
+    "cpu_vendors": ["any"],
+    "accelerator": "none"
+  }
+}
