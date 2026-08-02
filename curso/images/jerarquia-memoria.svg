@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="440" viewBox="0 0 960 440" role="img" aria-labelledby="title desc">
+<title id="title">Jerarquía de memoria y costo de movimiento</title>
+<desc id="desc">Niveles de registros, cachés, memoria principal y almacenamiento con capacidad y latencia crecientes.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#50677a"/></marker>
+  <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#a95642"/></marker>
+</defs>
+<style>
+  .title { font: 700 28px system-ui, sans-serif; fill: #243447; }
+  .label { font: 600 18px system-ui, sans-serif; fill: #243447; }
+  .small { font: 15px system-ui, sans-serif; fill: #334155; }
+  .tiny { font: 13px system-ui, sans-serif; fill: #475569; }
+  .box { fill: #fdfbf5; stroke: #50677a; stroke-width: 2; rx: 12; }
+  .blue { fill: #dce9ef; stroke: #506f83; stroke-width: 2; rx: 12; }
+  .green { fill: #dfeadf; stroke: #5d7d65; stroke-width: 2; rx: 12; }
+  .accent { fill: #f3ddd4; stroke: #a95642; stroke-width: 2.5; rx: 12; }
+  .line { fill: none; stroke: #50677a; stroke-width: 2.5; marker-end: url(#arrow); }
+  .critical { fill: none; stroke: #a95642; stroke-width: 4; marker-end: url(#arrow-red); }
+  .dash { fill: none; stroke: #718096; stroke-width: 2; stroke-dasharray: 8 7; marker-end: url(#arrow); }
+</style>
+<rect width="960" height="440" fill="#fbf7ed"/>
+<text x="40" y="46" class="title">Jerarquía de memoria y costo de movimiento</text>
+
+<rect x="330" y="80" width="300" height="55" class="accent"/><text x="480" y="115" text-anchor="middle" class="label">Registros</text>
+<rect x="275" y="150" width="410" height="55" class="blue"/><text x="480" y="185" text-anchor="middle" class="label">Cachés L1 / L2 / L3</text>
+<rect x="210" y="220" width="540" height="55" class="green"/><text x="480" y="255" text-anchor="middle" class="label">Memoria principal / NUMA</text>
+<rect x="140" y="290" width="680" height="55" class="box"/><text x="480" y="325" text-anchor="middle" class="label">Almacenamiento y memoria remota</text>
+<path d="M95 90 V335" class="line"/><text x="65" y="220" transform="rotate(-90 65 220)" text-anchor="middle" class="small">más capacidad y latencia</text>
+<path d="M865 335 V90" class="line"/><text x="900" y="220" transform="rotate(-90 900 220)" text-anchor="middle" class="small">más ancho de banda</text>
+<text x="480" y="400" text-anchor="middle" class="small">Optimizar suele significar reutilizar datos antes de bajar al siguiente nivel.</text>
+
+</svg>

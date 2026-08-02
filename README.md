@@ -45,7 +45,7 @@ En las prácticas de laboratorio, toda medición parte de una implementación cu
 | 08 | Implementación, revisión de reproducibilidad, presentación y defensa del proyecto final | 4 |
 | | **Total** | **38** |
 
-Cada módulo se desarrolla en uno, dos o tres notebooks, según la extensión del tema. Allí se articulan la discusión conceptual, el modelo de ejecución del sistema, las instrucciones de compilación, los programas de ejemplo y el análisis de datos obtenidos en los experimentos.
+Cada módulo se desarrolla en uno, dos o tres notebooks, según la extensión del tema. Todos siguen una ruta común: prerrequisitos, explicación paso a paso, diagrama compartido, ejemplo resuelto, ejemplo guiado y ejercicios progresivos. Los modelos portables se ejecutan dentro del notebook; una práctica solo afirma compilar o medir un programa externo cuando sus fuentes y pruebas existen en el inventario.
 
 ## Distribución semana a semana
 
@@ -148,7 +148,7 @@ python3 validation/preflight.py
 
 El comando identifica la plataforma, comprueba C17/C++20 y construye los ejercicios compatibles. Si encuentra una arquitectura no admitida, una dependencia ausente, una fuente sin registrar o una prueba fallida, termina con un código de error y no autoriza continuar. Para un nodo específico se utiliza, por ejemplo, `--profile linux-intel`, `--profile linux-amd`, `--profile linux-arm64`, `--profile linux-nvidia-cuda` o `--profile linux-amd-rocm`.
 
-En el estado actual, las carpetas de ejercicios contienen la planeación temática, pero aún no tienen fuentes activas; por ello el informe correcto es **0 ejercicios activos, 0 compilados**. El flujo prueba su propio mecanismo con programas mínimos C17 y C++20, que no se contabilizan como ejercicios. A medida que se incorpora cada actividad, se agrega su manifiesto y se aumenta el mínimo exigido por la política. El [protocolo de reproducibilidad](docs/REPRODUCIBILIDAD_EJERCICIOS.md) presenta el procedimiento completo, los niveles de evidencia y la configuración para Intel, AMD, ARM, NVIDIA y AMD GPU.
+En el estado actual hay **2 ejercicios públicos C17 activos** del tema 01 y sus **2 soluciones de referencia**. El preflight compila los esqueletos públicos sin exigir que sus pruebas incompletas pasen; para las soluciones sí exige compilación y CTest satisfactorio. El flujo también prueba su propio mecanismo con programas mínimos C17 y C++20, que no se contabilizan como ejercicios. Cada actividad incorporada añade su manifiesto y aumenta el mínimo exigido por la política. El [protocolo de reproducibilidad](docs/REPRODUCIBILIDAD_EJERCICIOS.md) presenta el procedimiento completo, los niveles de evidencia y la configuración para Intel, AMD, ARM, NVIDIA y AMD GPU.
 
 ### Plataforma comprobada para esta revisión
 
@@ -165,7 +165,7 @@ El [flujo de GitHub Actions 30752349549](https://github.com/eshernan/parallel_co
 | Windows Server 2025 | x86-64 | AMD64 Family 25 | MSVC 19.51 | 2/2 CTest |
 | Windows 11 | ARM64 | ARMv8 | MSVC 19.44 | 2/2 CTest |
 
-Esta evidencia acredita el mecanismo y los programas de control en esas plataformas; el inventario docente continúa en **0 ejercicios activos** y, por tanto, todavía no acredita ejercicios concretos. Los fabricantes observados en runners x86-64 se registran como evidencia de esa ejecución, no como una garantía de asignación futura de GitHub. CUDA, ROCm/HIP y el comportamiento sobre hardware institucional se documentarán únicamente después de ejecutar sus perfiles en los dispositivos correspondientes.
+Ese flujo histórico acredita el mecanismo y los programas de control en esas plataformas; se ejecutó antes de incorporar los dos ejercicios actuales y, por tanto, no acredita su portabilidad. La revisión local actual sí compila los dos esqueletos y compila y prueba las dos soluciones. Los fabricantes observados en runners x86-64 se registran como evidencia de aquella ejecución, no como una garantía de asignación futura de GitHub. CUDA, ROCm/HIP y el comportamiento sobre hardware institucional se documentarán únicamente después de ejecutar sus perfiles en los dispositivos correspondientes.
 
 ## Organización del repositorio
 
@@ -188,7 +188,8 @@ parallel_course/
 │   │   ├── 06_cuda/
 │   │   ├── 07_hibrido/
 │   │   └── 08_proyecto/
-│   ├── ejemplos/                   # Fuentes seriales y paralelos compilables
+│   ├── images/                     # SVG pedagógicos reutilizables
+│   ├── ejemplos/                   # Inventario y fuentes cuando estén incorporadas
 │   └── ejercicios/
 │       ├── <tema>/<ejercicio>/     # Enunciado, esqueleto y pruebas públicas
 │       └── soluciones/
@@ -203,7 +204,7 @@ parallel_course/
 
 ## Relación entre notebooks, ejemplos y ejercicios
 
-El trabajo de cada tema relaciona cuatro componentes:
+El diseño objetivo de cada tema relaciona cuatro componentes. Una flecha se considera implementada únicamente cuando el artefacto de destino existe y supera el preflight:
 
 ```text
 Notebook conceptual
@@ -217,7 +218,7 @@ Solución de referencia + pruebas docentes
 
 ### Ejemplos
 
-Cada ejemplo incluye:
+Un ejemplo se considera incorporado cuando incluye:
 
 - fuente serial de referencia y versión paralela;
 - construcción con CMake;
@@ -236,7 +237,7 @@ Las soluciones se almacenan en `curso/ejercicios/soluciones/<tema>/<ejercicio>/`
 
 ## Lineamiento visual de notebooks
 
-La ilustración de la cabecera establece el lenguaje visual para las imágenes conceptuales del curso:
+La ilustración de la cabecera establece el lenguaje visual para las imágenes conceptuales del curso. Los diagramas reutilizables se conservan como SVG accesibles en [`curso/images/`](curso/images/README.md):
 
 - boceto técnico hecho a lápiz de grafito;
 - papel marfil o fondo blanco cálido;
@@ -253,7 +254,7 @@ Las gráficas cuantitativas se generan a partir de los datos del experimento, co
 - Planeación de 38 sesiones: completada.
 - Configuración global y presets: creados.
 - Estructura de notebooks, ejemplos, ejercicios y soluciones: creada.
-- Protocolo, manifiestos y flujos de validación multiplataforma: creados; el inventario actual contiene 0 ejercicios activos y la política se incrementará con cada actividad incorporada.
+- Protocolo, manifiestos y flujos de validación multiplataforma: creados; el inventario actual contiene 2 ejercicios C17 activos y 2 soluciones del tema 01.
 - Edición en inglés: prevista después de consolidar y revisar la edición académica en español.
 - Material de profundización en ROCm/HIP, SYCL, Kokkos y RAJA: planeado y configurado; contenidos ejecutables pendientes.
 - Notebooks de los temas 00–08: incorporados, enlazados y ejecutados por la comprobación previa. Las soluciones se incorporan de manera independiente con cada ejercicio activo.

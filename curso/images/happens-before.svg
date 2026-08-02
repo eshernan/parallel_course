@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="440" viewBox="0 0 960 440" role="img" aria-labelledby="title desc">
+<title id="title">Sincronización y happens-before</title>
+<desc id="desc">El productor publica datos bajo sincronización y el consumidor los observa después de esperar la condición.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#50677a"/></marker>
+  <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#a95642"/></marker>
+</defs>
+<style>
+  .title { font: 700 28px system-ui, sans-serif; fill: #243447; }
+  .label { font: 600 18px system-ui, sans-serif; fill: #243447; }
+  .small { font: 15px system-ui, sans-serif; fill: #334155; }
+  .tiny { font: 13px system-ui, sans-serif; fill: #475569; }
+  .box { fill: #fdfbf5; stroke: #50677a; stroke-width: 2; rx: 12; }
+  .blue { fill: #dce9ef; stroke: #506f83; stroke-width: 2; rx: 12; }
+  .green { fill: #dfeadf; stroke: #5d7d65; stroke-width: 2; rx: 12; }
+  .accent { fill: #f3ddd4; stroke: #a95642; stroke-width: 2.5; rx: 12; }
+  .line { fill: none; stroke: #50677a; stroke-width: 2.5; marker-end: url(#arrow); }
+  .critical { fill: none; stroke: #a95642; stroke-width: 4; marker-end: url(#arrow-red); }
+  .dash { fill: none; stroke: #718096; stroke-width: 2; stroke-dasharray: 8 7; marker-end: url(#arrow); }
+</style>
+<rect width="960" height="440" fill="#fbf7ed"/>
+<text x="40" y="46" class="title">Sincronización y happens-before</text>
+
+<rect x="70" y="100" width="210" height="65" class="blue"/><text x="175" y="138" text-anchor="middle" class="label">productor escribe</text>
+<rect x="70" y="220" width="210" height="65" class="accent"/><text x="175" y="258" text-anchor="middle" class="label">signal / unlock</text>
+<rect x="620" y="220" width="210" height="65" class="accent"/><text x="725" y="258" text-anchor="middle" class="label">wait / lock</text>
+<rect x="620" y="100" width="210" height="65" class="green"/><text x="725" y="138" text-anchor="middle" class="label">consumidor lee</text>
+<path d="M175 165 V220 M280 252 H620 M725 220 V165" class="critical"/>
+<text x="450" y="235" text-anchor="middle" class="small">relación de sincronización</text>
+<rect x="330" y="330" width="240" height="60" class="box"/><text x="450" y="355" text-anchor="middle" class="small">La condición se comprueba</text><text x="450" y="376" text-anchor="middle" class="small">siempre dentro de un bucle.</text>
+
+</svg>

@@ -8,7 +8,7 @@ Este protocolo establece cómo se acepta un ejercicio antes de utilizarlo en cla
 
 El resultado se informa por ejercicio y por plataforma. Una compilación en `x86_64` no se presenta como evidencia para ARM64, y una ejecución en una máquina virtual sin acelerador no demuestra que un programa CUDA o HIP funcione en una GPU.
 
-A la fecha de este documento, `curso/ejercicios/` y `curso/ejercicios/soluciones/` contienen la organización de los temas, pero todavía no contienen fuentes de ejercicios activos. En consecuencia, el informe de esas dos carpetas indica **0 ejercicios activos, 0 compilados**. El repositorio sí compila dos programas internos, uno C17 y otro C++20, para comprobar que el mecanismo de validación funciona en cada runner. Estas pruebas internas no se contabilizan como ejercicios del curso.
+A la fecha de este documento, `curso/ejercicios/` contiene dos ejercicios C17 activos del tema 01 y `curso/ejercicios/soluciones/` contiene sus dos soluciones verificadas. El preflight compila los esqueletos públicos —sus pruebas pueden fallar hasta que el estudiante los complete— y compila y prueba las soluciones. El repositorio también compila dos programas internos, uno C17 y otro C++20, para comprobar el propio mecanismo en cada runner; esas pruebas internas no se contabilizan como ejercicios del curso.
 
 Esta distinción debe conservarse en los informes. Un flujo satisfactorio en el estado actual acredita la integridad del inventario y el funcionamiento del mecanismo; la compatibilidad de un ejercicio comienza a acreditarse cuando aparece en el informe como `compiled` o `tested`.
 
@@ -22,12 +22,13 @@ Esta distinción debe conservarse en los informes. Un flujo satisfactorio en el 
 | `validation/solutions-policy.json` | Política independiente para las soluciones docentes. |
 | `validation/validate_repository_hygiene.py` | Impide versionar outputs de compilación y conserva una excepción explícita para las bibliotecas vendorizadas de FreeImage. |
 | `validation/notebooks-manifest.json` | Inventario obligatorio de los 23 notebooks, con tema, sesiones, título y ruta. |
+| `tools/generate_course_diagrams.py` | Fuente canónica de los SVG pedagógicos compartidos por todos los capítulos. |
 | `tools/generate_course_notebooks.py` | Fuente canónica de estructura y contenido; el modo `--check` impide notebooks ausentes o divergentes. |
 | `validation/validate_notebooks.py` | Ejecuta secuencialmente todas las celdas Python y conserva un informe por notebook. |
 | `validation/validate_exercises.py` | Detecta fuentes sin registrar, valida manifiestos, configura, compila, ejecuta CTest y escribe el informe JSON. |
 | `validation/platform_manifest.py` | Registra sistema, kernel, arquitectura, CPU, compiladores, MPI y aceleradores; también comprueba el perfil solicitado. |
 | `validation/preflight.py` | Punto de entrada que debe ejecutar el usuario antes de abrir los ejercicios. Coordina el inventario de plataforma, los controles C17/C++20 y la construcción de las actividades compatibles. |
-| `validation/validate_navigation.py` | Comprueba los enlaces locales del índice, la presencia de los temas 00–08 y los enlaces de retorno de cada notebook. |
+| `validation/validate_navigation.py` | Comprueba enlaces, temas 00–08, ruta pedagógica, contenido explicativo, imágenes compartidas y navegación de retorno. |
 | `validation/fixtures/` | Programas mínimos C17 y C++20 que prueban el propio mecanismo. |
 | `.github/workflows/exercise-portability.yml` | Matriz automática en runners administrados por GitHub. |
 | `.github/workflows/exercise-hardware.yml` | Ejecución manual en equipos o nodos institucionales conectados como runners *self-hosted*. |
@@ -102,7 +103,7 @@ python3 validation/validate_exercises.py \
   --policy validation/policy.json \
   --build-root build/validation/local/exercises \
   --report build/validation/local/exercises.json \
-  --compile --test
+  --compile
 
 python3 validation/validate_exercises.py \
   --exercises-root curso/ejercicios/soluciones \
@@ -128,7 +129,7 @@ La tabla identifica con precisión lo que fue probado y no se utiliza para afirm
 
 El [flujo 30752349549 de GitHub Actions](https://github.com/eshernan/parallel_course/actions/runs/30752349549) ejecutó el commit `844cab1` en Ubuntu 24.04 x86-64 y ARM64, macOS 15 Intel y ARM64, Windows Server 2025 x86-64 y Windows 11 ARM64. En las seis plataformas CMake construyó los controles C17/C++20 con el compilador nativo seleccionado y CTest aprobó dos de dos pruebas. Los manifiestos conservaron, entre otros, un Intel Xeon Platinum 8573C en Ubuntu x86-64, un procesador AMD64 Family 25 en Windows x86-64 y procesadores ARM en Ubuntu y Windows ARM64. Estos modelos corresponden a esa ejecución; GitHub no fija el fabricante de sus runners x86-64 estándar.
 
-El alcance sigue siendo el mecanismo de preflight: los informes `ejercicios.json` y `soluciones.json` registraron 0 ejercicios activos. No se atribuye compatibilidad a CUDA, HIP ni a un ejercicio docente hasta que sus fuentes activas y sus pruebas aparezcan en el informe del hardware correspondiente.
+El alcance de esa ejecución histórica fue el mecanismo de preflight: sus informes `ejercicios.json` y `soluciones.json` registraron 0 ejercicios activos porque preceden a las actividades actuales. No se utiliza para atribuir portabilidad a los dos ejercicios incorporados después, ni compatibilidad a CUDA o HIP; cada afirmación requiere un informe posterior al cambio y, cuando corresponda, el hardware adecuado.
 
 ## 6. Matriz administrada por GitHub
 

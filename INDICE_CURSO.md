@@ -11,7 +11,7 @@ Este documento es el punto de entrada al material de **Programación Paralela 20
 
 ## Notebooks del curso
 
-La edición 2026 contiene los 23 notebooks definidos por la planeación. Cada enlace abre el archivo correspondiente y cada notebook ofrece navegación de regreso a este índice y a la guía de su tema.
+La edición 2026 contiene los 23 notebooks definidos por la planeación. Cada enlace abre el archivo correspondiente y cada notebook ofrece navegación de regreso a este índice y a la guía de su tema. Todos siguen la misma ruta: prerrequisitos, explicación paso a paso, [mapa visual compartido](curso/images/README.md), ejemplo resuelto, ejemplo guiado y ejercicios progresivos.
 
 | Tema | Semanas | Notebooks | Guía del tema |
 |---:|---:|---|---|
@@ -32,6 +32,7 @@ La distribución sesión por sesión y las evaluaciones se consultan en la [plan
 | Recurso | Ubicación | Uso |
 |---|---|---|
 | Notebooks | [`curso/notebooks/`](curso/notebooks/README.md) | Explicación conceptual, experimentos y gráficas. |
+| Imágenes | [`curso/images/`](curso/images/README.md) | Diagramas SVG accesibles y reutilizables por todos los capítulos. |
 | Ejemplos | [`curso/ejemplos/`](curso/ejemplos/README.md) | Especificación de las fuentes compilables que acompañarán las prácticas; su disponibilidad se comprueba antes de usarlas. |
 | Ejercicios | [`curso/ejercicios/`](curso/ejercicios/README.md) | Enunciados, código inicial, manifiestos y pruebas públicas. |
 | Soluciones | [`curso/ejercicios/soluciones/`](curso/ejercicios/soluciones/README.md) | Resolución docente y pruebas de referencia. |

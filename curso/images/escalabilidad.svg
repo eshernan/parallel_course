@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="440" viewBox="0 0 960 440" role="img" aria-labelledby="title desc">
+<title id="title">Cómo leer una curva de escalabilidad</title>
+<desc id="desc">Ejes de recursos y aceleración con líneas ideal, limitada por Amdahl y observada.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#50677a"/></marker>
+  <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#a95642"/></marker>
+</defs>
+<style>
+  .title { font: 700 28px system-ui, sans-serif; fill: #243447; }
+  .label { font: 600 18px system-ui, sans-serif; fill: #243447; }
+  .small { font: 15px system-ui, sans-serif; fill: #334155; }
+  .tiny { font: 13px system-ui, sans-serif; fill: #475569; }
+  .box { fill: #fdfbf5; stroke: #50677a; stroke-width: 2; rx: 12; }
+  .blue { fill: #dce9ef; stroke: #506f83; stroke-width: 2; rx: 12; }
+  .green { fill: #dfeadf; stroke: #5d7d65; stroke-width: 2; rx: 12; }
+  .accent { fill: #f3ddd4; stroke: #a95642; stroke-width: 2.5; rx: 12; }
+  .line { fill: none; stroke: #50677a; stroke-width: 2.5; marker-end: url(#arrow); }
+  .critical { fill: none; stroke: #a95642; stroke-width: 4; marker-end: url(#arrow-red); }
+  .dash { fill: none; stroke: #718096; stroke-width: 2; stroke-dasharray: 8 7; marker-end: url(#arrow); }
+</style>
+<rect width="960" height="440" fill="#fbf7ed"/>
+<text x="40" y="46" class="title">Cómo leer una curva de escalabilidad</text>
+
+<path d="M110 350 H860 M110 350 V85" stroke="#334155" stroke-width="2.5" fill="none"/>
+<text x="485" y="405" text-anchor="middle" class="label">recursos p</text><text x="35" y="220" transform="rotate(-90 35 220)" text-anchor="middle" class="label">aceleración Sₚ</text>
+<polyline points="110,350 220,310 340,260 480,205 650,145 820,90" fill="none" stroke="#718096" stroke-width="2.5" stroke-dasharray="8 7"/>
+<polyline points="110,350 220,312 340,275 480,245 650,225 820,215" fill="none" stroke="#a95642" stroke-width="4"/>
+<polyline points="110,350 220,320 340,290 480,268 650,260 820,262" fill="none" stroke="#506f83" stroke-width="4"/>
+<text x="720" y="120" class="small">ideal S=p</text><text x="700" y="205" class="small">límite de Amdahl</text><text x="700" y="288" class="small">medición</text>
+<rect x="120" y="95" width="285" height="85" class="green"/><text x="140" y="125" class="small">Preguntas obligatorias:</text><text x="140" y="150" class="tiny">¿tamaño fijo o carga por recurso?</text><text x="140" y="170" class="tiny">¿qué explica la pérdida de eficiencia?</text>
+
+</svg>

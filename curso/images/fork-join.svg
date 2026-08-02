@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="440" viewBox="0 0 960 440" role="img" aria-labelledby="title desc">
+<title id="title">Patrón fork–join</title>
+<desc id="desc">Una región serial crea trabajadores, distribuye trabajo y espera su finalización antes de continuar.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#50677a"/></marker>
+  <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#a95642"/></marker>
+</defs>
+<style>
+  .title { font: 700 28px system-ui, sans-serif; fill: #243447; }
+  .label { font: 600 18px system-ui, sans-serif; fill: #243447; }
+  .small { font: 15px system-ui, sans-serif; fill: #334155; }
+  .tiny { font: 13px system-ui, sans-serif; fill: #475569; }
+  .box { fill: #fdfbf5; stroke: #50677a; stroke-width: 2; rx: 12; }
+  .blue { fill: #dce9ef; stroke: #506f83; stroke-width: 2; rx: 12; }
+  .green { fill: #dfeadf; stroke: #5d7d65; stroke-width: 2; rx: 12; }
+  .accent { fill: #f3ddd4; stroke: #a95642; stroke-width: 2.5; rx: 12; }
+  .line { fill: none; stroke: #50677a; stroke-width: 2.5; marker-end: url(#arrow); }
+  .critical { fill: none; stroke: #a95642; stroke-width: 4; marker-end: url(#arrow-red); }
+  .dash { fill: none; stroke: #718096; stroke-width: 2; stroke-dasharray: 8 7; marker-end: url(#arrow); }
+</style>
+<rect width="960" height="440" fill="#fbf7ed"/>
+<text x="40" y="46" class="title">Patrón fork–join</text>
+
+<rect x="45" y="175" width="130" height="70" class="blue"/><text x="110" y="215" text-anchor="middle" class="label">serial</text>
+<circle cx="245" cy="210" r="34" fill="#f3ddd4" stroke="#a95642" stroke-width="2.5"/><text x="245" y="216" text-anchor="middle" class="label">fork</text>
+<rect x="340" y="80" width="190" height="55" class="box"/><text x="435" y="115" text-anchor="middle" class="label">trabajador 0</text>
+<rect x="340" y="180" width="190" height="55" class="box"/><text x="435" y="215" text-anchor="middle" class="label">trabajador 1</text>
+<rect x="340" y="280" width="190" height="55" class="box"/><text x="435" y="315" text-anchor="middle" class="label">trabajador n−1</text>
+<circle cx="625" cy="210" r="34" fill="#dfeadf" stroke="#5d7d65" stroke-width="2.5"/><text x="625" y="216" text-anchor="middle" class="label">join</text>
+<rect x="720" y="175" width="170" height="70" class="green"/><text x="805" y="203" text-anchor="middle" class="label">resultado</text><text x="805" y="227" text-anchor="middle" class="small">validado</text>
+<path d="M175 210 H211 M279 200 L340 108 M279 210 H340 M279 220 L340 308 M530 108 L591 200 M530 208 H591 M530 308 L591 220 M659 210 H720" class="line"/>
+
+</svg>

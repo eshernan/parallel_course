@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "id": "01_fundamentos_02_ancho_banda_roofline",
+  "topic": "01_fundamentos",
+  "title": "Vector triad, intensidad aritmética y régimen Roofline",
+  "status": "active",
+  "language": "c",
+  "standard": "c17",
+  "build": {
+    "system": "cmake",
+    "target": "exercise_02_ancho_banda_roofline",
+    "tests": true,
+    "configure_args": []
+  },
+  "requirements": {
+    "tools": ["cmake"],
+    "capabilities": ["cpu"]
+  },
+  "platforms": {
+    "operating_systems": ["linux", "macos", "windows"],
+    "architectures": ["x86_64", "arm64"],
+    "cpu_vendors": ["any"],
+    "accelerator": "none"
+  },
+  "notes": "Corresponde a curso/notebooks/01_fundamentos/03_memoria_roofline.ipynb. Las pruebas verifican corrección (triad, intensidad, clasificación de régimen) sin medir tiempo; src/benchmark.c mide ancho de banda y GFLOP/s reales en el equipo del estudiante y no participa en ctest."
+}

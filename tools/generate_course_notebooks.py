@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 from textwrap import dedent
@@ -829,6 +830,79 @@ TOPIC_TITLES = {
     "08": "Proyecto final",
 }
 
+TOPIC_PREREQUISITES = {
+    "00": ("Manejo básico de terminal y archivos.", "Diferencia elemental entre código fuente y programa ejecutable."),
+    "01": ("Aritmética, funciones y lectura de gráficas.", "Python básico para modificar parámetros y ejecutar aserciones."),
+    "02": ("Partición de datos y referencia serial del tema 01.", "Punteros, funciones y vida útil de objetos en C/C++."),
+    "03": ("Memoria compartida, carreras y sincronización.", "Compilación C/C++ con advertencias habilitadas."),
+    "04": ("Procesos, memoria privada y paso de argumentos.", "Modelo de costo latencia–ancho de banda y referencia serial."),
+    "05": ("OpenMP en CPU y jerarquía de memoria.", "Diferencia entre corrección funcional y evidencia de rendimiento."),
+    "06": ("C++20, memoria y descomposición por datos.", "Modelo host–dispositivo y medición extremo a extremo."),
+    "07": ("MPI, OpenMP y un modelo de acelerador.", "Afinidad, escalabilidad y lectura de perfiles."),
+    "08": ("Temas 00–07 y al menos una implementación paralela correcta.", "Método experimental, control de versiones y comunicación técnica."),
+}
+
+TOPIC_VOCABULARY = {
+    "00": ("plataforma — sistema, arquitectura y hardware observados", "toolchain — compilador, enlazador, bibliotecas y herramientas", "runtime — soporte que participa durante la ejecución"),
+    "01": ("trabajo T₁ — costo total de todas las operaciones", "span T∞ — costo del camino dependiente más largo", "eficiencia — aceleración dividida entre recursos", "intensidad aritmética — FLOP realizados por byte movido"),
+    "02": ("carrera — accesos concurrentes incompatibles sin orden suficiente", "happens-before — relación que hace visible un efecto entre hilos", "deadlock — ciclo de espera que impide el progreso"),
+    "03": ("fork–join — creación y reunión de trabajo paralelo", "entorno de datos — clasificación shared/private/firstprivate", "granularidad — cantidad de trabajo útil por unidad planificada"),
+    "04": ("rank — identidad de un proceso dentro de un comunicador", "tag — etiqueta que participa en el emparejamiento de mensajes", "colectiva — operación coordinada por todos los procesos del comunicador"),
+    "05": ("offload — delegación de cómputo a un dispositivo", "mapping — relación entre almacenamiento del host y del dispositivo", "fallback — ejecución alternativa en host que conserva corrección"),
+    "06": ("SIMT — ejecución de hilos agrupados sobre una instrucción", "warp — grupo de hilos planificado conjuntamente", "coalescencia — agrupación eficiente de accesos contiguos", "tile — bloque de datos reutilizado localmente"),
+    "07": ("afinidad — vínculo entre trabajo y recursos físicos", "sobresuscripción — más entidades ejecutables que recursos asignados", "perfil — atribución del tiempo a regiones o fases"),
+    "08": ("hipótesis — afirmación contrastable antes de observar resultados", "variable controlada — factor que se mantiene constante", "evidencia — datos, comandos y contexto que permiten revisar una conclusión"),
+}
+
+VISUAL_CATALOG = {
+    "ruta-reproducible.svg": ("Ruta reproducible desde la hipótesis hasta el informe", "Sigue las flechas de izquierda a derecha. La validación aparece antes de la medición porque un resultado rápido pero incorrecto no constituye evidencia de rendimiento."),
+    "capas-toolchain.svg": ("Capas de código, compilador, runtime, sistema y hardware", "Lee de arriba hacia abajo: cada capa añade condiciones que una macro o una bandera aislada no puede demostrar por sí sola."),
+    "dag-camino-critico.svg": ("DAG con trabajo y camino crítico", "El trazo destacado une las tareas que determinan el span. La rama B puede terminar antes sin reducir el total mientras A siga siendo más larga."),
+    "escalabilidad.svg": ("Curvas ideal, limitada y observada", "Compara la pendiente de cada curva y pregunta siempre si el tamaño es fijo. La distancia frente a la línea ideal se interpreta con eficiencia y overhead."),
+    "jerarquia-memoria.svg": ("Jerarquía de memoria y costo de movimiento", "Al descender aumenta la capacidad y suele aumentar la latencia. La optimización busca reutilizar datos antes de solicitar un nivel más lejano."),
+    "fork-join.svg": ("Región serial que crea y reúne trabajadores", "La región posterior al join solo puede consumir el resultado cuando todos los trabajadores necesarios terminaron y publicaron sus parciales."),
+    "happens-before.svg": ("Publicación de datos entre productor y consumidor", "La flecha central representa sincronización, no el mero paso del tiempo. Sin esa relación el consumidor no tiene garantía de observar la escritura."),
+    "distribucion-trabajo.svg": ("Iteraciones distribuidas y reducción final", "Verifica dos propiedades: cada iteración pertenece a un trabajador y la combinación de parciales reproduce la referencia serial."),
+    "mpi-comunicacion.svg": ("Procesos MPI con mensajes y colectiva", "Las flechas exteriores representan punto a punto; las interiores, coordinación colectiva. Todos los ranks deben respetar comunicador, orden y contrato de datos."),
+    "offload-host-device.svg": ("Flujo de datos entre host y dispositivo", "Separa preparación, H2D, kernel, D2H y validación. Esa separación evita llamar tiempo total a una medición que solo cubre el kernel."),
+    "cuda-grid-tiling.svg": ("Jerarquía grid–bloque–hilo y tile compartido", "Primero ubica un hilo dentro de su bloque y grid; después observa que la cooperación y sincronización ocurren dentro del bloque que reutiliza el tile."),
+    "topologia-hibrida.svg": ("Nodos con ranks, hilos y GPU local", "Recorre la jerarquía de afuera hacia adentro. El mapeo correcto conserva afinidad local y evita asignar accidentalmente varios ranks al mismo dispositivo."),
+    "metodo-rendimiento.svg": ("Ciclo de medición, resumen, perfil e hipótesis", "Una medición se repite y resume antes de perfilar. La conclusión genera un experimento nuevo cambiando una sola variable controlada."),
+}
+
+# Cada entrada fue contrastada con la pregunta, los ejemplos y las sesiones
+# declaradas en la planeación. Los diagramas se comparten entre capítulos.
+NOTEBOOK_GUIDES = {
+    "00_entorno/00_entorno_reproducible.ipynb": ("Antes de paralelizar, hay que saber qué equipo y qué herramientas ejecutarán el programa. Este notebook enseña a convertir el ambiente en evidencia verificable.", ("ruta-reproducible.svg", "capas-toolchain.svg"), "¿Qué puede concluirse si CMake existe, pero el compilador requerido o el runtime no coincide con la política?"),
+    "00_entorno/01_estandares_compiladores.ipynb": ("Una bandera de compilación selecciona un modo, pero no demuestra por sí sola conformidad completa. La meta es aprender a formular conclusiones del tamaño de la evidencia.", ("capas-toolchain.svg",), "¿Qué información adicional necesitarías después de observar `__cplusplus=202002L`?"),
+    "01_fundamentos/01_modelos.ipynb": ("La primera decisión paralela no es cuántos hilos usar, sino cómo expresar trabajo y dependencias. El DAG permite razonar antes de elegir una API.", ("dag-camino-critico.svg", "distribucion-trabajo.svg"), "Si la tarea B durara 7 unidades, ¿qué cambiaría en el span y en el camino crítico?"),
+    "01_fundamentos/02_escalabilidad.ipynb": ("Una aceleración aislada puede parecer buena y aun ocultar baja eficiencia. Este recorrido conecta los límites analíticos con una serie de tiempos observados.", ("escalabilidad.svg", "metodo-rendimiento.svg"), "¿Por qué Amdahl y Gustafson pueden producir conclusiones distintas sin que uno de los dos esté equivocado?"),
+    "01_fundamentos/03_memoria_roofline.ipynb": ("El procesador solo calcula con datos que logró mover hasta una unidad de ejecución. Roofline organiza esa tensión entre cómputo, ancho de banda y reutilización.", ("jerarquia-memoria.svg", "metodo-rendimiento.svg"), "¿Qué medición permitiría distinguir baja intensidad aritmética de mala localidad o de un pico teórico inadecuado?"),
+    "02_memoria_compartida/01_pthreads.ipynb": ("Crear hilos es sencillo; entregarles argumentos válidos, cubrir todo el dominio y reunir sus resultados exige un contrato preciso.", ("fork-join.svg", "distribucion-trabajo.svg"), "¿Qué ocurre con la cobertura cuando hay más trabajadores que elementos y cómo debe representarse ese caso?"),
+    "02_memoria_compartida/02_sincronizacion.ipynb": ("La sincronización protege invariantes y establece visibilidad; no es un adorno que se agrega después de encontrar una carrera.", ("happens-before.svg",), "¿Por qué una variable condición debe comprobarse dentro de un bucle y bajo el mismo mutex que protege el estado?"),
+    "02_memoria_compartida/03_cpp20_atomics.ipynb": ("RAII resuelve vida útil; los atomics resuelven operaciones y órdenes concretos. Elegirlos bien requiere decir qué dato se publica y quién debe observarlo.", ("happens-before.svg", "fork-join.svg"), "¿Cuándo `memory_order_relaxed` es suficiente y qué garantía deliberadamente no ofrece?"),
+    "03_openmp/01_modelo_datos.ipynb": ("OpenMP reduce código ceremonial, pero obliga a clasificar cada variable y a entender dónde comienza y termina el equipo de hilos.", ("fork-join.svg", "distribucion-trabajo.svg"), "¿Qué error ayuda a descubrir `default(none)` antes de ejecutar el programa?"),
+    "03_openmp/02_bucles_reducciones.ipynb": ("Distribuir iteraciones solo ayuda si la carga queda balanceada, conserva localidad y combina resultados con la precisión acordada.", ("distribucion-trabajo.svg", "metodo-rendimiento.svg"), "¿Qué cambiarías entre schedule estático y dinámico si cada iteración tuviera el mismo costo pero fuerte localidad?"),
+    "03_openmp/03_tareas_rendimiento.ipynb": ("Las tareas expresan un DAG dinámico. Su utilidad depende de que las dependencias sean correctas y el trabajo útil supere el costo de planificación.", ("dag-camino-critico.svg", "metodo-rendimiento.svg"), "¿Cómo detectarías experimentalmente que el cutoff genera tareas demasiado pequeñas?"),
+    "04_mpi/01_punto_a_punto.ipynb": ("MPI obliga a hacer explícito quién envía, quién recibe y qué datos forman el mensaje. Esa precisión permite razonar sobre deadlock, progreso y halos.", ("mpi-comunicacion.svg",), "¿Qué contrato de source, destination, tag y count debe coincidir para que dos operaciones se emparejen?"),
+    "04_mpi/02_colectivas_topologias.ipynb": ("Una colectiva expresa una intención global que la biblioteca puede implementar mejor que una secuencia manual, siempre que counts, layouts y orden sean compatibles.", ("mpi-comunicacion.svg", "distribucion-trabajo.svg"), "¿Cuándo `Allreduce` comunica más datos de los necesarios y qué alternativa expresa mejor el patrón?"),
+    "04_mpi/03_escalabilidad_slurm.ipynb": ("En clúster, el tiempo depende tanto del programa como de la asignación, el mapeo y la red. Un job reproducible registra esos factores.", ("mpi-comunicacion.svg", "escalabilidad.svg", "metodo-rendimiento.svg"), "¿Qué diferencia hay entre reservar recursos con Slurm y lanzar procesos MPI sobre esa reserva?"),
+    "05_openmp_target/01_modelo_offload.ipynb": ("Un acelerador puede ejecutar más cómputo por segundo y aun perder frente a la CPU cuando inicialización y transferencias dominan.", ("offload-host-device.svg", "metodo-rendimiento.svg"), "¿Qué tamaño o reutilización de datos desplaza el punto de equilibrio a favor del dispositivo?"),
+    "05_openmp_target/02_openmp_target.ipynb": ("Las regiones target deben declarar qué datos llegan, cuáles cambian y cuándo regresan. El fallback verifica lógica, pero no demuestra uso del acelerador.", ("offload-host-device.svg",), "¿Cómo demostrarías en el informe que la ejecución ocurrió realmente en un dispositivo?"),
+    "06_cuda/01_modelo_cuda.ipynb": ("CUDA hace explícita la jerarquía de ejecución. Un mapeo correcto cubre el dominio, controla bordes y separa errores de lanzamiento de errores asíncronos.", ("cuda-grid-tiling.svg", "offload-host-device.svg"), "¿Por qué una geometría que lanza más hilos que elementos necesita una guarda aunque el cálculo de bloques sea correcto?"),
+    "06_cuda/02_memoria_tiling.ipynb": ("Tiling intercambia cooperación y memoria compartida por reutilización. El beneficio depende de coalescencia, recursos por bloque y tratamiento correcto de bordes.", ("cuda-grid-tiling.svg", "jerarquia-memoria.svg"), "¿Por qué aumentar el tile puede reducir rendimiento aunque aumente reutilización ideal?"),
+    "06_cuda/03_bibliotecas_perfiles.ipynb": ("Una biblioteca acelerada aporta algoritmos afinados, pero su ventaja depende de layout, tamaños, workspace, reutilización y residencia de datos.", ("offload-host-device.svg", "metodo-rendimiento.svg"), "¿Qué costos deben incluirse simétricamente al comparar un kernel propio con una biblioteca?"),
+    "07_hibrido/01_mpi_openmp.ipynb": ("El diseño híbrido reparte paralelismo entre nodos y dentro de cada nodo. El producto ranks×hilos debe corresponder a recursos físicos y afinidad.", ("topologia-hibrida.svg", "fork-join.svg"), "¿Qué configuración mantendría constante el total de núcleos al comparar más ranks con más hilos?"),
+    "07_hibrido/02_mpi_gpu.ipynb": ("Combinar MPI y GPU añade una asignación rank–dispositivo y rutas alternativas para halos. La topología física pasa a ser parte del algoritmo.", ("topologia-hibrida.svg", "offload-host-device.svg"), "¿Qué falla funcional o de rendimiento puede ocurrir si dos ranks locales seleccionan la misma GPU sin intención?"),
+    "07_hibrido/03_perfilado_reproducible.ipynb": ("El perfil integral reconcilia cómputo, comunicación, transferencias, sincronización e I/O con el tiempo total y su variabilidad.", ("metodo-rendimiento.svg", "topologia-hibrida.svg"), "¿Cómo distinguirías una fase realmente dominante de una perturbación aislada en una sola repetición?"),
+    "08_proyecto/01_guia_proyecto.ipynb": ("El proyecto integra corrección, diseño, rendimiento y comunicación. La ruta evita optimizar una solución cuya pregunta, referencia o evidencia aún no están fijadas.", ("ruta-reproducible.svg", "metodo-rendimiento.svg"), "¿Qué evidencia mínima debe existir antes de afirmar que una optimización produjo speedup?"),
+}
+
+NOTEBOOK_EXERCISES = {
+    "01_fundamentos/01_modelos.ipynb": (("Ejercicio C17: partición balanceada y reducción", "../../ejercicios/01_fundamentos/01_particion_reduccion/README.md"),),
+    "01_fundamentos/03_memoria_roofline.ipynb": (("Ejercicio C17: vector triad y Roofline", "../../ejercicios/01_fundamentos/02_ancho_banda_roofline/README.md"),),
+}
+
 
 def markdown_cell(source: str) -> dict[str, object]:
     return {"cell_type": "markdown", "metadata": {}, "source": source.splitlines(keepends=True)}
@@ -844,7 +918,30 @@ def bullets(items: tuple[str, ...]) -> str:
 
 
 def notebook(specification: NotebookSpec) -> dict[str, object]:
+    key = f"{specification.directory}/{specification.filename}"
+    if key not in NOTEBOOK_GUIDES:
+        raise ValueError(f"Falta guía pedagógica para {key}")
+    motivation, visual_names, transfer_question = NOTEBOOK_GUIDES[key]
+    prerequisites = TOPIC_PREREQUISITES[specification.topic]
+    vocabulary = TOPIC_VOCABULARY[specification.topic]
+    exercise_links = NOTEBOOK_EXERCISES.get(key, ())
     session_text = ", ".join(str(value) for value in specification.sessions)
+    explanation = "\n\n".join(
+        f"### Paso {index}: construye la idea\n\n{concept}\n\n"
+        "**Pausa de comprensión.** Explica con tus palabras qué supuesto introduce esta idea y qué dato permitiría comprobarlo."
+        for index, concept in enumerate(specification.concepts, 1)
+    )
+    visual_markdown = "\n\n".join(
+        f"### {Path(name).stem.replace('-', ' ').title()}\n\n"
+        f"![{VISUAL_CATALOG[name][0]}](../../images/{name})\n\n"
+        f"**Cómo leerlo.** {VISUAL_CATALOG[name][1]}"
+        for name in visual_names
+    )
+    linked_exercises = ""
+    if exercise_links:
+        linked_exercises = "\n\n### Actividades compilables relacionadas\n\n" + "\n".join(
+            f"- [{label}]({target})" for label, target in exercise_links
+        )
     cells: list[dict[str, object]] = [
         markdown_cell(
             f"[← Volver al índice del curso](../../../INDICE_CURSO.md) · [Guía del tema {specification.topic}](README.md)\n\n"
@@ -852,8 +949,34 @@ def notebook(specification: NotebookSpec) -> dict[str, object]:
             f"**Tema:** {specification.topic} · **Sesiones:** {session_text} · **Edición:** 1.0.2026\n\n"
             f"**Pregunta guía:** {specification.question}\n"
         ),
-        markdown_cell("## Resultados de aprendizaje\n\n" + bullets(specification.outcomes) + "\n"),
-        markdown_cell("## Modelo conceptual\n\n" + "\n\n".join(specification.concepts) + "\n"),
+        markdown_cell(
+            "## Cómo usar este notebook\n\n"
+            "Sigue la secuencia sin saltar directamente al código:\n\n"
+            "1. Comprueba los prerrequisitos y formula una respuesta inicial a la pregunta guía.\n"
+            "2. Estudia la explicación paso a paso y reconstruye el mapa visual.\n"
+            "3. Predice el resultado del ejemplo resuelto antes de ejecutar su celda.\n"
+            "4. Repite el razonamiento en el ejemplo guiado y contesta las preguntas de comprensión.\n"
+            "5. Solo entonces desarrolla los ejercicios progresivos y contrasta los criterios de aceptación.\n\n"
+            "La meta no es memorizar una salida: es poder explicar qué se calculó, bajo qué supuestos y con qué evidencia.\n"
+        ),
+        markdown_cell(
+            "## Antes de empezar\n\n"
+            f"**Por qué importa.** {motivation}\n\n"
+            "**Prerrequisitos.**\n\n" + bullets(prerequisites) + "\n\n"
+            "**Diagnóstico inicial.** Escribe una respuesta de dos frases a la pregunta guía. Al terminar, vuelve a leerla y señala qué corregiste.\n"
+        ),
+        markdown_cell("## Resultados de aprendizaje\n\nAl finalizar podrás:\n\n" + bullets(specification.outcomes) + "\n"),
+        markdown_cell(
+            "## Explicación paso a paso\n\n"
+            "En esta sección todavía no se busca programar. Primero se construye el modelo mental que permitirá leer el ejemplo y detectar conclusiones inválidas.\n\n"
+            + explanation + "\n\n"
+            "### Vocabulario mínimo\n\n" + bullets(vocabulary) + "\n"
+        ),
+        markdown_cell(
+            "## Mapa visual\n\n"
+            "Los diagramas se almacenan en la carpeta compartida [`curso/images/`](../../images/README.md). Úsalos para explicar relaciones y secuencias; no los trates como resultados experimentales.\n\n"
+            + visual_markdown + "\n"
+        ),
         code_cell(dedent(f'''
             from pathlib import Path
 
@@ -871,18 +994,60 @@ def notebook(specification: NotebookSpec) -> dict[str, object]:
             print(f"Notebook: {{NOTEBOOK}}")
         ''')),
     ]
-    for heading, introduction, source, interpretation in specification.analyses:
+    for analysis_index, (heading, introduction, source, interpretation) in enumerate(specification.analyses):
+        if analysis_index == 0:
+            heading_prefix = "Ejemplo resuelto"
+            guidance = (
+                "**Razonamiento antes del código.**\n\n"
+                "1. Identifica entradas, supuestos y la magnitud que debe producirse.\n"
+                "2. Formula una propiedad esperada; la celda la expresa mediante una aserción.\n"
+                "3. Predice el resultado y después ejecuta. Una salida impresa ayuda a observar, pero la aserción decide si se conserva el invariante."
+            )
+            interpretation_label = "Explicación del resultado"
+        else:
+            heading_prefix = "Ejemplo guiado"
+            guidance = (
+                "**Tu turno antes de ejecutar.** Anota una predicción, identifica la variable que modificarías y explica qué propiedad no debe cambiar. "
+                "Ejecuta después y compara el resultado con tu predicción."
+            )
+            interpretation_label = "Lectura razonada"
         cells.extend(
             [
-                markdown_cell(f"## {heading}\n\n{introduction}\n"),
+                markdown_cell(f"## {heading_prefix}: {heading}\n\n**Situación.** {introduction}\n\n{guidance}\n"),
                 code_cell(source),
-                markdown_cell(f"**Interpretación.** {interpretation}\n"),
+                markdown_cell(
+                    f"### {interpretation_label}\n\n{interpretation}\n\n"
+                    "**Qué debes poder explicar.** Relaciona cada valor producido con el modelo conceptual y distingue el cálculo ilustrativo de una medición sobre hardware real.\n"
+                ),
             ]
         )
     cells.extend(
         [
-            markdown_cell("## Práctica reproducible\n\n" + "\n".join(f"{index}. {item}" for index, item in enumerate(specification.practice, 1)) + "\n"),
-            markdown_cell("## Errores frecuentes\n\n" + bullets(specification.pitfalls) + "\n\n## Criterios de aceptación\n\n" + bullets(specification.acceptance) + "\n"),
+            markdown_cell(
+                "## Comprueba tu comprensión\n\n"
+                f"1. {transfer_question}\n"
+                "2. ¿Qué aserción o comparación del ejemplo protege la corrección y qué error detectaría?\n"
+                "3. ¿Qué parte es un modelo y qué evidencia adicional exigirías antes de generalizar al hardware real?\n\n"
+                "Responde primero sin ejecutar código. Luego usa las celdas anteriores para corregir o precisar tu explicación.\n"
+            ),
+            markdown_cell(
+                "## Ejercicios progresivos\n\n"
+                "### Nivel 1 — reproducir y explicar\n\n"
+                "Cambia un parámetro del ejemplo resuelto, predice el efecto y explica por qué la aserción debe seguir pasando o debe fallar de manera controlada.\n\n"
+                "### Nivel 2 — aplicar\n\n"
+                + "\n".join(f"{index}. {item}" for index, item in enumerate(specification.practice, 1)) + "\n\n"
+                "### Nivel 3 — producir evidencia\n\n"
+                "Conserva entrada, comandos, versión del entorno, resultados crudos y una conclusión limitada por los supuestos. Separa siempre corrección, tiempo de kernel y tiempo extremo a extremo cuando corresponda."
+                + linked_exercises + "\n"
+            ),
+            markdown_cell("## Errores frecuentes\n\n" + bullets(specification.pitfalls) + "\n"),
+            markdown_cell("## Criterios de aceptación\n\n" + bullets(specification.acceptance) + "\n"),
+            markdown_cell(
+                "## Síntesis\n\n"
+                f"- La pregunta que debes poder responder es: **{specification.question}**\n"
+                "- Los ejemplos convierten el modelo en propiedades comprobables; no sustituyen una medición del sistema objetivo.\n"
+                "- Los ejercicios se consideran terminados cuando la explicación, la corrección y la evidencia satisfacen los criterios de aceptación.\n"
+            ),
             markdown_cell("## Referencias y material relacionado\n\n" + "\n".join(f"- [{label}]({target})" for label, target in specification.references) + "\n"),
             markdown_cell(f"[← Volver al índice del curso](../../../INDICE_CURSO.md) · [Continuar desde la guía del tema {specification.topic}](README.md)\n"),
         ]
@@ -898,6 +1063,8 @@ def notebook(specification: NotebookSpec) -> dict[str, object]:
                 "directory": specification.directory,
                 "sessions": list(specification.sessions),
                 "title": specification.title,
+                "pedagogy": "explain-visual-example-exercises-v1",
+                "images": list(visual_names),
             },
             "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
             "language_info": {"name": "python", "version": "3.14"},
@@ -911,6 +1078,37 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="No escribe; falla si un notebook difiere del canónico")
     return parser.parse_args()
+
+
+def validate_catalog() -> None:
+    expected_keys = {f"{item.directory}/{item.filename}" for item in SPECS}
+    guide_keys = set(NOTEBOOK_GUIDES)
+    if len(SPECS) != 23 or expected_keys != guide_keys:
+        raise ValueError(
+            f"Inventario pedagógico incompleto; specs={len(SPECS)}, "
+            f"sin guía={sorted(expected_keys - guide_keys)}, sin notebook={sorted(guide_keys - expected_keys)}"
+        )
+    motivations = [guide[0] for guide in NOTEBOOK_GUIDES.values()]
+    transfer_questions = [guide[2] for guide in NOTEBOOK_GUIDES.values()]
+    if len(set(motivations)) != len(motivations) or len(set(transfer_questions)) != len(transfer_questions):
+        raise ValueError("Cada notebook debe tener motivación y pregunta de transferencia propias")
+    image_usage: Counter[str] = Counter()
+    for key, (_, images, _) in NOTEBOOK_GUIDES.items():
+        if not images:
+            raise ValueError(f"{key}: debe declarar al menos una imagen compartida")
+        for image_name in images:
+            if image_name not in VISUAL_CATALOG:
+                raise ValueError(f"{key}: imagen fuera del catálogo: {image_name}")
+            image_usage[image_name] += 1
+    missing_images = set(VISUAL_CATALOG) - set(image_usage)
+    single_use = sorted(name for name, count in image_usage.items() if count < 2)
+    if missing_images or single_use:
+        raise ValueError(
+            f"Las imágenes deben ser compartidas; sin uso={sorted(missing_images)}, uso único={single_use}"
+        )
+    for item in SPECS:
+        if len(item.analyses) != 2:
+            raise ValueError(f"{item.filename}: debe tener un ejemplo resuelto y uno guiado")
 
 
 def manifest() -> dict[str, object]:
@@ -930,17 +1128,26 @@ def manifest() -> dict[str, object]:
                         "filename": item.filename,
                         "title": item.title,
                         "sessions": list(item.sessions),
+                        "pedagogy": "explain-visual-example-exercises-v1",
+                        "images": list(NOTEBOOK_GUIDES[f"{item.directory}/{item.filename}"][1]),
                     }
                     for item in selected
                 ],
             }
         )
-    return {"schema_version": "1.0", "edition": "1.0.2026", "total_notebooks": len(SPECS), "topics": topics}
+    return {
+        "schema_version": "2.0",
+        "edition": "1.0.2026",
+        "pedagogical_route": "explanation -> shared visual -> worked example -> guided example -> exercises",
+        "total_notebooks": len(SPECS),
+        "topics": topics,
+    }
 
 
 def main() -> int:
     args = parse_args()
     repository = Path(__file__).resolve().parent.parent
+    validate_catalog()
     failures: list[str] = []
     for specification in SPECS:
         target = repository / "curso" / "notebooks" / specification.directory / specification.filename

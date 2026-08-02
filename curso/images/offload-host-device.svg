@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="440" viewBox="0 0 960 440" role="img" aria-labelledby="title desc">
+<title id="title">Flujo host–dispositivo</title>
+<desc id="desc">El host prepara datos, transfiere al dispositivo, ejecuta un kernel, recupera resultados y valida.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#50677a"/></marker>
+  <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#a95642"/></marker>
+</defs>
+<style>
+  .title { font: 700 28px system-ui, sans-serif; fill: #243447; }
+  .label { font: 600 18px system-ui, sans-serif; fill: #243447; }
+  .small { font: 15px system-ui, sans-serif; fill: #334155; }
+  .tiny { font: 13px system-ui, sans-serif; fill: #475569; }
+  .box { fill: #fdfbf5; stroke: #50677a; stroke-width: 2; rx: 12; }
+  .blue { fill: #dce9ef; stroke: #506f83; stroke-width: 2; rx: 12; }
+  .green { fill: #dfeadf; stroke: #5d7d65; stroke-width: 2; rx: 12; }
+  .accent { fill: #f3ddd4; stroke: #a95642; stroke-width: 2.5; rx: 12; }
+  .line { fill: none; stroke: #50677a; stroke-width: 2.5; marker-end: url(#arrow); }
+  .critical { fill: none; stroke: #a95642; stroke-width: 4; marker-end: url(#arrow-red); }
+  .dash { fill: none; stroke: #718096; stroke-width: 2; stroke-dasharray: 8 7; marker-end: url(#arrow); }
+</style>
+<rect width="960" height="440" fill="#fbf7ed"/>
+<text x="40" y="46" class="title">Flujo host–dispositivo</text>
+
+<rect x="45" y="145" width="175" height="95" class="blue"/><text x="132" y="180" text-anchor="middle" class="label">Host</text><text x="132" y="205" text-anchor="middle" class="small">prepara + referencia</text>
+<rect x="330" y="95" width="300" height="190" class="box"/><text x="480" y="130" text-anchor="middle" class="label">Dispositivo</text><rect x="370" y="160" width="80" height="55" class="accent"/><rect x="460" y="160" width="80" height="55" class="accent"/><rect x="550" y="160" width="45" height="55" class="accent"/><text x="480" y="250" text-anchor="middle" class="small">kernel sobre grid de trabajo</text>
+<rect x="740" y="145" width="175" height="95" class="green"/><text x="827" y="180" text-anchor="middle" class="label">Validación</text><text x="827" y="205" text-anchor="middle" class="small">error + tiempos</text>
+<path d="M220 170 H330" class="line"/><text x="275" y="155" text-anchor="middle" class="tiny">H2D</text><path d="M630 215 H740" class="line"/><text x="685" y="205" text-anchor="middle" class="tiny">D2H</text>
+<path d="M740 265 C650 365 300 365 220 265" class="dash"/><text x="480" y="365" text-anchor="middle" class="small">comparar con la misma operación y tolerancia</text>
+
+</svg>

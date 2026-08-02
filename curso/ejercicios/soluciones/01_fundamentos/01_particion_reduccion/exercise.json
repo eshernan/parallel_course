@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "id": "01_fundamentos_01_particion_reduccion",
+  "topic": "01_fundamentos",
+  "title": "Partición balanceada y suma por reducción",
+  "status": "active",
+  "language": "c",
+  "standard": "c17",
+  "build": {
+    "system": "cmake",
+    "target": "exercise_01_particion_reduccion",
+    "tests": true,
+    "configure_args": []
+  },
+  "requirements": {
+    "tools": ["cmake"],
+    "capabilities": ["cpu"]
+  },
+  "platforms": {
+    "operating_systems": ["linux", "macos", "windows"],
+    "architectures": ["x86_64", "arm64"],
+    "cpu_vendors": ["any"],
+    "accelerator": "none"
+  },
+  "notes": "Implementa en C17 la partición balanceada y la suma por reducción presentadas en Python en curso/notebooks/01_fundamentos/01_modelos.ipynb (sección 'Partición balanceada')."
+}
