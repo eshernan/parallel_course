@@ -1,12 +1,14 @@
 # Notebooks del tema 06: CUDA C++
 
-El módulo CUDA ocupa seis sesiones y se desarrolla en tres notebooks:
+El módulo CUDA ocupa seis sesiones y se desarrolla en tres notebooks ejecutables:
 
-1. `01_modelo_cuda.ipynb`: toolchain CUDA 13, modelo SIMT, grid/bloque/hilo, primer kernel, memoria, transferencias y manejo de errores.
-2. `02_memoria_tiling.ipynb`: coalescencia, memoria compartida, bancos, tiles, multiplicación de matrices, reducciones y primitivas de warp.
-3. `03_bibliotecas_perfiles.ipynb`: Thrust/CUB, cuBLAS/cuBLASLt, cuFFT, cuSPARSE, cuSOLVER y cuRAND; streams, ocupación, Nsight y decisión biblioteca frente a kernel propio.
+1. [`01_modelo_cuda.ipynb`](01_modelo_cuda.ipynb): toolchain CUDA 13, modelo SIMT, grid/bloque/hilo, primer kernel, memoria, transferencias y manejo de errores.
+2. [`02_memoria_tiling.ipynb`](02_memoria_tiling.ipynb): coalescencia, memoria compartida, bancos, tiles, multiplicación de matrices, reducciones y primitivas de warp.
+3. [`03_bibliotecas_perfiles.ipynb`](03_bibliotecas_perfiles.ipynb): Thrust/CUB, cuBLAS/cuBLASLt, cuFFT, cuSPARSE, cuSOLVER y cuRAND; streams, ocupación, Nsight y decisión biblioteca frente a kernel propio.
 
-Los notebooks compilan y ejecutan los programas de `curso/ejemplos/06_cuda/`. Los resultados se comparan con una referencia en CPU y las gráficas se elaboran con los datos exportados por los ejecutables.
+[Tema anterior: OpenMP target](../05_openmp_target/README.md) · [Volver al índice del curso](../../../INDICE_CURSO.md) · [Siguiente tema: programación híbrida](../07_hibrido/README.md)
+
+Los notebooks ejecutan modelos analíticos portables y definen las prácticas, invariantes y criterios de evidencia del módulo. `curso/ejemplos/06_cuda/` documenta el inventario previsto, pero todavía no contiene sus fuentes compilables; por tanto, esta edición no presenta esos programas ni resultados de GPU como si ya existieran. Cuando las fuentes se incorporen, deberán compararse con una referencia en CPU y exportar los datos con los que se elaboren las gráficas.
 
 ## Alcance conceptual obligatorio
 
@@ -42,9 +44,9 @@ El informe presenta por separado:
 
 Las bibliotecas resultan especialmente útiles cuando la operación coincide con una primitiva optimizada, el tamaño o el lote aprovecha el dispositivo y los datos permanecen en la GPU durante varias llamadas. En problemas pequeños, o cuando cada llamada exige transferencias y conversiones de formato, esos costos pueden superar el tiempo de cómputo. Una operación muy específica también puede beneficiarse de la fusión en un kernel propio.
 
-## Bibliotecas que se cubrirán
+## Bibliotecas incluidas en el alcance académico
 
-| Biblioteca | Función | Uso mínimo que se enseñará | Cuándo suele convenir |
+| Biblioteca | Función | Uso mínimo previsto para la práctica compilable | Cuándo suele convenir |
 |---|---|---|---|
 | Thrust 3.0.1 | Algoritmos paralelos C++ de alto nivel | `device_vector`, política de ejecución, `transform`, `reduce`, `scan` y `sort` | Prototipos y pipelines expresables como algoritmos estándar, cuando claridad y composición pesan más que controlar cada warp. |
 | CUB 3.0.1 | Primitivas jerárquicas thread/warp/block/device | `BlockReduce` y `DeviceReduce` con consulta y reutilización de almacenamiento temporal | Reducciones, scans, selección e histogramas que requieren más control y rendimiento que Thrust sin reimplementar primitivas complejas. |

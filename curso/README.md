@@ -2,7 +2,7 @@
 
 Esta carpeta reúne el material docente de la edición 2026. La estructura relaciona cada explicación con fuentes compilables, actividades evaluables, soluciones docentes y evidencia reproducible de su ejecución.
 
-La navegación comienza en el [índice general del curso](../INDICE_CURSO.md), no recorriendo las carpetas de manera aislada. El índice conserva el orden de los temas y conduce a los notebooks o, mientras se incorporan, a la guía académica correspondiente.
+La navegación comienza en el [índice general del curso](../INDICE_CURSO.md), no recorriendo las carpetas de manera aislada. El índice conserva el orden de los temas y conduce directamente a los 23 notebooks y a la guía académica de cada tema.
 
 ## Carpetas
 

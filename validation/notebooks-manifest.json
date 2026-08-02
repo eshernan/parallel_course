@@ -1,0 +1,253 @@
+{
+  "schema_version": "1.0",
+  "edition": "1.0.2026",
+  "total_notebooks": 23,
+  "topics": [
+    {
+      "topic": "00",
+      "title": "Entorno y lenguajes",
+      "directory": "00_entorno",
+      "notebooks": [
+        {
+          "filename": "00_entorno_reproducible.ipynb",
+          "title": "Entorno reproducible y diagnóstico",
+          "sessions": [
+            1,
+            2
+          ]
+        },
+        {
+          "filename": "01_estandares_compiladores.ipynb",
+          "title": "Estándares, compiladores y macros",
+          "sessions": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "01",
+      "title": "Fundamentos, arquitectura y rendimiento",
+      "directory": "01_fundamentos",
+      "notebooks": [
+        {
+          "filename": "01_modelos.ipynb",
+          "title": "Modelos de paralelismo y descomposición",
+          "sessions": [
+            3
+          ]
+        },
+        {
+          "filename": "02_escalabilidad.ipynb",
+          "title": "Amdahl, Gustafson y escalabilidad",
+          "sessions": [
+            4,
+            6
+          ]
+        },
+        {
+          "filename": "03_memoria_roofline.ipynb",
+          "title": "Jerarquía de memoria y Roofline",
+          "sessions": [
+            5,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "02",
+      "title": "Memoria compartida",
+      "directory": "02_memoria_compartida",
+      "notebooks": [
+        {
+          "filename": "01_pthreads.ipynb",
+          "title": "Pthreads: ciclo de vida y partición",
+          "sessions": [
+            7
+          ]
+        },
+        {
+          "filename": "02_sincronizacion.ipynb",
+          "title": "Sincronización, condición y deadlock",
+          "sessions": [
+            8,
+            10
+          ]
+        },
+        {
+          "filename": "03_cpp20_atomics.ipynb",
+          "title": "C++20: RAII, jthread y atomics",
+          "sessions": [
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "03",
+      "title": "OpenMP",
+      "directory": "03_openmp",
+      "notebooks": [
+        {
+          "filename": "01_modelo_datos.ipynb",
+          "title": "OpenMP: fork-join y entorno de datos",
+          "sessions": [
+            11,
+            12
+          ]
+        },
+        {
+          "filename": "02_bucles_reducciones.ipynb",
+          "title": "OpenMP: bucles, reducciones y SIMD",
+          "sessions": [
+            12,
+            13
+          ]
+        },
+        {
+          "filename": "03_tareas_rendimiento.ipynb",
+          "title": "OpenMP: tareas, dependencias y granularidad",
+          "sessions": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "04",
+      "title": "MPI",
+      "directory": "04_mpi",
+      "notebooks": [
+        {
+          "filename": "01_punto_a_punto.ipynb",
+          "title": "MPI punto a punto y progreso",
+          "sessions": [
+            16,
+            17,
+            18
+          ]
+        },
+        {
+          "filename": "02_colectivas_topologias.ipynb",
+          "title": "MPI colectivas, datatypes y topologías",
+          "sessions": [
+            19,
+            20
+          ]
+        },
+        {
+          "filename": "03_escalabilidad_slurm.ipynb",
+          "title": "MPI en clúster: Slurm y escalabilidad",
+          "sessions": [
+            21
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "05",
+      "title": "OpenMP target",
+      "directory": "05_openmp_target",
+      "notebooks": [
+        {
+          "filename": "01_modelo_offload.ipynb",
+          "title": "Modelo de offload y portabilidad",
+          "sessions": [
+            22
+          ]
+        },
+        {
+          "filename": "02_openmp_target.ipynb",
+          "title": "OpenMP target: datos, reducción y fallback",
+          "sessions": [
+            23,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "06",
+      "title": "CUDA C++",
+      "directory": "06_cuda",
+      "notebooks": [
+        {
+          "filename": "01_modelo_cuda.ipynb",
+          "title": "CUDA: modelo SIMT, grid y memoria",
+          "sessions": [
+            25,
+            26
+          ]
+        },
+        {
+          "filename": "02_memoria_tiling.ipynb",
+          "title": "CUDA: coalescencia, memoria compartida y tiling",
+          "sessions": [
+            27,
+            28
+          ]
+        },
+        {
+          "filename": "03_bibliotecas_perfiles.ipynb",
+          "title": "CUDA: bibliotecas, streams y perfiles",
+          "sessions": [
+            28,
+            29,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "07",
+      "title": "Programación híbrida y perfilado",
+      "directory": "07_hibrido",
+      "notebooks": [
+        {
+          "filename": "01_mpi_openmp.ipynb",
+          "title": "Híbrido MPI + OpenMP",
+          "sessions": [
+            31,
+            34
+          ]
+        },
+        {
+          "filename": "02_mpi_gpu.ipynb",
+          "title": "Híbrido MPI + GPU",
+          "sessions": [
+            32,
+            34
+          ]
+        },
+        {
+          "filename": "03_perfilado_reproducible.ipynb",
+          "title": "Perfilado integral y reproducibilidad",
+          "sessions": [
+            33,
+            34
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "08",
+      "title": "Proyecto final",
+      "directory": "08_proyecto",
+      "notebooks": [
+        {
+          "filename": "01_guia_proyecto.ipynb",
+          "title": "Guía del proyecto final reproducible",
+          "sessions": [
+            35,
+            36,
+            37,
+            38
+          ]
+        }
+      ]
+    }
+  ]
+}

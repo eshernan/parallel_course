@@ -14,7 +14,7 @@ El mapa representa la secuencia de los módulos 01 a 08. El módulo 00 es transv
 
 ## Navegación del curso
 
-Para navegar el material se debe seguir el **[Índice de navegación del curso](INDICE_CURSO.md)**. Allí se encuentran los temas en el orden de estudio, los notebooks definidos, los enlaces disponibles, los ejemplos, los ejercicios y el camino hacia el material de profundización. Cada notebook incorporado deberá ofrecer, al inicio y al cierre, un enlace de regreso a ese índice.
+Para navegar el material se debe seguir el **[Índice de navegación del curso](INDICE_CURSO.md)**. Allí se encuentran los temas en el orden de estudio, los 23 notebooks enlazados, los ejemplos, los ejercicios y el camino hacia el material de profundización. Cada notebook ofrece, al inicio y al cierre, un enlace de regreso a ese índice y a la guía de su tema.
 
 ## Idioma de esta edición
 
@@ -256,7 +256,7 @@ Las gráficas cuantitativas se generan a partir de los datos del experimento, co
 - Protocolo, manifiestos y flujos de validación multiplataforma: creados; el inventario actual contiene 0 ejercicios activos y la política se incrementará con cada actividad incorporada.
 - Edición en inglés: prevista después de consolidar y revisar la edición académica en español.
 - Material de profundización en ROCm/HIP, SYCL, Kokkos y RAJA: planeado y configurado; contenidos ejecutables pendientes.
-- Desarrollo de todos los notebooks y soluciones: pendiente por tema.
+- Notebooks de los temas 00–08: incorporados, enlazados y ejecutados por la comprobación previa. Las soluciones se incorporan de manera independiente con cada ejercicio activo.
 
 Documentos de referencia:
 

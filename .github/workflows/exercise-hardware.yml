@@ -41,6 +41,7 @@ jobs:
           path: |
             build/validation/${{ inputs.target }}/repository-hygiene.json
             build/validation/${{ inputs.target }}/navigation.json
+            build/validation/${{ inputs.target }}/notebooks.json
             build/validation/${{ inputs.target }}/platform.json
             build/validation/${{ inputs.target }}/harness.json
             build/validation/${{ inputs.target }}/ejercicios.json

@@ -73,6 +73,7 @@ jobs:
           path: |
             build/validation/${{ matrix.platform }}/repository-hygiene.json
             build/validation/${{ matrix.platform }}/navigation.json
+            build/validation/${{ matrix.platform }}/notebooks.json
             build/validation/${{ matrix.platform }}/platform.json
             build/validation/${{ matrix.platform }}/harness.json
             build/validation/${{ matrix.platform }}/ejercicios.json

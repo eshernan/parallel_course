@@ -67,6 +67,15 @@ def main() -> int:
         print("Preflight interrumpido: el repositorio contiene artefactos compilados rastreados.", file=sys.stderr)
         return 1
 
+    canonical_notebooks_command = [
+        python,
+        str(repository / "tools" / "generate_course_notebooks.py"),
+        "--check",
+    ]
+    if run(canonical_notebooks_command, repository) != 0:
+        print("Preflight interrumpido: los notebooks no coinciden con el inventario canónico.", file=sys.stderr)
+        return 1
+
     navigation_command = [
         python,
         str(repository / "validation" / "validate_navigation.py"),
@@ -75,6 +84,16 @@ def main() -> int:
     ]
     if run(navigation_command, repository) != 0:
         print("Preflight interrumpido: el índice del curso contiene enlaces inválidos.", file=sys.stderr)
+        return 1
+
+    notebooks_command = [
+        python,
+        str(repository / "validation" / "validate_notebooks.py"),
+        "--report",
+        str(output / "notebooks.json"),
+    ]
+    if run(notebooks_command, repository) != 0:
+        print("Preflight interrumpido: al menos un notebook no se ejecuta de principio a fin.", file=sys.stderr)
         return 1
 
     platform_command = [
