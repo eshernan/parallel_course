@@ -152,7 +152,20 @@ En el estado actual, las carpetas de ejercicios contienen la planeación temáti
 
 ### Plataforma comprobada para esta revisión
 
-La revisión del 2 de agosto de 2026 se probó localmente en **macOS 26.5.2, ARM64, Apple M4 (10 núcleos)**, con Apple Clang 21.0.0 y CMake 3.31.5. Los controles C17 y C++20 compilaron y sus dos pruebas CTest terminaron satisfactoriamente. Esta evidencia acredita el mecanismo en esa plataforma; no se extiende por inferencia a Intel, AMD, Windows, Linux ni GPU. Las plataformas adicionales se incorporan al registro cuando finaliza el flujo de GitHub Actions o la prueba en el runner institucional correspondiente.
+La revisión del 2 de agosto de 2026 se probó localmente en **macOS 26.5.2, ARM64, Apple M4 (10 núcleos)**, con Apple Clang 21.0.0 y CMake 3.31.5. Los controles C17 y C++20 compilaron y sus dos pruebas CTest terminaron satisfactoriamente.
+
+El [flujo de GitHub Actions 30752349549](https://github.com/eshernan/parallel_course/actions/runs/30752349549), correspondiente al commit `844cab1`, ejecutó el mismo preflight en seis combinaciones:
+
+| Sistema del runner | Arquitectura | CPU observada en esa ejecución | Compilador utilizado por CMake | Resultado del control |
+|---|---:|---|---|---:|
+| Ubuntu 24.04 | x86-64 | Intel Xeon Platinum 8573C | GCC 13.3 | 2/2 CTest |
+| Ubuntu 24.04 | ARM64 | ARM `aarch64` | GCC 13.3 | 2/2 CTest |
+| macOS 15 | x86-64 | Intel Core i7-8700B | Apple Clang 17 | 2/2 CTest |
+| macOS 15 | ARM64 | Apple M1 virtual | Apple Clang 17 | 2/2 CTest |
+| Windows Server 2025 | x86-64 | AMD64 Family 25 | MSVC 19.51 | 2/2 CTest |
+| Windows 11 | ARM64 | ARMv8 | MSVC 19.44 | 2/2 CTest |
+
+Esta evidencia acredita el mecanismo y los programas de control en esas plataformas; el inventario docente continúa en **0 ejercicios activos** y, por tanto, todavía no acredita ejercicios concretos. Los fabricantes observados en runners x86-64 se registran como evidencia de esa ejecución, no como una garantía de asignación futura de GitHub. CUDA, ROCm/HIP y el comportamiento sobre hardware institucional se documentarán únicamente después de ejecutar sus perfiles en los dispositivos correspondientes.
 
 ## Organización del repositorio
 

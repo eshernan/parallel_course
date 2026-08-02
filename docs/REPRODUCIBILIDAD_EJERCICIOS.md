@@ -122,6 +122,10 @@ El 2 de agosto de 2026 se ejecutó `preflight.py` en la siguiente plataforma loc
 
 La tabla identifica con precisión lo que fue probado y no se utiliza para afirmar compatibilidad con otras arquitecturas. Cada ejecución de GitHub o del clúster produce su propio `platform.json`; los resultados aceptados se consultan en los artefactos del trabajo correspondiente.
 
+El [flujo 30752349549 de GitHub Actions](https://github.com/eshernan/parallel_course/actions/runs/30752349549) ejecutó el commit `844cab1` en Ubuntu 24.04 x86-64 y ARM64, macOS 15 Intel y ARM64, Windows Server 2025 x86-64 y Windows 11 ARM64. En las seis plataformas CMake construyó los controles C17/C++20 con el compilador nativo seleccionado y CTest aprobó dos de dos pruebas. Los manifiestos conservaron, entre otros, un Intel Xeon Platinum 8573C en Ubuntu x86-64, un procesador AMD64 Family 25 en Windows x86-64 y procesadores ARM en Ubuntu y Windows ARM64. Estos modelos corresponden a esa ejecución; GitHub no fija el fabricante de sus runners x86-64 estándar.
+
+El alcance sigue siendo el mecanismo de preflight: los informes `ejercicios.json` y `soluciones.json` registraron 0 ejercicios activos. No se atribuye compatibilidad a CUDA, HIP ni a un ejercicio docente hasta que sus fuentes activas y sus pruebas aparezcan en el informe del hardware correspondiente.
+
 ## 6. Matriz administrada por GitHub
 
 El flujo `Portabilidad de ejercicios` se ejecuta en cada *pull request* hacia `master`, en los envíos a `master` y a `feature/actualizacion_2026`, y por solicitud manual.
