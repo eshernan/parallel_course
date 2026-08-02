@@ -215,6 +215,12 @@ Documentos de referencia:
 - [Estructura objetivo del curso](curso/README.md).
 - [Planeación de tópicos avanzados](topicos_avanzados/README.md).
 
+## Política de mantenimiento documental
+
+Todo cambio de módulos, contenidos, semanas, tecnologías, notebooks, ejemplos, ejercicios o soluciones debe actualizar este README en el mismo commit. Si el cambio altera la ruta conceptual del curso, también debe revisarse la ilustración de cabecera y generarse una nueva versión cuando deje de representar fielmente el contenido.
+
+Antes de cerrar un cambio se comprobarán, como mínimo, la suma de sesiones, la secuencia de semanas, los enlaces locales, la existencia de la imagen referenciada y la correspondencia entre este resumen y `docs/PLANEACION_CURSO.md`.
+
 ## Autoría
 
 El diseño académico, la curaduría y la reconstrucción 2026 de este curso son autoría de **Esteban Hernández B., PhD.**
