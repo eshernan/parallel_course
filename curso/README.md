@@ -1,13 +1,13 @@
-# Estructura objetivo del curso
+# Organización del material docente
 
-Esta carpeta separa el material docente nuevo del banco histórico situado en la raíz. La migración será selectiva: un ejemplo antiguo solo entra aquí después de corregirse, probarse, documentarse y declarar su procedencia.
+Esta carpeta reúne el material preparado para la nueva versión de la asignatura y lo separa de los programas históricos que permanecen en la raíz. Cuando un ejemplo anterior resulta útil, se elabora aquí una versión revisada, con pruebas, documentación y referencia a su procedencia.
 
 ## Carpetas
 
-- `notebooks/`: explicación ejecutable y gráficas; entre uno y tres notebooks por tema.
-- `ejemplos/`: código fuente compilable invocado por los notebooks.
-- `ejercicios/`: enunciados, esqueletos y pruebas públicas.
-- `ejercicios/soluciones/`: soluciones de referencia y pruebas docentes.
+- `notebooks/`: desarrollo conceptual, experimentos y gráficas; de uno a tres notebooks por tema.
+- `ejemplos/`: programas compilables utilizados durante las explicaciones y prácticas.
+- `ejercicios/`: enunciados, código inicial y pruebas públicas.
+- `ejercicios/soluciones/`: soluciones de referencia y pruebas reservadas para el equipo docente.
 
 ## Temas y prefijos
 
@@ -23,8 +23,8 @@ Esta carpeta separa el material docente nuevo del banco histórico situado en la
 | `07` | Programación híbrida y perfilado |
 | `08` | Proyecto final |
 
-La planeación completa está en [`docs/PLANEACION_CURSO.md`](../docs/PLANEACION_CURSO.md). Los contenidos extracurriculares se planean de manera independiente en [`topicos_avanzados/README.md`](../topicos_avanzados/README.md).
+La [planeación de la asignatura](../docs/PLANEACION_CURSO.md) contiene el calendario, las evaluaciones y la bibliografía. El [material de profundización](../topicos_avanzados/README.md) se organiza por fuera del semestre regular.
 
-## Regla de promoción
+## Incorporación de material histórico
 
-No se mueve código desde el árbol histórico: se crea una versión nueva con referencia al original. Antes de considerarla docente debe compilar con el entorno fijado, pasar pruebas, comprobar errores, producir resultados trazables y tener un ejercicio asociado.
+El código histórico no se traslada sin revisión. La versión docente se incorpora cuando compila con el entorno fijado, pasa las pruebas previstas, comprueba los errores de las APIs, produce resultados trazables y cuenta con un ejercicio asociado.

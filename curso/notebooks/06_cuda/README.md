@@ -1,16 +1,16 @@
 # Notebooks del tema 06: CUDA C++
 
-El módulo CUDA tiene seis sesiones y un máximo de tres notebooks:
+El módulo CUDA ocupa seis sesiones y se desarrolla en tres notebooks:
 
 1. `01_modelo_cuda.ipynb`: toolchain CUDA 13, modelo SIMT, grid/bloque/hilo, primer kernel, memoria, transferencias y manejo de errores.
 2. `02_memoria_tiling.ipynb`: coalescencia, memoria compartida, bancos, tiles, multiplicación de matrices, reducciones y primitivas de warp.
 3. `03_bibliotecas_perfiles.ipynb`: Thrust/CUB, cuBLAS/cuBLASLt, cuFFT, cuSPARSE, cuSOLVER y cuRAND; streams, ocupación, Nsight y decisión biblioteca frente a kernel propio.
 
-Cada notebook deberá ejecutar fuentes de `curso/ejemplos/06_cuda/`, comprobar una referencia CPU y construir sus gráficas desde datos exportados.
+Los notebooks compilan y ejecutan los programas de `curso/ejemplos/06_cuda/`. Los resultados se comparan con una referencia en CPU y las gráficas se elaboran con los datos exportados por los ejecutables.
 
 ## Alcance conceptual obligatorio
 
-Antes de optimizar, el estudiante debe poder explicar:
+La discusión conceptual cubre los siguientes aspectos antes de entrar en optimizaciones específicas:
 
 - diferencia entre host, device, kernel, thread, warp, bloque, grid y stream;
 - ejecución SIMT, divergencia y sincronización;
@@ -21,11 +21,11 @@ Antes de optimizar, el estudiante debe poder explicar:
 - asincronía, eventos, errores diferidos y vida útil de memoria, handles, planes y descriptores;
 - precisión, orden de operaciones, determinismo y tolerancia numérica.
 
-El tile se presenta como una estrategia de descomposición, no como un tamaño mágico. Se comparará una multiplicación de matrices ingenua con una versión por tiles que use memoria compartida, sincronización y límites correctos para dimensiones no múltiplos del tile. La práctica mostrará cuándo aumenta la reutilización y cuándo el tamaño elegido perjudica ocupación, registros o memoria compartida.
+El trabajo por mosaicos se estudia como una estrategia de descomposición y reutilización de datos. La práctica compara una multiplicación de matrices directa con una versión que emplea memoria compartida, sincronización y manejo correcto de dimensiones que no son múltiplos del tamaño del mosaico. A partir de las mediciones se discute el efecto del tamaño elegido sobre la ocupación, el uso de registros y la memoria compartida.
 
 ## Manera de trabajar con bibliotecas aceleradas
 
-Todas las bibliotecas seguirán el mismo ciclo para hacer visibles sus costos:
+Para comparar las bibliotecas con el mismo criterio se utiliza el siguiente ciclo de trabajo:
 
 ```text
 identificar operación → comprobar layout/tipo → crear contexto o plan
@@ -33,14 +33,14 @@ identificar operación → comprobar layout/tipo → crear contexto o plan
      → comprobar estado → sincronizar donde corresponda → validar → liberar
 ```
 
-Se medirán por separado:
+El informe presenta por separado:
 
 1. preparación de datos, conversión de formato y transferencias;
 2. creación de handle, descriptor, plan o workspace;
 3. ejecución repetida con datos residentes en GPU;
 4. tiempo extremo a extremo y error frente a la referencia.
 
-Una biblioteca ofrece ventaja cuando el problema coincide con una primitiva optimizada, hay suficiente trabajo o un batch adecuado, los datos permanecen en GPU y se reutilizan planes/workspaces. Puede no ofrecer ventaja para entradas pequeñas, una única llamada rodeada de transferencias, conversiones de formato costosas o una operación especializada que pueda fusionarse en un kernel sencillo.
+Las bibliotecas resultan especialmente útiles cuando la operación coincide con una primitiva optimizada, el tamaño o el lote aprovecha el dispositivo y los datos permanecen en la GPU durante varias llamadas. En problemas pequeños, o cuando cada llamada exige transferencias y conversiones de formato, esos costos pueden superar el tiempo de cómputo. Una operación muy específica también puede beneficiarse de la fusión en un kernel propio.
 
 ## Bibliotecas que se cubrirán
 
@@ -54,13 +54,13 @@ Una biblioteca ofrece ventaja cuando el problema coincide con una primitiva opti
 | cuSOLVER | Factorizaciones y solución de sistemas densos | consultar workspace, factorizar/solucionar un sistema y comprobar `info` | Problemas densos de costo alto y datos ya residentes; no sustituye validar condicionamiento, singularidad o precisión. |
 | cuRAND | Generación pseudo/cuasi-aleatoria en host o device | crear generador, fijar semilla/offset/stream, generar y destruir; comparar con estado por hilo | Monte Carlo o grandes secuencias consumidas en GPU; inicializar estados o transferir muestras puede dominar trabajos pequeños. |
 
-cuBLAS y CUB/Thrust tendrán práctica obligatoria. cuFFT y cuSPARSE tendrán ejemplos guiados. cuSOLVER y cuRAND se estudiarán mediante casos representativos y criterios de selección. No se pretende memorizar las APIs completas.
+cuBLAS y CUB/Thrust forman parte de la práctica evaluada. cuFFT y cuSPARSE se trabajan mediante ejemplos guiados. Para cuSOLVER y cuRAND se estudian casos representativos y criterios de selección. El propósito es comprender el patrón de integración de estas bibliotecas y consultar con solvencia su documentación, en lugar de memorizar las interfaces completas.
 
-En CUDA 13.0 se utilizará la API genérica de cuSPARSE; las APIs legacy no se enseñarán. `cuSOLVERSp` y `cuSOLVERRf` están deprecadas, por lo que el curso no construirá material nuevo sobre ellas. cuDSS se mencionará como ruta moderna para solucionadores dispersos directos, fuera del alcance obligatorio.
+Los ejemplos de cuSPARSE emplean la API genérica disponible en CUDA 13.0. Las interfaces históricas se consultan únicamente para interpretar código existente. Debido a la deprecación de `cuSOLVERSp` y `cuSOLVERRf`, no se desarrollan ejercicios nuevos con esas APIs; cuDSS se presenta como referencia actual para solucionadores dispersos directos, por fuera del alcance evaluado.
 
 ## Construcción
 
-Los ejemplos enlazarán targets importados de CMake, según corresponda:
+Los ejemplos enlazan los targets importados de CMake que correspondan a cada biblioteca:
 
 ```cmake
 target_link_libraries(ejemplo PRIVATE
@@ -69,11 +69,11 @@ target_link_libraries(ejemplo PRIVATE
   CUDA::cusolver CUDA::curand)
 ```
 
-Thrust y CUB son cabeceras de CUDA Core Compute Libraries incluidas con el Toolkit. El código debe comprobar tanto errores del runtime como estados devueltos por cada biblioteca.
+Thrust y CUB forman parte de CUDA Core Compute Libraries y sus cabeceras se distribuyen con el Toolkit. Los programas comprueban tanto los errores del runtime como los estados devueltos por cada biblioteca.
 
 ## Gráficas explicativas
 
-Se usarán gráficas con una sola pregunta y pocas series:
+Cada gráfica responde una pregunta concreta y contiene únicamente las series necesarias para discutirla:
 
 - naïve frente a tiled frente a cuBLAS para GEMM, separando ejecución y extremo a extremo;
 - ancho de banda efectivo frente a patrón coalescente/no coalescente;
@@ -82,4 +82,4 @@ Se usarán gráficas con una sola pregunta y pocas series:
 - SpMV frente a densidad/formato, sin generalizar desde una sola matriz;
 - transferencia, preparación y cómputo como componentes separados del tiempo.
 
-Cada comparación utilizará el mismo problema, precisión, tolerancia y dispositivo. Una aceleración de biblioteca no se atribuirá únicamente al algoritmo: se explicarán también layout, precisión, Tensor Cores cuando apliquen, fusión, workspace y residencia de datos.
+Las comparaciones mantienen el problema, la precisión, la tolerancia y el dispositivo. En la interpretación se consideran el algoritmo, la disposición de los datos, el uso de Tensor Cores cuando corresponda, la fusión de operaciones, el espacio de trabajo y la permanencia de los datos en la GPU.

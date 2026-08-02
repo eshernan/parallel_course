@@ -1,5 +1,5 @@
 # Soluciones de referencia
 
-Esta carpeta contendrá soluciones explicadas y pruebas docentes por tema. Durante el semestre se recomienda mantenerla en una rama privada o generar una distribución estudiantil que la excluya.
+Esta carpeta reúne las soluciones comentadas y las pruebas reservadas para el equipo docente. Durante el semestre se mantiene en una rama privada o se prepara una distribución estudiantil que la excluya.
 
-Una solución debe mostrar al menos una estrategia correcta, justificar sincronización y partición, comprobar errores y conservar los datos necesarios para reproducir sus gráficas.
+Cada solución presenta al menos una estrategia correcta, justifica las decisiones de partición y sincronización, comprueba los errores de las APIs y conserva los datos necesarios para reproducir las gráficas.

@@ -1,6 +1,6 @@
 # Programación Paralela 2026
 
-Curso universitario completo de programación paralela, diseñado para estudiar los fundamentos, la corrección y el rendimiento de aplicaciones sobre CPU multinúcleo, clústeres y GPU.
+Material docente para una asignatura universitaria de programación paralela. El curso estudia los fundamentos del área y su aplicación en CPU multinúcleo, clústeres y GPU, con énfasis en corrección, medición y análisis de rendimiento.
 
 **Autor:** [Esteban Hernández B., PhD.](https://eshernan.github.io/)
 
@@ -10,15 +10,13 @@ Curso universitario completo de programación paralela, diseñado para estudiar 
 
 ## Descripción
 
-El curso está planeado para 19 semanas, con dos sesiones semanales de máximo dos horas. Comprende 38 sesiones y 76 horas presenciales, además del trabajo autónomo requerido para laboratorios y proyecto.
+La asignatura está organizada en 19 semanas, con dos sesiones semanales de hasta dos horas. Esto corresponde a 38 sesiones y 76 horas de trabajo presencial. Los laboratorios y el proyecto requieren, además, trabajo independiente por parte del estudiante.
 
-La ruta parte de los modelos de costo y la arquitectura de memoria; continúa con Pthreads, concurrencia en C++20, OpenMP y MPI; presenta aceleradores portables con OpenMP target; dedica un módulo completo a CUDA C++; y termina con programación híbrida, perfilado y un proyecto reproducible.
+La secuencia comienza con modelos de costo y arquitectura de memoria. Luego se estudian Pthreads, concurrencia en C++20, OpenMP y MPI. El trabajo con aceleradores incluye OpenMP target y un módulo completo de CUDA C++. Las últimas semanas se dedican a programación híbrida, perfilado y desarrollo de un proyecto reproducible.
 
-El repositorio también contiene una sección extracurricular de [tópicos avanzados](topicos_avanzados/README.md) sobre AMD ROCm/HIP, SYCL, Kokkos y RAJA. Esta ampliación no modifica la duración, las evaluaciones ni los resultados de aprendizaje obligatorios del curso base.
+El repositorio incluye, por fuera del programa regular, [material de profundización](topicos_avanzados/README.md) sobre AMD ROCm/HIP, SYCL, Kokkos y RAJA. Estos temas pueden trabajarse en seminarios, cursos intersemestrales o proyectos de investigación y no modifican las 19 semanas ni las evaluaciones de la asignatura.
 
-El principio metodológico es:
-
-> Primero demostrar corrección; después medir; finalmente optimizar y explicar.
+En las prácticas de laboratorio, toda medición parte de una implementación cuya corrección ya fue establecida frente a una referencia. Con esa base se estudian tiempos, escalabilidad y uso de recursos; las optimizaciones se sustentan con evidencia experimental y con una explicación del comportamiento observado en el hardware y en el sistema.
 
 ## Estructura académica
 
@@ -32,10 +30,10 @@ El principio metodológico es:
 | 05 | Aceleradores portables con OpenMP target | 3 |
 | 06 | CUDA C++: modelo SIMT, memoria, tiling, reducciones, streams, bibliotecas aceleradas y Nsight | 6 |
 | 07 | MPI+OpenMP, MPI+GPU, perfilado integral y diseño híbrido | 4 |
-| 08 | Implementación, auditoría, presentación y defensa del proyecto final | 4 |
+| 08 | Implementación, revisión de reproducibilidad, presentación y defensa del proyecto final | 4 |
 | | **Total** | **38** |
 
-Cada módulo se explica mediante uno y como máximo tres notebooks. Los notebooks combinan conceptos, detalles del sistema, instrucciones de compilación, ejecución de fuentes independientes, experimentos reproducibles y gráficas generadas desde datos.
+Cada módulo se desarrolla en uno, dos o tres notebooks, según la extensión del tema. Allí se articulan la discusión conceptual, el modelo de ejecución del sistema, las instrucciones de compilación, los programas de ejemplo y el análisis de datos obtenidos en los experimentos.
 
 ## Distribución semana a semana
 
@@ -58,7 +56,7 @@ Cada módulo se explica mediante uno y como máximo tres notebooks. Los notebook
 | 15 | 29–30 | cuBLAS/Lt, cuFFT, cuSPARSE, cuSOLVER y cuRAND; streams, ocupación, Nsight, Compute Sanitizer y laboratorio CUDA. |
 | 16 | 31–32 | MPI+OpenMP, niveles de soporte de hilos, afinidad, MPI+CUDA/OpenMP target y asignación proceso-dispositivo. |
 | 17 | 33–34 | Perfilado de extremo a extremo, comunicación/cómputo, reproducibilidad y revisión del diseño híbrido. |
-| 18 | 35–36 | Clínica del proyecto, revisión cruzada, auditoría de reproducibilidad y ensayo de defensa. |
+| 18 | 35–36 | Clínica del proyecto, revisión cruzada de reproducibilidad y ensayo de defensa. |
 | 19 | 37–38 | Presentaciones, defensa, retrospectiva y cierre del curso. |
 
 La descripción sesión por sesión, evaluaciones, rúbricas y bibliografía están en la [planeación completa](docs/PLANEACION_CURSO.md).
@@ -73,7 +71,7 @@ La descripción sesión por sesión, evaluaciones, rúbricas y bibliografía est
 - OpenMP 5.2 como versión normativa del curso.
 - MPI 5.0 como versión normativa.
 - CUDA C++20 para el módulo NVIDIA.
-- Python 3.14.6 únicamente para notebooks, análisis y visualización.
+- Python 3.14.6 para notebooks, análisis de resultados y visualización.
 
 ### Toolchain e implementaciones
 
@@ -86,20 +84,20 @@ La descripción sesión por sesión, evaluaciones, rúbricas y bibliografía est
 - JupyterLab, NumPy, pandas y Matplotlib para explicación y gráficas.
 - ThreadSanitizer, AddressSanitizer, `perf`, Compute Sanitizer, Nsight Systems y Nsight Compute para diagnóstico y perfilado.
 
-### Extensión extracurricular
+### Material de profundización
 
 - AMD ROCm 7.2.3 e HIP 7.2.3.
 - SYCL 2020, revisión 11, con AdaptiveCpp 25.10.0 como implementación abierta de referencia.
 - Kokkos 5.1.1 para espacios de ejecución/memoria, `View` y políticas paralelas.
 - RAJA 2025.12.2 para segmentos, políticas, kernels y recursos.
 
-Estas tecnologías se estudian fuera del calendario de 19 semanas. Sus backends requieren perfiles independientes y hardware compatible; “portable” no significa que una única configuración produzca rendimiento óptimo en cualquier dispositivo.
+Estas tecnologías se estudian fuera del calendario de 19 semanas. Cada backend requiere su propia configuración y hardware compatible. La portabilidad del código se analizará por separado de la portabilidad del rendimiento, pues una misma configuración rara vez resulta óptima en arquitecturas distintas.
 
-CUDA es un tema obligatorio y dispone de seis sesiones propias. Incluye desde el modelo de programación y kernels correctos hasta tiling, primitivas jerárquicas y selección de bibliotecas aceleradas. El estudiante debe aprender qué función cumple cada biblioteca, su ciclo de integración y cuándo sus costos de preparación, transferencia o conversión pueden eliminar la ventaja. El compilador abierto principal continúa siendo GCC; `nvcc`, el runtime y las herramientas NVIDIA se utilizan exclusivamente en el módulo CUDA.
+CUDA es un tema obligatorio al que se asignan seis sesiones. Se estudian el modelo de programación, la escritura y validación de kernels, el trabajo por mosaicos, las primitivas jerárquicas y las bibliotecas aceleradas. Para cada biblioteca se revisan su propósito, la forma de integrarla y las condiciones en las que resulta conveniente. También se miden los costos de preparación, transferencia y conversión de datos. GCC continúa como compilador abierto principal de la asignatura; `nvcc`, el runtime y las herramientas de NVIDIA se emplean en el módulo CUDA.
 
 ## Configuración global
 
-La configuración única de compiladores, estándares, MPI, CUDA y versiones está en [`config/course-toolchain.cmake`](config/course-toolchain.cmake). Las dependencias se verifican en [`cmake/CourseDependencies.cmake`](cmake/CourseDependencies.cmake) y el stack de notebooks se fija en [`config/requirements.lock`](config/requirements.lock).
+La configuración común de compiladores, estándares, MPI, CUDA y versiones está en [`config/course-toolchain.cmake`](config/course-toolchain.cmake). Las dependencias se verifican en [`cmake/CourseDependencies.cmake`](cmake/CourseDependencies.cmake) y el entorno de los notebooks se fija en [`config/requirements.lock`](config/requirements.lock).
 
 Presets disponibles:
 
@@ -125,7 +123,7 @@ La guía de variables `COURSE_CC`, `COURSE_CXX`, `COURSE_MPI_ROOT` y `COURSE_CUD
 parallel_course/
 ├── CMakeLists.txt
 ├── CMakePresets.json
-├── config/                         # Versiones, toolchain y stack Python
+├── config/                         # Versiones, toolchain y entorno Python
 ├── cmake/                          # Descubrimiento y validación de librerías
 ├── curso/
 │   ├── notebooks/                  # 1–3 notebooks por tema
@@ -148,14 +146,14 @@ parallel_course/
 │   ├── ejemplos/
 │   └── ejercicios/soluciones/
 ├── docs/                            # Planeación e imágenes
-└── <directorios históricos>         # Material 2020 aún no certificado
+└── <directorios históricos>         # Material 2020 pendiente de revisión
 ```
 
-Los directorios históricos de la raíz son material de referencia. Un ejemplo solo pasa a `curso/ejemplos/` después de corregirse, probarse, documentarse y registrar su procedencia.
+Los directorios históricos de la raíz se conservan como material de consulta. Para incorporar uno de esos programas a `curso/ejemplos/` se prepara una versión corregida, probada y documentada, con registro de su procedencia.
 
 ## Relación entre notebooks, ejemplos y ejercicios
 
-El flujo de cada tema es:
+El trabajo de cada tema relaciona cuatro componentes:
 
 ```text
 Notebook conceptual
@@ -169,7 +167,7 @@ Solución de referencia + pruebas docentes
 
 ### Ejemplos
 
-Cada ejemplo debe incluir:
+Cada ejemplo incluye:
 
 - fuente serial de referencia y versión paralela;
 - construcción con CMake;
@@ -180,15 +178,15 @@ Cada ejemplo debe incluir:
 
 ### Ejercicios
 
-Cada ejercicio incluye un enunciado, resultados de aprendizaje, esqueleto, datos pequeños, salida esperada, pruebas públicas y rúbrica. Los criterios de rendimiento solo se aplican después de pasar corrección.
+Cada ejercicio incluye enunciado, resultados esperados, código inicial, un conjunto pequeño de datos, salida de referencia, pruebas públicas y rúbrica. La valoración del rendimiento procede cuando las pruebas de corrección han sido superadas.
 
 ### Respuestas y soluciones
 
-Las respuestas se almacenan en `curso/ejercicios/soluciones/<tema>/<ejercicio>/`. Durante el semestre deben permanecer en una rama privada o excluirse de la distribución estudiantil. Cada solución explica la descomposición, sincronización, validación, complejidad y metodología experimental.
+Las soluciones se almacenan en `curso/ejercicios/soluciones/<tema>/<ejercicio>/`. Durante el semestre se mantienen en una rama privada o se excluyen de la distribución entregada a los estudiantes. Cada solución documenta la descomposición, la sincronización, la validación, la complejidad y el diseño del experimento.
 
 ## Lineamiento visual de notebooks
 
-La ilustración de la cabecera es la referencia visual del curso. Siempre que una explicación requiera una imagen conceptual, se intentará mantener este lenguaje:
+La ilustración de la cabecera establece el lenguaje visual para las imágenes conceptuales del curso:
 
 - boceto técnico hecho a lápiz de grafito;
 - papel marfil o fondo blanco cálido;
@@ -198,32 +196,32 @@ La ilustración de la cabecera es la referencia visual del curso. Siempre que un
 - grafito monocromático con acentos azul grisáceo discretos;
 - sin fotografías, render 3D, colores saturados ni estética corporativa brillante.
 
-Las gráficas cuantitativas deben generarse directamente desde los datos, conservar fondo claro y usar la misma paleta sobria. Capturas de herramientas como Nsight solo se incluyen cuando sean evidencia técnica imprescindible; no se estilizan de manera que se alteren sus datos.
+Las gráficas cuantitativas se generan a partir de los datos del experimento, con fondo claro y una paleta sobria. Las capturas de herramientas como Nsight se reservan para observaciones que no puedan expresarse mejor con una gráfica propia y se presentan sin modificaciones que alteren la evidencia.
 
-## Estado de la reconstrucción
+## Estado de desarrollo
 
 - Planeación de 38 sesiones: completada.
 - Configuración global y presets: creados.
 - Estructura de notebooks, ejemplos, ejercicios y soluciones: creada.
-- Ruta extracurricular ROCm/HIP, SYCL, Kokkos y RAJA: diseñada y configurada; contenidos ejecutables pendientes.
-- Migración y certificación del material histórico: en progreso.
+- Material de profundización en ROCm/HIP, SYCL, Kokkos y RAJA: planeado y configurado; contenidos ejecutables pendientes.
+- Revisión e incorporación selectiva del material histórico: en progreso.
 - Desarrollo de todos los notebooks y soluciones: pendiente por tema.
 
 Documentos de referencia:
 
 - [Planeación semestral, evaluaciones y bibliografía](docs/PLANEACION_CURSO.md).
-- [Estructura objetivo del curso](curso/README.md).
-- [Planeación de tópicos avanzados](topicos_avanzados/README.md).
+- [Organización del material docente](curso/README.md).
+- [Planeación del material de profundización](topicos_avanzados/README.md).
 
 ## Política de mantenimiento documental
 
-Todo cambio de módulos, contenidos, semanas, tecnologías, notebooks, ejemplos, ejercicios o soluciones debe actualizar este README en el mismo commit. Si el cambio altera la ruta conceptual del curso, también debe revisarse la ilustración de cabecera y generarse una nueva versión cuando deje de representar fielmente el contenido.
+Todo cambio de módulos, contenidos, semanas, tecnologías, notebooks, ejemplos, ejercicios o soluciones se acompaña de la actualización correspondiente en este README. Cuando se modifica la estructura académica, también se revisa la ilustración de cabecera y se genera una nueva versión si la anterior dejó de representar el curso.
 
-Antes de cerrar un cambio se comprobarán, como mínimo, la suma de sesiones, la secuencia de semanas, los enlaces locales, la existencia de la imagen referenciada y la correspondencia entre este resumen y `docs/PLANEACION_CURSO.md`.
+La revisión editorial utiliza español académico, directo y propio del contexto universitario colombiano. Se evitan eslóganes, fórmulas impersonales y afirmaciones generales que no estén respaldadas por el diseño del curso. Antes de cerrar un cambio se comprueban la suma de sesiones, la secuencia de semanas, los enlaces locales, la imagen referenciada y la correspondencia entre este resumen y `docs/PLANEACION_CURSO.md`.
 
 ## Autoría
 
-El diseño académico, la curaduría y la reconstrucción 2026 de este curso son autoría de **Esteban Hernández B., PhD.**
+La concepción académica, la selección de contenidos y la actualización 2026 de este curso son autoría de **Esteban Hernández B., PhD.**
 
 - LinkedIn: [https://www.linkedin.com/in/hpccol/](https://www.linkedin.com/in/hpccol/)
 - Página personal: [https://eshernan.github.io/](https://eshernan.github.io/)

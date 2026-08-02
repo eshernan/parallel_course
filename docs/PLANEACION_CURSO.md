@@ -7,28 +7,28 @@ Fecha de versión: 2 de agosto de 2026.
 - Duración: 19 semanas.
 - Intensidad: 2 sesiones por semana, 2 horas por sesión.
 - Total: 38 sesiones, 76 horas presenciales.
-- Trabajo autónomo esperado: 4 horas por semana.
+- Trabajo independiente estimado: 4 horas por semana.
 - Nivel: pregrado avanzado; adaptable a primer semestre de posgrado.
 - Prerrequisitos: programación en C y C++, estructuras de datos, Linux/terminal, compilación separada y nociones de arquitectura de computadores.
-- Lenguajes: C17 y C++20. Python se usa únicamente para notebooks, análisis y gráficas.
-- Estrategia: explicación ejecutable, ejemplo mínimo validado, ejercicio incremental y medición reproducible.
+- Lenguajes: C17 y C++20. Python se emplea en los notebooks, el análisis de resultados y la elaboración de gráficas.
+- Trabajo en clase: discusión conceptual, programa de referencia, práctica incremental y análisis reproducible de resultados.
 
 ## 2. Resultados de aprendizaje
 
-Al terminar, el estudiante podrá:
+Al finalizar el semestre se espera que el estudiante esté en capacidad de:
 
 1. Elegir un modelo de paralelismo según dependencias, memoria, comunicación y hardware.
 2. Diseñar programas correctos con Pthreads/C++20, OpenMP y MPI.
 3. Explicar carreras, interbloqueos, consistencia de memoria, localidad y sincronización.
 4. Paralelizar y optimizar un kernel para CPU multinúcleo, clúster y acelerador.
-5. Medir escalado fuerte/débil, aceleración, eficiencia, ancho de banda y error numérico sin sesgos evidentes.
-6. Usar herramientas de diagnóstico y perfiles para justificar cambios.
+5. Medir escalado fuerte y débil, aceleración, eficiencia, ancho de banda y error numérico con un diseño experimental explícito.
+6. Utilizar herramientas de diagnóstico y perfilado para sustentar cambios en una implementación.
 7. Construir, probar y ejecutar una aplicación híbrida reproducible en Linux/Slurm.
 8. Comunicar resultados con gráficas, evidencia, limitaciones y conclusiones verificables.
 
 ## 3. Entorno fijado
 
-El curso debe comenzar con una imagen Linux y una matriz de versiones inmutable durante el semestre.
+Durante la primera semana se entrega una imagen Linux de referencia y se establece la matriz de versiones que se utilizará durante el semestre. Las actualizaciones se reservan para correcciones que afecten la seguridad o la posibilidad de ejecutar las prácticas.
 
 | Componente | Versión fijada | Uso |
 |---|---:|---|
@@ -40,7 +40,7 @@ El curso debe comenzar con una imagen Linux y una matriz de versiones inmutable 
 | MPI | 5.0 | Versión normativa. Se enseña un subconjunto portable y se consulta la especificación. |
 | MPICH | 5.0.1 | Implementación abierta de referencia con soporte completo de MPI 5.0. |
 | CMake | 3.31.x | Construcción fuera del árbol y CTest. |
-| Python | 3.14.6 | Orquestación de notebooks y gráficas; no se usa para implementar los kernels evaluados. |
+| Python | 3.14.6 | Ejecución de notebooks, procesamiento de resultados y gráficas. Los kernels evaluados se implementan en C o C++. |
 | CUDA, obligatorio | Toolkit 13.0.x | Itinerario NVIDIA. `nvcc` no es el compilador abierto principal; usa GCC 15 como compilador *host*. Hardware mínimo: Turing, `sm_75`. |
 | OpenACC, optativo | 3.4 | Solo comparación con OpenMP target. |
 | OpenCL, optativo | 3.1 | Lectura de portabilidad, no API principal del curso. |
@@ -50,21 +50,21 @@ Enlaces normativos y de versión:
 - [Versiones oficiales de GCC](https://gcc.gnu.org/releases.html).
 - [ISO C17](https://www.iso.org/standard/74528.html) y [borrador público C++20 N4860](https://isocpp.org/files/papers/N4860.pdf).
 - [POSIX.1-2024, Issue 8](https://pubs.opengroup.org/onlinepubs/9799919799/).
-- [OpenMP 5.2 y 6.0](https://www.openmp.org/specifications/). Se fija 5.2 porque es una base más estable para docencia; OpenMP 6.0 aún tiene cobertura parcial en compiladores.
+- [OpenMP 5.2 y 6.0](https://www.openmp.org/specifications/). La asignatura adopta 5.2 por su soporte estable en los compiladores seleccionados. Las características de 6.0 se consultan cuando el toolchain las implementa de manera verificable.
 - [MPI 5.0](https://www.mpi-forum.org/docs/) y [MPICH 5.0.1](https://www.mpich.org/downloads/).
 - [CUDA 13.0](https://docs.nvidia.com/cuda/archive/13.0.0/) y [guía del compilador `nvcc`](https://docs.nvidia.com/cuda/archive/13.0.0/cuda-compiler-driver-nvcc/).
 - [OpenACC 3.4](https://www.openacc.org/specification).
 - [OpenCL 3.1](https://registry.khronos.org/OpenCL/).
 
-La fuente única de configuración es `config/course-toolchain.cmake`, consumida por `CMakePresets.json`. Selecciona GCC/G++, wrappers de MPICH, `mpiexec`, CUDA y estándares. `cmake/CourseDependencies.cmake` comprueba Threads, OpenMP, MPI, CUDA y el stack Python fijado en `config/requirements.lock`.
+`config/course-toolchain.cmake`, utilizado por `CMakePresets.json`, concentra la selección de GCC/G++, los wrappers de MPICH, `mpiexec`, CUDA y los estándares de lenguaje. `cmake/CourseDependencies.cmake` comprueba Threads, OpenMP, MPI, CUDA y el entorno Python fijado en `config/requirements.lock`.
 
 ### Política para laboratorios con GPU antigua
 
-CUDA 13 eliminó la compilación fuera de línea para arquitecturas anteriores a `compute capability 7.5`. Si la universidad solo dispone de Maxwell, Pascal o Volta, el laboratorio debe usar una imagen separada y explícitamente legada con CUDA 12.9 y driver de la rama 580. No se mezclarán Makefiles de ambos itinerarios.
+CUDA 13 eliminó la compilación fuera de línea para arquitecturas anteriores a `compute capability 7.5`. Cuando un laboratorio dispone únicamente de equipos Maxwell, Pascal o Volta, se utiliza una imagen legada separada, con CUDA 12.9 y un controlador de la rama 580. Los archivos de construcción identifican con claridad cuál de los dos entornos utilizan.
 
-## 4. Plantilla obligatoria de cada tema
+## 4. Contenido académico de cada tema
 
-Cada tema tendrá entre uno y tres notebooks. Un notebook no reemplaza los fuentes compilables: invoca CMake/CTest o ejecutables ya construidos y carga datos CSV/JSON para graficar.
+Cada tema se desarrolla en uno, dos o tres notebooks. Los programas completos permanecen en archivos fuente compilables; el notebook invoca CMake/CTest o ejecutables ya construidos y carga los resultados CSV o JSON empleados en el análisis.
 
 1. Motivación y pregunta guía.
 2. Resultados de aprendizaje del tema.
@@ -80,13 +80,13 @@ Cada tema tendrá entre uno y tres notebooks. Un notebook no reemplaza los fuent
 12. Errores frecuentes y ejercicio de depuración.
 13. Ejercicios, criterios de aceptación y bibliografía.
 
-Gráficas mínimas según corresponda:
+La selección de gráficas depende de la pregunta experimental. Entre las representaciones previstas están:
 
 - Tiempo frente a tamaño del problema.
 - Aceleración y eficiencia frente a hilos/procesos.
 - Escalado fuerte y débil.
 - Ancho de banda o FLOP/s y Roofline.
-- Distribución de tiempos, no solo una ejecución.
+- Distribución de tiempos obtenida en varias repeticiones.
 - Error numérico frente a paralelismo/precisión.
 - Línea base serial y techo ideal claramente identificados.
 
@@ -143,7 +143,7 @@ Gráficas mínimas según corresponda:
 | 33 | Rendimiento integral | Perfil de extremo a extremo, comunicación/cómputo, I/O, energía como extensión y reproducibilidad. |
 | 34 | Taller híbrido | Revisión de diseño, referencia serial, pruebas y plan experimental. **Hito híbrido**. |
 | 35 | Proyecto final | Clínica de implementación y revisión cruzada de arquitectura. |
-| 36 | Proyecto final | Auditoría de reproducibilidad, ensayo de defensa y congelamiento de resultados. |
+| 36 | Proyecto final | Revisión de reproducibilidad, ensayo de defensa y consolidación de resultados. |
 | 37 | Proyecto final | Presentaciones y defensa, grupo A. |
 | 38 | Proyecto final | Presentaciones, grupo B; retrospectiva y cierre. **Evaluación final**. |
 
@@ -170,33 +170,33 @@ Gráficas mínimas según corresponda:
 - 10 % reproducibilidad y calidad del repositorio.
 - 5 % claridad de comunicación.
 
-Una aceleración alta no compensa resultados incorrectos. Un programa que no pasa la referencia serial obtiene cero en el componente de rendimiento.
+El componente de rendimiento se califica después de verificar la salida contra la referencia. Si el programa no supera esa comparación, puede recibir valoración en diseño o documentación, pero no en aceleración, eficiencia ni escalabilidad.
 
 ## 8. Bibliografía por tema
 
-Las calificaciones comunitarias son una señal secundaria y cambian con el tiempo. La selección prioriza autoridad técnica, adopción docente, edición vigente y disponibilidad de erratas/material complementario. Como referencia al 2 de agosto de 2026, Goodreads reportaba 3,88/5 (64 valoraciones) para Pacheco/Malensek, 4,05/5 (148) para Kirk/Hwu/El Hajj y 4,13/5 (1.033) para Hennessy/Patterson.
+La bibliografía se selecciona por autoridad técnica, uso en docencia, vigencia de la edición y disponibilidad de erratas o material complementario. Las calificaciones comunitarias se consignan como información adicional y pueden cambiar con el tiempo. Al 2 de agosto de 2026, Goodreads reportaba 3,88/5 (64 valoraciones) para Pacheco/Malensek, 4,05/5 (148) para Kirk/Hwu/El Hajj y 4,13/5 (1.033) para Hennessy/Patterson.
 
 ### Texto transversal
 
 - Peter Pacheco y Matthew Malensek, *An Introduction to Parallel Programming*, 2.ª ed., Morgan Kaufmann, 2021. Texto principal actual; cubre MPI, Pthreads, OpenMP y GPU, con recursos docentes. [Ficha editorial](https://www.educate.elsevier.com/book/details/9780128046050) y [valoración comunitaria](https://www.goodreads.com/book/show/34406040-an-introduction-to-parallel-programming).
-- Ananth Grama et al., *Introduction to Parallel Computing*, 2.ª ed., Addison-Wesley, 2003. Fundacional para modelos, algoritmos y costos; complementar con especificaciones actuales.
+- Ananth Grama et al., *Introduction to Parallel Computing*, 2.ª ed., Addison-Wesley, 2003. Texto fundacional para modelos, algoritmos y costos, que se complementa con las especificaciones vigentes.
 
 ### Fundamentos, arquitectura y rendimiento
 
 - John L. Hennessy y David A. Patterson, *Computer Architecture: A Quantitative Approach*, 6.ª ed., Morgan Kaufmann, 2018. Referencia de arquitectura y método cuantitativo. [Valoración comunitaria](https://www.goodreads.com/book/show/70135.Computer_Architecture).
 - Georg Hager y Gerhard Wellein, *Introduction to High Performance Computing for Scientists and Engineers*, CRC Press, 2010. Memoria, modelos de rendimiento y optimización.
-- Raj Jain, *The Art of Computer Systems Performance Analysis*, Wiley, 1991. Fundacional para diseño de experimentos; usar capítulos seleccionados.
+- Raj Jain, *The Art of Computer Systems Performance Analysis*, Wiley, 1991. Referencia fundacional para diseño de experimentos; se trabajan capítulos seleccionados.
 - Torsten Hoefler y Roberto Belli, “Scientific Benchmarking of Parallel Computing Systems”, SC15, 2015. Buenas prácticas modernas para *benchmarks*.
 
 ### Pthreads y C++20
 
-- David R. Butenhof, *Programming with POSIX Threads*, Addison-Wesley, 1997. Fundacional; contrastar cada interfaz con POSIX.1-2024.
-- Anthony Williams, *C++ Concurrency in Action*, 2.ª ed., Manning, 2019. Concurrencia moderna hasta C++17; complementar con C++20 y documentación estándar.
+- David R. Butenhof, *Programming with POSIX Threads*, Addison-Wesley, 1997. Referencia fundacional cuyas interfaces se contrastan con POSIX.1-2024.
+- Anthony Williams, *C++ Concurrency in Action*, 2.ª ed., Manning, 2019. Presenta concurrencia moderna hasta C++17 y se complementa con C++20 y documentación del estándar.
 - POSIX.1-2024, sección de [interfaces de hilos](https://pubs.opengroup.org/onlinepubs/9799919799/functions/V2_chap02.html).
 
 ### OpenMP
 
-- Barbara Chapman, Gabriele Jost y Ruud van der Pas, *Using OpenMP*, MIT Press, 2007. Fundacional para el modelo; sintaxis avanzada debe consultarse en 5.2.
+- Barbara Chapman, Gabriele Jost y Ruud van der Pas, *Using OpenMP*, MIT Press, 2007. Referencia fundacional para el modelo. La sintaxis avanzada se consulta en la especificación 5.2.
 - OpenMP ARB, [OpenMP API 5.2 Specification y Examples](https://www.openmp.org/specifications/), 2021/2024. Referencia normativa.
 - Ruud van der Pas, Eric Stotzer y Christian Terboven, *Using OpenMP—The Next Step*, MIT Press, 2017. Tareas, afinidad y rendimiento.
 
@@ -222,21 +222,21 @@ Las calificaciones comunitarias son una señal secundaria y cambian con el tiemp
 ### Híbrido y proyecto
 
 - Georg Hager y Gerhard Wellein, texto citado, capítulos de afinidad, modelos y optimización.
-- Rolf Rabenseifner, Georg Hager y Gabriele Jost, “Hybrid MPI/OpenMP Parallel Programming on Clusters of Multi-Core SMP Nodes”, 2009. Fundacional para diseño híbrido; actualizar comandos y hardware.
+- Rolf Rabenseifner, Georg Hager y Gabriele Jost, “Hybrid MPI/OpenMP Parallel Programming on Clusters of Multi-Core SMP Nodes”, 2009. Referencia fundacional para diseño híbrido; sus comandos y supuestos de hardware se actualizan para el entorno del curso.
 - Timothy G. Mattson, Beverly A. Sanders y Berna L. Massingill, *Patterns for Parallel Programming*, Addison-Wesley, 2004. Patrones de descomposición y coordinación.
 
-## 9. Política de fuentes, ejercicios y soluciones
+## 9. Organización de fuentes, ejercicios y soluciones
 
-- Todo ejemplo mostrado en un notebook vive como fuente independiente en `curso/ejemplos/<tema>/` y se construye sin copiar celdas manualmente.
-- Cada ejercicio vive en `curso/ejercicios/<tema>/<id>/` con enunciado, interfaz, datos pequeños y pruebas públicas.
-- Su solución de referencia vive en `curso/ejercicios/soluciones/<tema>/<id>/` y no se publica en la rama estudiantil durante el semestre.
-- Las pruebas de corrección son obligatorias antes de medir.
-- Los datos de rendimiento se generan en `build/results/` y no se versionan; solo se versionan conjuntos pequeños de referencia cuando sea necesario.
-- Cada fuente de terceros debe aparecer en `THIRD_PARTY_NOTICES.md` con origen, versión y licencia.
+- Los ejemplos presentados en los notebooks se almacenan como fuentes independientes en `curso/ejemplos/<tema>/`; el notebook los construye sin duplicar manualmente el código en las celdas.
+- Los ejercicios se ubican en `curso/ejercicios/<tema>/<id>/`, junto con el enunciado, la interfaz, datos pequeños y pruebas públicas.
+- Las soluciones de referencia se ubican en `curso/ejercicios/soluciones/<tema>/<id>/` y permanecen por fuera de la rama estudiantil durante el semestre.
+- Las mediciones se realizan sobre programas que hayan superado las pruebas de corrección.
+- Los resultados de rendimiento se generan en `build/results/`. Solo se versionan conjuntos pequeños que sean necesarios como referencia.
+- Las fuentes de terceros se registran en `THIRD_PARTY_NOTICES.md` con origen, versión y licencia.
 
-## 10. Criterio de finalización del curso reconstruido
+## 10. Condiciones para dictar un tema
 
-Un tema está listo para dictarse solo si tiene:
+Antes de incorporar un tema al calendario se comprueba que cuente con:
 
 - 1 a 3 notebooks ejecutados de principio a fin.
 - Ejemplos que construyen con el entorno fijado.
@@ -246,8 +246,8 @@ Un tema está listo para dictarse solo si tiene:
 - Bibliografía y enlaces normativos.
 - Tiempo de clase ensayado dentro de dos horas.
 
-Esta planeación define la meta. La existencia de carpetas o notebooks vacíos no cuenta como tema terminado.
+Esta planeación establece el trabajo previsto para la nueva versión. Las carpetas creadas para organizar el material indican su ubicación, pero el tema se considera disponible cuando cumple las condiciones anteriores.
 
-## 11. Delimitación de tópicos avanzados
+## 11. Material de profundización
 
-ROCm/HIP, SYCL, Kokkos y RAJA se mantienen fuera de las 19 semanas, las 38 sesiones y las evaluaciones obligatorias. Su planeación, plantilla conceptual, entornos de compilación y requisitos de clúster se encuentran en [`topicos_avanzados/README.md`](../topicos_avanzados/README.md).
+ROCm/HIP, SYCL, Kokkos y RAJA se ofrecen por fuera de las 19 semanas, las 38 sesiones y las evaluaciones regulares. La planeación, la guía conceptual, los entornos de compilación y los requisitos de clúster se encuentran en [`topicos_avanzados/README.md`](../topicos_avanzados/README.md).

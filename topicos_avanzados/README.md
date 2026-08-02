@@ -1,38 +1,38 @@
-# Tópicos avanzados de portabilidad de rendimiento
+# Temas avanzados de portabilidad de rendimiento
 
-Esta sección amplía el repositorio con material de estudio independiente sobre ecosistemas heterogéneos y portabilidad de rendimiento. **No forma parte de las 19 semanas, las 38 sesiones ni las evaluaciones del curso base.** Puede utilizarse en seminarios, escuelas de verano, proyectos de investigación o como continuación del curso.
+Esta sección contiene material de profundización sobre programación heterogénea y portabilidad de rendimiento. Se propone para seminarios, cursos intersemestrales y proyectos de investigación posteriores a la asignatura. Por esta razón, sus actividades no se cuentan dentro de las 19 semanas, las 38 sesiones ni las evaluaciones del programa regular.
 
-Los prerrequisitos generales son haber completado los módulos de OpenMP, MPI, OpenMP target y CUDA, además de dominar C++20, plantillas, lambdas, jerarquías de memoria y medición reproducible.
+Para abordar estos temas se requiere haber cursado OpenMP, MPI, OpenMP target y CUDA. También se espera manejo de C++20, plantillas, expresiones lambda, jerarquías de memoria y metodología de medición.
 
 ## Objetivos
 
-Al completar las cápsulas, el estudiante podrá:
+El trabajo propuesto busca que el estudiante esté en capacidad de:
 
 1. Programar y perfilar una GPU AMD mediante ROCm y HIP.
 2. Explicar la diferencia entre una API directa de GPU, un estándar como SYCL y una capa de portabilidad como Kokkos o RAJA.
-3. Implementar el mismo kernel sobre varios backends sin confundir portabilidad funcional con portabilidad de rendimiento.
+3. Implementar el mismo kernel sobre varios backends y distinguir la portabilidad funcional de la portabilidad del rendimiento.
 4. Elegir espacios de ejecución, memoria, políticas y mecanismos de sincronización de manera explícita.
 5. Comparar corrección, mantenibilidad y rendimiento contra implementaciones nativas OpenMP, CUDA o HIP.
 
 ## Versiones de referencia
 
-Las versiones se congelan para reproducir los laboratorios avanzados y se revisan antes de cada edición. La fuente global es [`config/advanced-topics.cmake`](../config/advanced-topics.cmake).
+Para cada edición se fija una combinación de versiones que permita reproducir las prácticas. La matriz se revisa antes de iniciar el trabajo académico y se registra en [`config/advanced-topics.cmake`](../config/advanced-topics.cmake).
 
 | Componente | Versión de referencia | Función |
 |---|---:|---|
-| ROCm | 7.2.3 | Stack abierto de cómputo para GPU AMD sobre Linux. |
+| ROCm | 7.2.3 | Plataforma abierta de cómputo para GPU AMD sobre Linux. |
 | HIP | 7.2.3 | API y compilación C++ para los ejemplos nativos AMD. |
 | SYCL | SYCL 2020, revisión 11 | Estándar normativo de programación heterogénea en C++ de Khronos. |
 | AdaptiveCpp | 25.10.0 | Implementación abierta de referencia de SYCL, con backends para CPU y GPU. |
 | Kokkos | 5.1.1 | Modelo de ejecución y memoria para portabilidad de rendimiento. |
 | RAJA | 2025.12.2 | Abstracciones de políticas para bucles y kernels portables. |
-| C++ | C++20 | Lenguaje común de las cuatro cápsulas. |
+| C++ | C++20 | Lenguaje común de las cuatro unidades. |
 
-ROCm/HIP exige una GPU y un sistema operativo incluidos en la matriz de compatibilidad de AMD. SYCL, Kokkos y RAJA no garantizan que un único binario o una única configuración funcione sobre todos los fabricantes. Cada resultado debe registrar compilador, backend, arquitectura, controlador y hardware.
+Para trabajar con ROCm/HIP se necesita una GPU y un sistema operativo incluidos en la matriz de compatibilidad de AMD. En SYCL, Kokkos y RAJA, la posibilidad de compilar o ejecutar en varias plataformas no implica que una sola configuración sea adecuada para todos los fabricantes. Los informes registran compilador, backend, arquitectura, controlador y hardware.
 
-## Método de explicación
+## Enfoque docente
 
-La conceptualización es el centro de cada cápsula. Antes de mostrar sintaxis, el tema debe responder:
+Cada unidad comienza con el modelo de programación y con las decisiones que el framework deja en manos del programador. La presentación de la sintaxis viene después de discutir las siguientes preguntas:
 
 1. ¿Qué problema de portabilidad o programación resuelve?
 2. ¿Qué abstracciones introduce y qué oculta?
@@ -41,23 +41,23 @@ La conceptualización es el centro de cada cápsula. Antes de mostrar sintaxis, 
 5. ¿Qué parte depende del compilador, runtime, backend, dispositivo y clúster?
 6. ¿Qué garantías ofrece y cuáles no ofrece?
 
-Cada tema seguirá la [plantilla avanzada](PLANTILLA_TEMA.md): mapa conceptual, manera de trabajo, ejemplo mínimo, experimento, interpretación y ejercicio. Se usarán entre uno y tres notebooks; no se fragmentará una explicación únicamente para aumentar el número de archivos.
+La [plantilla para temas avanzados](PLANTILLA_TEMA.md) organiza el mapa conceptual, la práctica de laboratorio, el ejemplo inicial, el experimento y los ejercicios. Cada unidad utiliza entre uno y tres notebooks, de acuerdo con la extensión efectiva del contenido.
 
-Las figuras conceptuales mantendrán el estilo de boceto técnico a lápiz del curso. Las gráficas cuantitativas serán poco densas: una pregunta por figura, pocas series claramente identificadas, unidades visibles, línea base y una conclusión breve. No se aceptan tableros saturados ni capturas de perfiladores sin una pregunta de análisis.
+Las figuras conceptuales conservan el estilo de boceto técnico a lápiz definido para la asignatura. En las gráficas cuantitativas se plantea una pregunta por figura, con pocas series, unidades visibles y una línea base cuando corresponda. Las capturas de perfiladores se incluyen cuando permiten discutir un evento o un cuello de botella específico.
 
-## Cápsulas propuestas
+## Unidades de profundización
 
 ### A1. AMD ROCm y HIP
 
-**Conceptos clave:** stack ROCm; arquitectura AMD; modelo grid/bloque/hilo; wavefront; memoria host/device; transferencias; eventos; streams; errores asíncronos; rocPRIM/rocBLAS; perfilado y relación HIP–CUDA.
+**Conceptos clave:** ecosistema ROCm; arquitectura AMD; modelo grid/bloque/hilo; wavefront; memoria host/device; transferencias; eventos; streams; errores asíncronos; rocPRIM/rocBLAS; perfilado y relación HIP–CUDA.
 
-**Manera de trabajo:** inventariar hardware y software → compilar con `amdclang++`/`hipcc` → validar kernel contra CPU → comprobar errores y sincronización → perfilar transferencias y kernels → ajustar acceso a memoria y ocupación.
+**Trabajo de laboratorio:** inventario de hardware y software → compilación con `amdclang++`/`hipcc` → validación del kernel frente a CPU → comprobación de errores y sincronización → perfil de transferencias y kernels → ajuste del acceso a memoria y la ocupación.
 
 **Notebooks previstos:** `01_rocm_entorno_modelo.ipynb`, `02_hip_memoria_kernels.ipynb` y `03_hip_streams_perfilado.ipynb`.
 
-**Ejemplos ilustrativos:** inventario del dispositivo, suma vectorial, reducción y multiplicación de matrices con referencia CPU. `hipify` se trata como ayuda de migración, nunca como prueba de portabilidad o corrección.
+**Ejemplos ilustrativos:** inventario del dispositivo, suma vectorial, reducción y multiplicación de matrices con referencia en CPU. `hipify` se utiliza como apoyo para una migración inicial; la portabilidad y la corrección se establecen mediante compilación, pruebas y revisión del código resultante.
 
-**Entorno mínimo:** Linux soportado por ROCm 7.2.3, GPU AMD incluida en su matriz de compatibilidad, controlador correspondiente y acceso a los perfiladores. En clúster, el ejercicio debe declarar módulo ROCm, partición GPU, recurso GRES equivalente y arquitectura `gfx*` efectiva.
+**Entorno de trabajo:** Linux soportado por ROCm 7.2.3, GPU AMD incluida en su matriz de compatibilidad, controlador correspondiente y acceso a los perfiladores. En el clúster se registran el módulo ROCm, la partición GPU, el recurso GRES equivalente y la arquitectura `gfx*` efectiva.
 
 **Evaluación opcional:** portar y perfilar un kernel CUDA ya validado, documentando diferencias semánticas, cambios manuales, resultados numéricos y cuellos de botella.
 
@@ -65,13 +65,13 @@ Las figuras conceptuales mantendrán el estilo de boceto técnico a lápiz del c
 
 **Conceptos clave:** estándar frente a implementación; plataformas y dispositivos; selectores; colas; grupos de comandos; `range`/`nd_range`; USM; buffers/accessors; eventos; dependencias; backends y perfilado.
 
-**Manera de trabajo:** seleccionar implementación/backend → enumerar dispositivos → construir la cola → expresar dependencias y kernel → validar → capturar eventos → comparar el mismo código en los backends realmente disponibles.
+**Trabajo de laboratorio:** selección de implementación y backend → inventario de dispositivos → construcción de la cola → expresión de dependencias y kernel → validación → captura de eventos → comparación en los backends disponibles.
 
 **Notebooks previstos:** `01_sycl_modelo_colas.ipynb`, `02_sycl_memoria_ndrange.ipynb` y `03_sycl_portabilidad_medicion.ipynb`.
 
 **Ejemplos ilustrativos:** consulta de dispositivos, suma vectorial, reducción y stencil con selección explícita del dispositivo y fallback controlado.
 
-**Entorno mínimo:** compilador AdaptiveCpp 25.10.0 y un backend declarado. Un ejercicio CPU no presupone soporte GPU. En clúster se registran módulos del compilador/runtime, backend activo, dispositivo solicitado, partición y variables de selección visibles al proceso.
+**Entorno de trabajo:** AdaptiveCpp 25.10.0 y un backend declarado. Una ejecución en CPU no se toma como evidencia de soporte GPU. En el clúster se registran los módulos del compilador y del runtime, el backend activo, el dispositivo solicitado, la partición y las variables de selección visibles para el proceso.
 
 **Evaluación opcional:** ejecutar un kernel sobre dos backends disponibles, validar resultados y explicar qué partes del código, construcción y ajuste siguen siendo específicas de plataforma.
 
@@ -79,13 +79,13 @@ Las figuras conceptuales mantendrán el estilo de boceto técnico a lápiz del c
 
 **Conceptos clave:** espacios de ejecución y memoria; `View`; layouts; mirrors; deep copies; `RangePolicy`, `MDRangePolicy` y `TeamPolicy`; `parallel_for`, `parallel_reduce`, `parallel_scan`; inicialización y Kokkos Tools.
 
-**Manera de trabajo:** seleccionar un backend al configurar Kokkos → definir espacios y layout → expresar el patrón con una política → validar movimientos de datos → medir → ajustar políticas, equipos o layout para el hardware.
+**Trabajo de laboratorio:** selección del backend durante la configuración de Kokkos → definición de espacios y disposición de datos → expresión del patrón mediante una política → validación de movimientos de datos → medición → ajuste de políticas, equipos o layout para el hardware disponible.
 
 **Notebooks previstos:** `01_kokkos_views_policies.ipynb`, `02_kokkos_jerarquia_memoria.ipynb` y `03_kokkos_backends_rendimiento.ipynb`.
 
 **Ejemplos ilustrativos:** reducción, stencil 2D y multiplicación de matrices con la misma interfaz y configuraciones de backend separadas.
 
-**Entorno mínimo:** Kokkos 5.1.1 compilado para un backend y arquitectura declarados. Cada ejercicio indicará el compilador que construyó Kokkos, `Kokkos_DIR`, backend, arquitectura y combinación host/device. No se reutiliza una instalación de Kokkos construida para otro backend como si fuera intercambiable.
+**Entorno de trabajo:** Kokkos 5.1.1 compilado para un backend y una arquitectura declarados. El ejercicio registra el compilador utilizado para construir Kokkos, `Kokkos_DIR`, el backend, la arquitectura y la combinación host/device. Las instalaciones destinadas a backends distintos se manejan como perfiles separados.
 
 **Evaluación opcional:** desarrollar un kernel con dos políticas o layouts y comparar portabilidad funcional, trabajo de ajuste y rendimiento contra una línea base nativa.
 
@@ -93,17 +93,17 @@ Las figuras conceptuales mantendrán el estilo de boceto técnico a lápiz del c
 
 **Conceptos clave:** segmentos; políticas de ejecución; `RAJA::forall`; reducciones; `RAJA::kernel`; `RAJA::launch`; recursos; captura de lambdas y relación con Umpire/CHAI.
 
-**Manera de trabajo:** aislar el cuerpo del bucle → definir segmento y política → resolver memoria fuera de la política → validar backend secuencial → activar OpenMP/GPU → medir y ajustar la política explícita.
+**Trabajo de laboratorio:** aislamiento del cuerpo del bucle → definición del segmento y la política → gestión de memoria por fuera de la política → validación del backend secuencial → activación de OpenMP o GPU → medición y ajuste de la política.
 
 **Notebooks previstos:** `01_raja_segmentos_politicas.ipynb`, `02_raja_kernels_recursos.ipynb` y `03_raja_backends_comparacion.ipynb`.
 
 **Ejemplos ilustrativos:** suma vectorial, reducción y stencil con políticas secuencial, OpenMP y, según disponibilidad, CUDA o HIP.
 
-**Entorno mínimo:** RAJA 2025.12.2 construido con el backend declarado, `RAJA_DIR`, compilador C++20 y dependencias de la suite. Para HIP se declara ROCm/rocPRIM; para CUDA, Toolkit/arquitectura. El script del clúster debe coincidir con ese backend.
+**Entorno de trabajo:** RAJA 2025.12.2 construido con el backend declarado, `RAJA_DIR`, compilador C++20 y dependencias de la suite. El perfil HIP registra ROCm y rocPRIM; el perfil CUDA registra el Toolkit y la arquitectura. El script de ejecución corresponde al backend utilizado en la construcción.
 
 **Evaluación opcional:** implementar un kernel con políticas intercambiables y justificar el costo de abstracción, las decisiones de memoria y las diferencias de rendimiento.
 
-En RAJA 2025.12.2, los backends secuencial, OpenMP, CUDA y HIP son los más maduros. SYCL y OpenMP target se consideran experimentales o incompletos para varias capacidades; no deben presentarse como equivalentes de producción sin validación específica.
+En RAJA 2025.12.2, el soporte más consolidado corresponde a los backends secuencial, OpenMP, CUDA y HIP. SYCL y OpenMP target todavía tienen capacidades experimentales o incompletas; cualquier uso en un proyecto requiere una validación particular de las funciones empleadas.
 
 ## Comparación transversal
 
@@ -116,7 +116,7 @@ En RAJA 2025.12.2, los backends secuencial, OpenMP, CUDA y HIP son los más madu
 | Extensión GPU | AMD nativa | Según implementación | CUDA, HIP o SYCL | CUDA o HIP maduros |
 | Riesgo pedagógico | Suponer identidad total con CUDA | Confundir estándar e implementación | Creer que cambiar backend basta para rendir | Omitir la gestión de memoria |
 
-El estudio comparativo reutiliza los mismos kernels y conjuntos de datos. No se comparan tiempos entre máquinas distintas como si fueran evidencia de superioridad de un framework.
+El estudio comparativo utiliza los mismos kernels y conjuntos de datos. Cuando intervienen máquinas distintas, los resultados se reportan como caracterización de cada plataforma y no como una clasificación directa de los frameworks.
 
 ## Organización del material
 
@@ -124,7 +124,7 @@ El estudio comparativo reutiliza los mismos kernels y conjuntos de datos. No se 
 topicos_avanzados/
 ├── PLANTILLA_TEMA.md               # Contrato conceptual y experimental
 ├── ENTORNOS_CLUSTER.md             # Ficha de compilación y ejecución
-├── notebooks/                      # 1–3 notebooks por cápsula
+├── notebooks/                      # 1–3 notebooks por unidad
 ├── ejemplos/                       # Referencia serial y variantes portables
 └── ejercicios/
     ├── <topico>/<ejercicio>/       # Enunciado, esqueleto y pruebas públicas
@@ -132,18 +132,18 @@ topicos_avanzados/
         └── <topico>/<ejercicio>/   # Solución y pruebas docentes
 ```
 
-Los nombres de tópico son `01_rocm_hip`, `02_sycl`, `03_kokkos` y `04_raja`. Se aplican las mismas reglas de corrección, trazabilidad, gráficas y estilo visual descritas para [`curso/`](../curso/README.md). Las soluciones deben mantenerse fuera de la distribución estudiantil cuando una cápsula se evalúe.
+Los directorios temáticos se denominan `01_rocm_hip`, `02_sycl`, `03_kokkos` y `04_raja`. Se aplican los mismos criterios de corrección, trazabilidad y presentación definidos para [`curso/`](../curso/README.md). Si una unidad se utiliza como evaluación, sus soluciones se excluyen de la distribución estudiantil mientras la actividad esté abierta.
 
 ## Perfiles de entorno
 
-No se construye todo el material avanzado en un único preset. Se mantendrán perfiles independientes:
+El material avanzado se construye con perfiles independientes:
 
 - `advanced-hip`: ROCm/HIP sobre un nodo AMD compatible.
 - `advanced-sycl`: AdaptiveCpp y un backend declarado.
 - `advanced-kokkos-cpu`, `advanced-kokkos-hip` o `advanced-kokkos-cuda`.
 - `advanced-raja-cpu`, `advanced-raja-hip` o `advanced-raja-cuda`.
 
-La configuración acepta las raíces `COURSE_ROCM_ROOT`, `COURSE_ADAPTIVECPP_ROOT`, `COURSE_KOKKOS_ROOT` y `COURSE_RAJA_ROOT`. Los presets se añadirán junto con el primer ejemplo compilable de cada perfil; una carpeta vacía no se considera soporte de un backend.
+La configuración acepta las raíces `COURSE_ROCM_ROOT`, `COURSE_ADAPTIVECPP_ROOT`, `COURSE_KOKKOS_ROOT` y `COURSE_RAJA_ROOT`. Cada preset se incorpora cuando exista al menos un ejemplo compilable y probado con ese perfil.
 
 ## Bibliografía y especificaciones
 
@@ -156,7 +156,7 @@ La configuración acepta las raíces `COURSE_ROCM_ROOT`, `COURSE_ADAPTIVECPP_ROO
 ### SYCL
 
 - Khronos Group, [SYCL 2020 Specification, revision 11](https://registry.khronos.org/SYCL/specs/sycl-2020/html/sycl-2020.html).
-- James Brodman et al., *Data Parallel C++*, 2.ª ed., Apress, 2023. Debe leerse distinguiendo las extensiones oneAPI del núcleo normativo de SYCL.
+- James Brodman et al., *Data Parallel C++*, 2.ª ed., Apress, 2023. Durante su lectura se distinguen las extensiones oneAPI del núcleo normativo de SYCL.
 - AdaptiveCpp, [documentación y código fuente](https://github.com/AdaptiveCpp/AdaptiveCpp).
 
 ### Kokkos
@@ -171,6 +171,6 @@ La configuración acepta las raíces `COURSE_ROCM_ROOT`, `COURSE_ADAPTIVECPP_ROO
 - Richard D. Hornung y Jeffrey A. Keasler, *The RAJA Portability Layer: Overview and Status*, LLNL-TR-661403, 2014.
 - LLNL, [RAJA Performance Suite](https://github.com/LLNL/RAJAPerf), para comparaciones de kernels y backends.
 
-## Criterio de finalización
+## Condiciones para ofrecer una unidad
 
-Una cápsula solo estará lista para publicación cuando tenga notebooks ejecutados, ejemplos compilables en cada perfil declarado, referencia serial, pruebas de corrección, medición reproducible, ejercicios, soluciones, bibliografía y una matriz de hardware/software probada. Este README define la ruta avanzada; no certifica todavía que los cuatro toolchains estén instalados en el equipo local.
+Una unidad podrá ofrecerse cuando cuente con notebooks ejecutados de principio a fin, ejemplos compilables en cada perfil declarado, referencia serial, pruebas de corrección, medición reproducible, ejercicios, soluciones, bibliografía y una matriz de hardware y software efectivamente probada. En su estado actual, este documento establece la planeación académica; la disponibilidad local de los cuatro toolchains se comprobará durante el desarrollo de los ejemplos.

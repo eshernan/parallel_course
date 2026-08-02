@@ -1,6 +1,6 @@
 # Ejemplos
 
-Fuentes compilables que respaldan los notebooks. Cada subcarpeta temática tendrá:
+Esta carpeta contiene los programas compilables empleados en los notebooks. Cada subcarpeta temática incluye:
 
 - `CMakeLists.txt` o integración con el CMake superior.
 - versión serial de referencia;
@@ -10,4 +10,4 @@ Fuentes compilables que respaldan los notebooks. Cada subcarpeta temática tendr
 - opción para exportar métricas a CSV/JSON;
 - README con compilación, ejecución y hardware requerido.
 
-No se versionan ejecutables, objetos, perfiles ni resultados grandes.
+Los ejecutables, objetos, perfiles y conjuntos voluminosos de resultados se generan durante la práctica y quedan por fuera del control de versiones.

@@ -1,6 +1,6 @@
 # Ficha de compilación y ejecución en clúster
 
-Todo ejemplo o ejercicio avanzado debe completar esta ficha. Los valores dependen del clúster institucional; los nombres siguientes son campos, no módulos o particiones universales.
+Cada ejemplo o ejercicio avanzado incluye esta ficha. Los valores se diligencian para el clúster institucional en el que se realizó la práctica; los nombres que siguen corresponden a campos de información y no a módulos o particiones universales.
 
 ## Manifiesto obligatorio
 
@@ -25,23 +25,23 @@ Todo ejemplo o ejercicio avanzado debe completar esta ficha. Los valores depende
 
 ### ROCm/HIP
 
-Requiere un nodo AMD compatible, `amdclang++` o `hipcc`, runtime HIP, arquitectura `gfx*` y herramientas de perfilado autorizadas. El script debe solicitar una GPU AMD explícitamente; no se asume que `--gres=gpu:1` seleccione fabricante o modelo en todos los clústeres.
+La práctica requiere un nodo AMD compatible, `amdclang++` o `hipcc`, el runtime HIP, una arquitectura `gfx*` identificada y acceso autorizado a las herramientas de perfilado. El script solicita de manera explícita una GPU AMD, pues `--gres=gpu:1` no selecciona necesariamente fabricante o modelo en todos los clústeres.
 
 ### SYCL
 
-Declara implementación y backend. La selección de dispositivo debe comprobarse en tiempo de ejecución y guardarse en el log. Si el ejercicio exige GPU, un fallback CPU se considera error de configuración, no una ejecución válida.
+El manifiesto identifica la implementación y el backend. La selección de dispositivo se comprueba durante la ejecución y queda registrada en el log. En una práctica que exige GPU, el fallback en CPU indica un error de configuración.
 
 ### Kokkos
 
-Declara cómo fue construido Kokkos: backend host, backend device, arquitectura y compilador. `Kokkos_DIR` debe referirse a esa instalación exacta. Una instalación CPU y una instalación HIP/CUDA se consideran perfiles distintos.
+El manifiesto describe cómo se construyó Kokkos: backend de host, backend de dispositivo, arquitectura y compilador. `Kokkos_DIR` referencia esa instalación específica. Las instalaciones CPU, HIP y CUDA se administran como perfiles distintos.
 
 ### RAJA
 
-Declara los backends habilitados al construir RAJA, `RAJA_DIR` y las dependencias asociadas. Para GPU se registra además el método de gestión de memoria y las versiones de ROCm/rocPRIM o CUDA/CUB.
+El manifiesto registra los backends habilitados durante la construcción de RAJA, `RAJA_DIR` y las dependencias asociadas. En GPU también se informa el método de gestión de memoria y las versiones de ROCm/rocPRIM o CUDA/CUB.
 
 ## Validación previa
 
-Antes de enviar una carga larga, el ejercicio debe ejecutar una prueba pequeña que:
+Antes de enviar un trabajo de larga duración se ejecuta una prueba pequeña que:
 
 1. imprima el dispositivo y backend seleccionados;
 2. compruebe que el recurso solicitado está visible;
@@ -49,4 +49,4 @@ Antes de enviar una carga larga, el ejercicio debe ejecutar una prueba pequeña 
 4. compare resultados con tolerancia declarada;
 5. falle con código distinto de cero si alguna comprobación no se cumple.
 
-Los scripts reales del clúster se almacenarán junto al ejercicio. No se publicará una plantilla con nombres ficticios como si estuviera certificada para una infraestructura concreta.
+Los scripts utilizados en el clúster se almacenan junto con el ejercicio. Las plantillas genéricas se identifican como tales y se indican como verificadas cuando han sido probadas en una infraestructura concreta.

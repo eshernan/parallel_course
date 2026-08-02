@@ -1,6 +1,6 @@
 # Ejemplos CUDA C++
 
-Secuencia prevista:
+La secuencia de ejemplos es la siguiente:
 
 - `00_device_query`: versión, dispositivo, capacidad de cómputo y límites.
 - `01_vector_add`: referencia CPU, kernel con límites y errores comprobados.
@@ -15,6 +15,6 @@ Secuencia prevista:
 - `10_cusolver_dense`: sistema denso pequeño con factorización, workspace y comprobación de `info`.
 - `11_curand_montecarlo`: generador host/device, semilla reproducible y consumo de muestras sin retorno innecesario al host.
 
-Todos los ejecutables usarán CUDA 13.0.x, C++20, CMake, `cudaEvent` para tiempos GPU, Compute Sanitizer y arquitectura mínima `sm_75`. Cada biblioteca debe comprobar su propio estado, reutilizar handles/planes/workspaces durante la región medida y validar contra una referencia CPU o propiedad numérica conocida.
+Los ejecutables se construyen con CUDA 13.0.x, C++20 y CMake para arquitecturas `sm_75` o posteriores. Los tiempos de GPU se obtienen con `cudaEvent` y la revisión de memoria se realiza con Compute Sanitizer. En los ejemplos de biblioteca se comprueban los estados de retorno, se reutilizan handles, planes y espacios de trabajo durante la región medida, y se valida el resultado contra una referencia en CPU o una propiedad numérica conocida.
 
-Las comparaciones no incluirán creación de contexto en una medida de kernel, pero sí la reportarán en el tiempo extremo a extremo. Los ejemplos mantendrán los datos residentes cuando ese sea el escenario real y mostrarán explícitamente cuándo la transferencia o conversión de formato elimina la ventaja.
+La creación del contexto queda por fuera del tiempo de kernel y se incluye en el reporte extremo a extremo. Cuando el caso de uso supone datos residentes en la GPU, esa condición se conserva durante la medición. El análisis también identifica los tamaños para los cuales la transferencia o la conversión de formato absorbe la posible ganancia.

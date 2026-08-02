@@ -1,6 +1,6 @@
 # Configuración global
 
-`course-toolchain.cmake` es la fuente única para compiladores, estándares e implementaciones:
+`course-toolchain.cmake` concentra las versiones de compiladores, estándares e implementaciones utilizadas en la asignatura:
 
 - GCC/G++ 15.3.0;
 - C17 y C++20;
@@ -8,9 +8,9 @@
 - MPICH 5.0.1 / MPI 5.0;
 - CUDA 13.0 y arquitecturas `sm_75`, `sm_80`, `sm_86`, `sm_89`, `sm_90`, `sm_100` y `sm_120`;
 - bibliotecas CUDA importadas por CMake: cuBLAS/cuBLASLt, cuFFT, cuSPARSE, cuSOLVER y cuRAND; Thrust/CUB 3.0.1 como cabeceras de CCCL;
-- CPython 3.14.6 y el stack fijado en `requirements.lock`.
+- CPython 3.14.6 y el entorno fijado en `requirements.lock`.
 
-El material extracurricular de `topicos_avanzados/` añade perfiles separados para ROCm/HIP 7.2.3, SYCL 2020 revisión 11 con AdaptiveCpp 25.10.0, Kokkos 5.1.1 y RAJA 2025.12.2. Sus versiones y rutas se centralizan en `advanced-topics.cmake`; permanecen deshabilitadas para no convertirlas en requisitos del curso base.
+El material de profundización de `topicos_avanzados/` utiliza perfiles independientes para ROCm/HIP 7.2.3, SYCL 2020 revisión 11 con AdaptiveCpp 25.10.0, Kokkos 5.1.1 y RAJA 2025.12.2. `advanced-topics.cmake` registra sus versiones y rutas. Estos perfiles están deshabilitados por defecto y, por tanto, no forman parte de los requisitos de la asignatura regular.
 
 ## Variables de entorno admitidas
 
@@ -41,11 +41,11 @@ cmake --build --preset course-cuda
 ctest --preset course-cuda
 ```
 
-Las versiones estrictas pueden desactivarse solo para desarrollo del repositorio mediante `-DCOURSE_STRICT_VERSIONS=OFF`; las entregas y la imagen oficial siempre usan validación estricta.
+Durante el desarrollo del repositorio es posible desactivar la comprobación estricta con `-DCOURSE_STRICT_VERSIONS=OFF`. Las entregas académicas y la imagen oficial se construyen con validación estricta.
 
 ## Tópicos avanzados
 
-La detección se activa de forma explícita y para un solo perfil a la vez:
+La detección se activa de manera explícita para un perfil a la vez:
 
 ```console
 cmake -S . -B build/advanced-hip \
@@ -54,4 +54,4 @@ cmake -S . -B build/advanced-hip \
   -DCOURSE_ADVANCED_PROFILE=HIP
 ```
 
-Los perfiles admitidos son `HIP`, `SYCL`, `KOKKOS` y `RAJA`. Esta comprobación confirma que el compilador o paquete existe; la compatibilidad con un backend y arquitectura concretos se validará mediante los ejemplos y CTest de cada cápsula. Consulte [`topicos_avanzados/README.md`](../topicos_avanzados/README.md).
+Los perfiles admitidos son `HIP`, `SYCL`, `KOKKOS` y `RAJA`. Esta comprobación localiza el compilador o paquete solicitado. La compatibilidad con una arquitectura y un backend específicos se establece mediante los ejemplos y las pruebas CTest de cada unidad de profundización. Los criterios académicos y técnicos están descritos en [`topicos_avanzados/README.md`](../topicos_avanzados/README.md).

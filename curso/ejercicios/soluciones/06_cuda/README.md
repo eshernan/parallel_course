@@ -1,5 +1,5 @@
 # Soluciones CUDA
 
-Las soluciones de referencia incluirán kernels correctos para tamaños arbitrarios, comprobación centralizada de errores CUDA y de estados de biblioteca, referencia CPU, pruebas CTest y perfiles pequeños reproducibles. Documentarán layout, precisión, workspace, stream y vida útil de handles/planes/descriptores.
+Las soluciones de referencia incluyen kernels válidos para tamaños arbitrarios, comprobación centralizada de errores CUDA y estados de biblioteca, referencia en CPU, pruebas CTest y perfiles pequeños reproducibles. También documentan la disposición de los datos, la precisión, el espacio de trabajo, el stream y el ciclo de vida de handles, planes y descriptores.
 
-Las comparaciones tiled/cuBLAS y kernel/Thrust/CUB reportarán tiempo de ejecución y extremo a extremo, además del punto en que la preparación o transferencia domina. Permanecerán fuera de la distribución estudiantil hasta cerrar la evaluación correspondiente.
+Las comparaciones entre la versión por mosaicos y cuBLAS, y entre el kernel propio y Thrust/CUB, reportan el tiempo de ejecución y el tiempo extremo a extremo. El análisis identifica los tamaños en los que predominan la preparación o la transferencia. Estas soluciones permanecen fuera de la distribución estudiantil hasta el cierre de la evaluación correspondiente.

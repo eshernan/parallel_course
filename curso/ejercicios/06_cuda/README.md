@@ -9,6 +9,6 @@
 7. Comparar GEMM ingenuo, tiled y cuBLAS usando tiempo de ejecución y tiempo extremo a extremo.
 8. Elegir entre cuFFT, cuSPARSE, cuSOLVER o cuRAND para un caso dado, construir un ejemplo mínimo y explicar por qué la biblioteca ofrece —o no— ventaja.
 
-Cada entrega debe pasar Compute Sanitizer, verificar errores CUDA y estados de biblioteca, y exportar métricas antes de producir gráficas.
+La entrega incluye la ejecución de Compute Sanitizer, la comprobación de errores CUDA y estados de biblioteca, y los archivos de métricas utilizados para producir las gráficas.
 
-El enunciado declarará CUDA Toolkit, capacidad de cómputo, memoria mínima, targets CMake, librerías, datos, precisión y tolerancia. En clúster indicará módulos, partición, recurso GPU, tiempo límite y comando de ejecución. La conclusión debe separar preparación, transferencia, ejecución y validación; no basta con afirmar que una biblioteca “es más rápida”.
+En cada enunciado se especifican la versión del CUDA Toolkit, capacidad de cómputo, memoria mínima, targets CMake, bibliotecas, conjunto de datos, precisión y tolerancia. Para la ejecución en clúster también se indican módulos, partición, recurso GPU, tiempo límite y comando de envío. La conclusión distingue los costos de preparación, transferencia, ejecución y validación, y sustenta con esas mediciones cualquier afirmación sobre rendimiento.
