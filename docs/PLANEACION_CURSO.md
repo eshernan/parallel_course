@@ -245,3 +245,7 @@ Un tema está listo para dictarse solo si tiene:
 - Tiempo de clase ensayado dentro de dos horas.
 
 Esta planeación define la meta. La existencia de carpetas o notebooks vacíos no cuenta como tema terminado.
+
+## 11. Delimitación de tópicos avanzados
+
+ROCm/HIP, SYCL, Kokkos y RAJA se mantienen fuera de las 19 semanas, las 38 sesiones y las evaluaciones obligatorias. Su planeación, plantilla conceptual, entornos de compilación y requisitos de clúster se encuentran en [`topicos_avanzados/README.md`](../topicos_avanzados/README.md).

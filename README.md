@@ -14,6 +14,8 @@ El curso está planeado para 19 semanas, con dos sesiones semanales de máximo d
 
 La ruta parte de los modelos de costo y la arquitectura de memoria; continúa con Pthreads, concurrencia en C++20, OpenMP y MPI; presenta aceleradores portables con OpenMP target; dedica un módulo completo a CUDA C++; y termina con programación híbrida, perfilado y un proyecto reproducible.
 
+El repositorio también contiene una sección extracurricular de [tópicos avanzados](topicos_avanzados/README.md) sobre AMD ROCm/HIP, SYCL, Kokkos y RAJA. Esta ampliación no modifica la duración, las evaluaciones ni los resultados de aprendizaje obligatorios del curso base.
+
 El principio metodológico es:
 
 > Primero demostrar corrección; después medir; finalmente optimizar y explicar.
@@ -83,6 +85,15 @@ La descripción sesión por sesión, evaluaciones, rúbricas y bibliografía est
 - JupyterLab, NumPy, pandas y Matplotlib para explicación y gráficas.
 - ThreadSanitizer, AddressSanitizer, `perf`, Compute Sanitizer, Nsight Systems y Nsight Compute para diagnóstico y perfilado.
 
+### Extensión extracurricular
+
+- AMD ROCm 7.2.3 e HIP 7.2.3.
+- SYCL 2020, revisión 11, con AdaptiveCpp 25.10.0 como implementación abierta de referencia.
+- Kokkos 5.1.1 para espacios de ejecución/memoria, `View` y políticas paralelas.
+- RAJA 2025.12.2 para segmentos, políticas, kernels y recursos.
+
+Estas tecnologías se estudian fuera del calendario de 19 semanas. Sus backends requieren perfiles independientes y hardware compatible; “portable” no significa que una única configuración produzca rendimiento óptimo en cualquier dispositivo.
+
 CUDA es un tema obligatorio y dispone de seis sesiones propias. El compilador abierto principal continúa siendo GCC; `nvcc`, el runtime y las herramientas NVIDIA se utilizan exclusivamente en el módulo CUDA.
 
 ## Configuración global
@@ -131,7 +142,11 @@ parallel_course/
 │       ├── <tema>/<ejercicio>/     # Enunciado, esqueleto y pruebas públicas
 │       └── soluciones/
 │           └── <tema>/<ejercicio>/ # Solución y pruebas docentes
-├── docs/                            # Auditoría, planeación e imágenes
+├── topicos_avanzados/               # ROCm/HIP, SYCL, Kokkos y RAJA; fuera del curso base
+│   ├── notebooks/
+│   ├── ejemplos/
+│   └── ejercicios/soluciones/
+├── docs/                            # Planeación e imágenes
 └── <directorios históricos>         # Material 2020 aún no certificado
 ```
 
@@ -186,18 +201,18 @@ Las gráficas cuantitativas deben generarse directamente desde los datos, conser
 
 ## Estado de la reconstrucción
 
-- Auditoría del repositorio: completada.
 - Planeación de 38 sesiones: completada.
 - Configuración global y presets: creados.
 - Estructura de notebooks, ejemplos, ejercicios y soluciones: creada.
+- Ruta extracurricular ROCm/HIP, SYCL, Kokkos y RAJA: diseñada y configurada; contenidos ejecutables pendientes.
 - Migración y certificación del material histórico: en progreso.
 - Desarrollo de todos los notebooks y soluciones: pendiente por tema.
 
 Documentos de referencia:
 
-- [Auditoría técnica y pedagógica](docs/AUDITORIA_REPOSITORIO.md).
 - [Planeación semestral, evaluaciones y bibliografía](docs/PLANEACION_CURSO.md).
 - [Estructura objetivo del curso](curso/README.md).
+- [Planeación de tópicos avanzados](topicos_avanzados/README.md).
 
 ## Autoría
 
@@ -206,4 +221,4 @@ El diseño académico, la curaduría y la reconstrucción 2026 de este curso son
 - LinkedIn: [https://www.linkedin.com/in/hpccol/](https://www.linkedin.com/in/hpccol/)
 - Página personal: [https://eshernan.github.io/](https://eshernan.github.io/)
 
-El material histórico o de terceros conserva sus avisos y licencias correspondientes. Consulte [LICENSE](LICENSE) y la auditoría de procedencia antes de redistribuir componentes externos.
+El material histórico o de terceros conserva sus avisos y licencias correspondientes. Consulte [LICENSE](LICENSE) y la documentación de procedencia antes de redistribuir componentes externos.

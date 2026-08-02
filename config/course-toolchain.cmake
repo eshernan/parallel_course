@@ -12,6 +12,9 @@ set(COURSE_CUDA_VERSION "13.0" CACHE STRING "Versión de CUDA Toolkit")
 set(COURSE_CUDA_ARCHITECTURES "75;80;86;89;90;100;120" CACHE STRING "Arquitecturas CUDA docentes")
 set(COURSE_PYTHON_VERSION "3.14.6" CACHE STRING "Versión de Python para notebooks")
 
+# Metadatos y descubrimiento optativo de los toolchains extracurriculares.
+include("${CMAKE_CURRENT_LIST_DIR}/advanced-topics.cmake")
+
 option(COURSE_STRICT_VERSIONS "Rechazar versiones distintas a las fijadas" ON)
 option(COURSE_ENABLE_OPENMP "Configurar OpenMP" ON)
 option(COURSE_ENABLE_MPI "Configurar MPICH/MPI" ON)

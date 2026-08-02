@@ -23,7 +23,7 @@ Esta carpeta separa el material docente nuevo del banco histórico situado en la
 | `07` | Programación híbrida y perfilado |
 | `08` | Proyecto final |
 
-La planeación completa está en [`docs/PLANEACION_CURSO.md`](../docs/PLANEACION_CURSO.md). La auditoría que justifica la reconstrucción está en [`docs/AUDITORIA_REPOSITORIO.md`](../docs/AUDITORIA_REPOSITORIO.md).
+La planeación completa está en [`docs/PLANEACION_CURSO.md`](../docs/PLANEACION_CURSO.md). Los contenidos extracurriculares se planean de manera independiente en [`topicos_avanzados/README.md`](../topicos_avanzados/README.md).
 
 ## Regla de promoción
 
