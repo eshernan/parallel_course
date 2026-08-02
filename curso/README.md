@@ -13,7 +13,7 @@ Esta carpeta reúne el material preparado para la nueva versión de la asignatur
 
 | Prefijo | Tema |
 |---:|---|
-| `00` | Entorno reproducible |
+| `00` | Estándares C/C++, compiladores y entorno reproducible |
 | `01` | Fundamentos, arquitectura y rendimiento |
 | `02` | Memoria compartida: Pthreads y C++20 |
 | `03` | OpenMP |
@@ -23,7 +23,7 @@ Esta carpeta reúne el material preparado para la nueva versión de la asignatur
 | `07` | Programación híbrida y perfilado |
 | `08` | Proyecto final |
 
-La [planeación de la asignatura](../docs/PLANEACION_CURSO.md) contiene el calendario, las evaluaciones y la bibliografía. El [material de profundización](../topicos_avanzados/README.md) se organiza por fuera del semestre regular.
+La [planeación de la asignatura](../docs/PLANEACION_CURSO.md) contiene el calendario, las evaluaciones y la bibliografía. El [panorama de C y C++](../docs/ESTANDARES_C_CPP.md) sustenta la comparación de estándares y compiladores de la primera semana. El [material de profundización](../topicos_avanzados/README.md) se organiza por fuera del semestre regular.
 
 ## Incorporación de material histórico
 

@@ -11,6 +11,7 @@ Fecha de versión: 2 de agosto de 2026.
 - Nivel: pregrado avanzado; adaptable a primer semestre de posgrado.
 - Prerrequisitos: programación en C y C++, estructuras de datos, Linux/terminal, compilación separada y nociones de arquitectura de computadores.
 - Lenguajes: C17 y C++20. Python se emplea en los notebooks, el análisis de resultados y la elaboración de gráficas.
+- Idioma: la edición 2026 se prepara en español para los grupos de estudiantes hispanohablantes que han constituido la población principal del curso. Se elaborará posteriormente una versión en inglés con el mismo contenido académico.
 - Trabajo en clase: discusión conceptual, programa de referencia, práctica incremental y análisis reproducible de resultados.
 
 ## 2. Resultados de aprendizaje
@@ -18,13 +19,14 @@ Fecha de versión: 2 de agosto de 2026.
 Al finalizar el semestre se espera que el estudiante esté en capacidad de:
 
 1. Elegir un modelo de paralelismo según dependencias, memoria, comunicación y hardware.
-2. Diseñar programas correctos con Pthreads/C++20, OpenMP y MPI.
-3. Explicar carreras, interbloqueos, consistencia de memoria, localidad y sincronización.
-4. Paralelizar y optimizar un kernel para CPU multinúcleo, clúster y acelerador.
-5. Medir escalado fuerte y débil, aceleración, eficiencia, ancho de banda y error numérico con un diseño experimental explícito.
-6. Utilizar herramientas de diagnóstico y perfilado para sustentar cambios en una implementación.
-7. Construir, probar y ejecutar una aplicación híbrida reproducible en Linux/Slurm.
-8. Comunicar resultados con gráficas, evidencia, limitaciones y conclusiones verificables.
+2. Distinguir entre estándar, compilador, biblioteca, runtime y sistema operativo al construir programas en C y C++.
+3. Diseñar programas correctos con Pthreads/C++20, OpenMP y MPI.
+4. Explicar carreras, interbloqueos, consistencia de memoria, localidad y sincronización.
+5. Paralelizar y optimizar un kernel para CPU multinúcleo, clúster y acelerador.
+6. Medir escalado fuerte y débil, aceleración, eficiencia, ancho de banda y error numérico con un diseño experimental explícito.
+7. Utilizar herramientas de diagnóstico y perfilado para sustentar cambios en una implementación.
+8. Construir, probar y ejecutar una aplicación híbrida reproducible en Linux/Slurm.
+9. Comunicar resultados con gráficas, evidencia, limitaciones y conclusiones verificables.
 
 ## 3. Entorno fijado
 
@@ -32,7 +34,7 @@ Durante la primera semana se entrega una imagen Linux de referencia y se estable
 
 | Componente | Versión fijada | Uso |
 |---|---:|---|
-| GCC | 15.3 | Compilador abierto principal para C17/C++20 y OpenMP. Es una versión de corrección de la rama 15 y mantiene compatibilidad como *host compiler* de CUDA 13. |
+| GCC | 15.3 | Compilador abierto principal para C17/C++20 y OpenMP. Aunque GCC 16.1 es la rama principal vigente, CUDA 13 admite compiladores host hasta GCC 15; la selección permite conservar un solo entorno verificable. |
 | C | ISO/IEC 9899:2018 (C17) | `-std=c17 -Wall -Wextra -Wpedantic -Werror` en entregas. |
 | C++ | ISO/IEC 14882:2020 (C++20) | `-std=c++20`; `std::jthread`, atomics y biblioteca estándar. |
 | POSIX | POSIX.1-2024, Issue 8 | Contrato normativo para Pthreads. |
@@ -48,7 +50,7 @@ Durante la primera semana se entrega una imagen Linux de referencia y se estable
 Enlaces normativos y de versión:
 
 - [Versiones oficiales de GCC](https://gcc.gnu.org/releases.html).
-- [ISO C17](https://www.iso.org/standard/74528.html) y [borrador público C++20 N4860](https://isocpp.org/files/papers/N4860.pdf).
+- [ISO C17](https://www.iso.org/standard/74528.html), [borrador público C++20 N4860](https://isocpp.org/files/papers/N4860.pdf) y [panorama de estándares y compiladores](ESTANDARES_C_CPP.md).
 - [POSIX.1-2024, Issue 8](https://pubs.opengroup.org/onlinepubs/9799919799/).
 - [OpenMP 5.2 y 6.0](https://www.openmp.org/specifications/). La asignatura adopta 5.2 por su soporte estable en los compiladores seleccionados. Las características de 6.0 se consultan cuando el toolchain las implementa de manera verificable.
 - [MPI 5.0](https://www.mpi-forum.org/docs/) y [MPICH 5.0.1](https://www.mpich.org/downloads/).
@@ -94,7 +96,7 @@ La selección de gráficas depende de la pregunta experimental. Entre las repres
 
 | Tema | Notebooks previstos (máximo 3) | Ejemplos fuente |
 |---|---|---|
-| 00. Entorno | `00_entorno_reproducible.ipynb` | `hello_c`, `hello_cpp`, inventario de CPU/NUMA, CMake/CTest. |
+| 00. Entorno y lenguajes | `00_entorno_reproducible.ipynb`, `01_estandares_compiladores.ipynb` | `hello_c`, `hello_cpp`, diagnóstico de macros, comparación GCC/Clang/MSVC, inventario de CPU/NUMA y CMake/CTest. |
 | 01. Fundamentos | `01_modelos.ipynb`, `02_escalabilidad.ipynb`, `03_memoria_roofline.ipynb` | suma serial, microbenchmark de memoria, *false sharing*. |
 | 02. Memoria compartida | `01_pthreads.ipynb`, `02_sincronizacion.ipynb`, `03_cpp20_atomics.ipynb` | creación/join, productor-consumidor, deadlock, reducción, cola de trabajo. |
 | 03. OpenMP | `01_modelo_datos.ipynb`, `02_bucles_reducciones.ipynb`, `03_tareas_rendimiento.ipynb` | π, histograma, *stencil*, mergesort con tareas. |
@@ -108,7 +110,7 @@ La selección de gráficas depende de la pregunta experimental. Entre las repres
 
 | Sesión | Tema | Actividad y evidencia |
 |---:|---|---|
-| 1 | Entorno reproducible | Presentación, diagnóstico, imagen Linux, versiones, estructura del repositorio y primer CMake/CTest. |
+| 1 | Lenguajes y entorno reproducible | Presentación, evolución de C/C++, diferencia entre estándar, compilador y biblioteca, soporte en Linux/macOS/Windows, imagen Linux y primer CMake/CTest. |
 | 2 | Sistema | Procesos, hilos, CPU/NUMA, afinidad, inventario de hardware y ejecución por lotes. Evaluación diagnóstica aprobada/no aprobada. |
 | 3 | Fundamentos | Concurrencia, paralelismo, taxonomía de Flynn, descomposición de datos/tareas y dependencias. |
 | 4 | Rendimiento | Trabajo, *span*, overhead, Amdahl, Gustafson, escalado fuerte/débil y eficiencia. |
@@ -151,7 +153,7 @@ La selección de gráficas depende de la pregunta experimental. Entre las repres
 
 | Evaluación | Peso | Entrega mínima |
 |---|---:|---|
-| Diagnóstico de entorno | 0 %, requisito | Compila C17/C++20, ejecuta CTest y registra hardware/versiones. |
+| Diagnóstico de entorno | 0 %, requisito | Compila C17/C++20, interpreta `__STDC_VERSION__` y `__cplusplus`, ejecuta CTest y registra compilador, biblioteca, sistema y hardware. |
 | 1. Informe de rendimiento | 10 % | Amdahl/Gustafson, escalado, gráfica reproducible y crítica de medición. |
 | 2. Laboratorio Pthreads/C++20 | 10 % | Versión serial y paralela, prueba de carrera, corrección, speedup y revisión cruzada. |
 | 3. Laboratorio OpenMP | 15 % | Dos estrategias, `default(none)`, tareas o SIMD, validación y perfil. |
@@ -187,6 +189,14 @@ La bibliografía se selecciona por autoridad técnica, uso en docencia, vigencia
 - Georg Hager y Gerhard Wellein, *Introduction to High Performance Computing for Scientists and Engineers*, CRC Press, 2010. Memoria, modelos de rendimiento y optimización.
 - Raj Jain, *The Art of Computer Systems Performance Analysis*, Wiley, 1991. Referencia fundacional para diseño de experimentos; se trabajan capítulos seleccionados.
 - Torsten Hoefler y Roberto Belli, “Scientific Benchmarking of Parallel Computing Systems”, SC15, 2015. Buenas prácticas modernas para *benchmarks*.
+
+### Lenguajes C y C++
+
+- ISO/IEC, [ISO/IEC 9899:2024 — C](https://www.iso.org/standard/82075.html). Revisión publicada vigente, denominada C23.
+- ISO/IEC, [ISO/IEC 14882:2024 — C++](https://www.iso.org/standard/83626.html). Revisión publicada vigente, denominada C++23.
+- WG14, [estado y cronología de los proyectos de C](https://www.open-std.org/jtc1/sc22/wg14/www/projects.html). Referencia para distinguir revisiones publicadas y C2y.
+- WG21, [documentos públicos de 2026](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2026/). Fuente para seguir el borrador de C++26 sin presentarlo como requisito del curso.
+- GCC, [estado de C](https://gcc.gnu.org/projects/c-status.html) y [estado de C++](https://gcc.gnu.org/projects/cxx-status.html); LLVM, [estado de C](https://clang.llvm.org/c_status.html) y [estado de C++](https://clang.llvm.org/cxx_status.html). Matrices que se consultan en el diagnóstico de compiladores.
 
 ### Pthreads y C++20
 

@@ -10,6 +10,8 @@
 - bibliotecas CUDA importadas por CMake: cuBLAS/cuBLASLt, cuFFT, cuSPARSE, cuSOLVER y cuRAND; Thrust/CUB 3.0.1 como cabeceras de CCCL;
 - CPython 3.14.6 y el entorno fijado en `requirements.lock`.
 
+GCC 16.1 es la rama principal más reciente a la fecha de esta planeación, pero CUDA 13.0 admite como compilador host las ramas GCC 6 a 15. Por eso el entorno común conserva GCC 15.3 y selecciona de forma explícita `-std=c17` y `-std=c++20`, sin depender de los modos predeterminados del compilador. La justificación y la comparación con Clang, Apple Clang y MSVC están en [`docs/ESTANDARES_C_CPP.md`](../docs/ESTANDARES_C_CPP.md).
+
 El material de profundización de `topicos_avanzados/` utiliza perfiles independientes para ROCm/HIP 7.2.3, SYCL 2020 revisión 11 con AdaptiveCpp 25.10.0, Kokkos 5.1.1 y RAJA 2025.12.2. `advanced-topics.cmake` registra sus versiones y rutas. Estos perfiles están deshabilitados por defecto y, por tanto, no forman parte de los requisitos de la asignatura regular.
 
 ## Variables de entorno admitidas

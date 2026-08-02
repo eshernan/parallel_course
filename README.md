@@ -8,6 +8,12 @@ Material docente para una asignatura universitaria de programación paralela. El
 
 ![Mapa técnico del curso: fundamentos, CPU, OpenMP, MPI, offload, CUDA con tiles y bibliotecas, programación híbrida y proyecto](docs/images/programacion-paralela-curso-2026-v2.png)
 
+El mapa representa la secuencia de los módulos 01 a 08. El módulo 00 es transversal: establece los lenguajes, los compiladores y el entorno con los que se desarrollan los demás temas.
+
+## Idioma de esta edición
+
+La actualización 2026 se desarrolla en español porque la experiencia docente que sustenta el curso corresponde principalmente a grupos de estudiantes hispanohablantes. Una vez consolidada esta edición académica se preparará una versión en inglés, con la misma estructura, programas, experimentos y referencias.
+
 ## Descripción
 
 La asignatura está organizada en 19 semanas, con dos sesiones semanales de hasta dos horas. Esto corresponde a 38 sesiones y 76 horas de trabajo presencial. Los laboratorios y el proyecto requieren, además, trabajo independiente por parte del estudiante.
@@ -22,7 +28,7 @@ En las prácticas de laboratorio, toda medición parte de una implementación cu
 
 | Módulo | Contenido principal | Sesiones |
 |---:|---|---:|
-| 00 | Entorno reproducible, compilación, sistema, CPU, NUMA y afinidad | 2 |
+| 00 | Estándares C/C++, compiladores por sistema operativo, entorno reproducible, CPU, NUMA y afinidad | 2 |
 | 01 | Fundamentos, Amdahl, Gustafson, escalado, memoria, Roofline y medición | 4 |
 | 02 | Pthreads, sincronización, C++20, atomics y patrones de memoria compartida | 4 |
 | 03 | OpenMP: datos, bucles, scheduling, reducciones, SIMD y tareas | 5 |
@@ -39,7 +45,7 @@ Cada módulo se desarrolla en uno, dos o tres notebooks, según la extensión de
 
 | Semana | Sesiones | Contenido y entregables |
 |---:|---:|---|
-| 1 | 1–2 | Presentación, diagnóstico, entorno Linux, GCC/CMake, procesos, hilos, CPU, NUMA y afinidad. |
+| 1 | 1–2 | Presentación, diagnóstico, evolución de C/C++, soporte en Linux, macOS y Windows, entorno Linux, GCC/CMake, procesos, hilos, CPU, NUMA y afinidad. |
 | 2 | 3–4 | Concurrencia y paralelismo, taxonomía de Flynn, descomposición, trabajo, span, Amdahl y Gustafson. |
 | 3 | 5–6 | Cachés, coherencia, localidad, false sharing, vectorización, Roofline y metodología de medición. Evaluación de fundamentos. |
 | 4 | 7–8 | Creación y ciclo de vida de Pthreads, partición, mutex, variables de condición, barreras y productor-consumidor. |
@@ -67,6 +73,7 @@ La descripción sesión por sesión, evaluaciones, rúbricas y bibliografía est
 
 - C17 — ISO/IEC 9899:2018.
 - C++20 — ISO/IEC 14882:2020.
+- C23 y C++23 son las revisiones publicadas vigentes; C2y y C++26 se estudian como trabajo en curso, no como requisito de las entregas.
 - POSIX.1-2024 para Pthreads.
 - OpenMP 5.2 como versión normativa del curso.
 - MPI 5.0 como versión normativa.
@@ -83,6 +90,8 @@ La descripción sesión por sesión, evaluaciones, rúbricas y bibliografía est
 - Slurm para ejecución en clúster.
 - JupyterLab, NumPy, pandas y Matplotlib para explicación y gráficas.
 - ThreadSanitizer, AddressSanitizer, `perf`, Compute Sanitizer, Nsight Systems y Nsight Compute para diagnóstico y perfilado.
+
+La [hoja de ruta de C y C++](docs/ESTANDARES_C_CPP.md) resume las versiones publicadas, el estado de las revisiones en preparación y el soporte de GCC, Clang/Apple Clang y MSVC en Linux, macOS y Windows. El curso conserva C17/C++20 como base común: se trata de una decisión de reproducibilidad y compatibilidad con el entorno paralelo, no de desconocimiento de C23 o C++23.
 
 ### Material de profundización
 
@@ -145,7 +154,7 @@ parallel_course/
 │   ├── notebooks/
 │   ├── ejemplos/
 │   └── ejercicios/soluciones/
-├── docs/                            # Planeación e imágenes
+├── docs/                            # Planeación, estándares e imágenes
 └── <directorios históricos>         # Material 2020 pendiente de revisión
 ```
 
@@ -203,6 +212,7 @@ Las gráficas cuantitativas se generan a partir de los datos del experimento, co
 - Planeación de 38 sesiones: completada.
 - Configuración global y presets: creados.
 - Estructura de notebooks, ejemplos, ejercicios y soluciones: creada.
+- Edición en inglés: prevista después de consolidar y revisar la edición académica en español.
 - Material de profundización en ROCm/HIP, SYCL, Kokkos y RAJA: planeado y configurado; contenidos ejecutables pendientes.
 - Revisión e incorporación selectiva del material histórico: en progreso.
 - Desarrollo de todos los notebooks y soluciones: pendiente por tema.
@@ -210,6 +220,7 @@ Las gráficas cuantitativas se generan a partir de los datos del experimento, co
 Documentos de referencia:
 
 - [Planeación semestral, evaluaciones y bibliografía](docs/PLANEACION_CURSO.md).
+- [Estándares de C y C++ y soporte por plataforma](docs/ESTANDARES_C_CPP.md).
 - [Organización del material docente](curso/README.md).
 - [Planeación del material de profundización](topicos_avanzados/README.md).
 
@@ -217,7 +228,7 @@ Documentos de referencia:
 
 Todo cambio de módulos, contenidos, semanas, tecnologías, notebooks, ejemplos, ejercicios o soluciones se acompaña de la actualización correspondiente en este README. Cuando se modifica la estructura académica, también se revisa la ilustración de cabecera y se genera una nueva versión si la anterior dejó de representar el curso.
 
-La revisión editorial utiliza español académico, directo y propio del contexto universitario colombiano. Se evitan eslóganes, fórmulas impersonales y afirmaciones generales que no estén respaldadas por el diseño del curso. Antes de cerrar un cambio se comprueban la suma de sesiones, la secuencia de semanas, los enlaces locales, la imagen referenciada y la correspondencia entre este resumen y `docs/PLANEACION_CURSO.md`.
+La revisión editorial utiliza español académico, directo y propio del contexto universitario colombiano. Esta es la edición principal mientras se prepara la versión en inglés. Se evitan eslóganes, fórmulas impersonales y afirmaciones generales que no estén respaldadas por el diseño del curso. Antes de cerrar un cambio se comprueban la suma de sesiones, la secuencia de semanas, los enlaces locales, la imagen referenciada y la correspondencia entre este resumen y `docs/PLANEACION_CURSO.md`.
 
 ## Autoría
 
