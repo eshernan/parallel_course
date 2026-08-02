@@ -1,0 +1,32 @@
+# CMake y compilación
+/build/
+cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+compile_commands.json
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.dll
+*.lib
+*.exe
+
+# Resultados y perfiles
+*.nsys-rep
+*.ncu-rep
+*.nvvp
+*.prof
+results/
+
+# Python/Jupyter
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.jupyter_cache/
+
+# Editores y sistema
+.DS_Store
+*~

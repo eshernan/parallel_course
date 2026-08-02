@@ -1,0 +1,48 @@
+# Versiones y rutas de referencia para el material extracurricular de
+# topicos_avanzados/. Este archivo no habilita dependencias por defecto.
+
+set(COURSE_ROCM_VERSION "7.2.3" CACHE STRING "Versión de ROCm para tópicos avanzados")
+set(COURSE_HIP_VERSION "7.2.3" CACHE STRING "Versión de HIP para tópicos avanzados")
+set(COURSE_SYCL_STANDARD "2020" CACHE STRING "Versión normativa de SYCL")
+set(COURSE_SYCL_REVISION "11" CACHE STRING "Revisión de la especificación SYCL 2020")
+set(COURSE_SYCL_IMPLEMENTATION "AdaptiveCpp" CACHE STRING "Implementación SYCL abierta de referencia")
+set(COURSE_ADAPTIVECPP_VERSION "25.10.0" CACHE STRING "Versión de AdaptiveCpp")
+set(COURSE_KOKKOS_VERSION "5.1.1" CACHE STRING "Versión de Kokkos")
+set(COURSE_RAJA_VERSION "2025.12.2" CACHE STRING "Versión de RAJA")
+
+option(COURSE_ENABLE_ADVANCED_TOPICS "Habilitar descubrimiento de toolchains avanzados" OFF)
+set(COURSE_ADVANCED_PROFILE "NONE" CACHE STRING "Perfil avanzado solicitado")
+set_property(CACHE COURSE_ADVANCED_PROFILE PROPERTY STRINGS NONE HIP SYCL KOKKOS RAJA)
+
+function(course_advanced_root_from_environment cache_variable environment_variable description)
+  if(DEFINED ENV{${environment_variable}} AND NOT "$ENV{${environment_variable}}" STREQUAL "")
+    set(${cache_variable} "$ENV{${environment_variable}}" CACHE PATH "${description}" FORCE)
+  endif()
+endfunction()
+
+course_advanced_root_from_environment(ROCM_ROOT COURSE_ROCM_ROOT "Raíz de ROCm/HIP")
+course_advanced_root_from_environment(AdaptiveCpp_ROOT COURSE_ADAPTIVECPP_ROOT "Raíz de AdaptiveCpp")
+course_advanced_root_from_environment(Kokkos_ROOT COURSE_KOKKOS_ROOT "Raíz de Kokkos")
+course_advanced_root_from_environment(RAJA_ROOT COURSE_RAJA_ROOT "Raíz de RAJA")
+
+if(COURSE_ENABLE_ADVANCED_TOPICS)
+  if(COURSE_ADVANCED_PROFILE STREQUAL "NONE")
+    message(FATAL_ERROR "Seleccione COURSE_ADVANCED_PROFILE: HIP, SYCL, KOKKOS o RAJA.")
+  endif()
+
+  if(COURSE_ADVANCED_PROFILE STREQUAL "HIP")
+    find_program(COURSE_HIP_COMPILER NAMES amdclang++ hipcc HINTS "${ROCM_ROOT}/bin" REQUIRED)
+    message(STATUS "Perfil HIP ${COURSE_HIP_VERSION}: ${COURSE_HIP_COMPILER}")
+  elseif(COURSE_ADVANCED_PROFILE STREQUAL "SYCL")
+    find_program(COURSE_SYCL_COMPILER NAMES acpp HINTS "${AdaptiveCpp_ROOT}/bin" REQUIRED)
+    message(STATUS "SYCL ${COURSE_SYCL_STANDARD} rev. ${COURSE_SYCL_REVISION} con ${COURSE_SYCL_IMPLEMENTATION} ${COURSE_ADAPTIVECPP_VERSION}: ${COURSE_SYCL_COMPILER}")
+  elseif(COURSE_ADVANCED_PROFILE STREQUAL "KOKKOS")
+    find_package(Kokkos ${COURSE_KOKKOS_VERSION} CONFIG REQUIRED)
+    message(STATUS "Kokkos ${COURSE_KOKKOS_VERSION}: ${Kokkos_DIR}")
+  elseif(COURSE_ADVANCED_PROFILE STREQUAL "RAJA")
+    find_package(RAJA ${COURSE_RAJA_VERSION} CONFIG REQUIRED)
+    message(STATUS "RAJA ${COURSE_RAJA_VERSION}: ${RAJA_DIR}")
+  else()
+    message(FATAL_ERROR "Perfil avanzado desconocido: ${COURSE_ADVANCED_PROFILE}")
+  endif()
+endif()
