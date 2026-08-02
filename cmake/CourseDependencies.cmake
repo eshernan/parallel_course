@@ -77,6 +77,19 @@ if(COURSE_ENABLE_CUDA)
   endif()
   add_library(course_cuda INTERFACE)
   target_link_libraries(course_cuda INTERFACE CUDA::cudart)
+
+  # Colección común para los ejemplos de bibliotecas aceleradas. Los targets
+  # importados conservan includes, dependencias transitivas y flags de enlace.
+  add_library(course_cuda_libraries INTERFACE)
+  target_link_libraries(course_cuda_libraries INTERFACE
+    course_cuda
+    CUDA::cublas
+    CUDA::cublasLt
+    CUDA::cufft
+    CUDA::cusparse
+    CUDA::cusolver
+    CUDA::curand
+  )
 endif()
 
 if(COURSE_ENABLE_NOTEBOOKS)

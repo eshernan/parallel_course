@@ -30,7 +30,7 @@ El principio metodológico es:
 | 03 | OpenMP: datos, bucles, scheduling, reducciones, SIMD y tareas | 5 |
 | 04 | MPI: punto a punto, no bloqueante, colectivas, topologías y Slurm | 6 |
 | 05 | Aceleradores portables con OpenMP target | 3 |
-| 06 | CUDA C++: modelo SIMT, memoria, tiling, reducciones, streams y Nsight | 6 |
+| 06 | CUDA C++: modelo SIMT, memoria, tiling, reducciones, streams, bibliotecas aceleradas y Nsight | 6 |
 | 07 | MPI+OpenMP, MPI+GPU, perfilado integral y diseño híbrido | 4 |
 | 08 | Implementación, auditoría, presentación y defensa del proyecto final | 4 |
 | | **Total** | **38** |
@@ -54,8 +54,8 @@ Cada módulo se explica mediante uno y como máximo tres notebooks. Los notebook
 | 11 | 21–22 | Escalado MPI y Slurm; inicio de aceleradores, offload, dispositivos y portabilidad. Laboratorio MPI. |
 | 12 | 23–24 | OpenMP target, mapeo de datos, reducción, fallback en CPU y análisis transferencia/cómputo. |
 | 13 | 25–26 | CUDA 13, `nvcc`, SIMT, grid/bloque/hilo, manejo de errores, memoria y coalescencia. |
-| 14 | 27–28 | Memoria compartida, bancos, tiling, multiplicación de matrices, reducciones, atomics y primitivas de warp. |
-| 15 | 29–30 | Streams, memoria pinned, solapamiento, ocupación, Nsight, Compute Sanitizer y laboratorio CUDA. |
+| 14 | 27–28 | Memoria compartida, bancos, tiling, multiplicación de matrices, reducciones, primitivas de warp, Thrust y CUB. |
+| 15 | 29–30 | cuBLAS/Lt, cuFFT, cuSPARSE, cuSOLVER y cuRAND; streams, ocupación, Nsight, Compute Sanitizer y laboratorio CUDA. |
 | 16 | 31–32 | MPI+OpenMP, niveles de soporte de hilos, afinidad, MPI+CUDA/OpenMP target y asignación proceso-dispositivo. |
 | 17 | 33–34 | Perfilado de extremo a extremo, comunicación/cómputo, reproducibilidad y revisión del diseño híbrido. |
 | 18 | 35–36 | Clínica del proyecto, revisión cruzada, auditoría de reproducibilidad y ensayo de defensa. |
@@ -80,6 +80,7 @@ La descripción sesión por sesión, evaluaciones, rúbricas y bibliografía est
 - GCC/G++ 15.3.0 como compiladores abiertos principales.
 - MPICH 5.0.1 como implementación MPI de referencia.
 - CUDA Toolkit 13.0.x con GCC 15 como compilador host y GPU mínima Turing (`sm_75`).
+- Bibliotecas CUDA 13: Thrust/CUB 3.0.1, cuBLAS/cuBLASLt, cuFFT, cuSPARSE, cuSOLVER y cuRAND.
 - CMake 3.31, CTest y Ninja para construcción y pruebas.
 - Slurm para ejecución en clúster.
 - JupyterLab, NumPy, pandas y Matplotlib para explicación y gráficas.
@@ -94,7 +95,7 @@ La descripción sesión por sesión, evaluaciones, rúbricas y bibliografía est
 
 Estas tecnologías se estudian fuera del calendario de 19 semanas. Sus backends requieren perfiles independientes y hardware compatible; “portable” no significa que una única configuración produzca rendimiento óptimo en cualquier dispositivo.
 
-CUDA es un tema obligatorio y dispone de seis sesiones propias. El compilador abierto principal continúa siendo GCC; `nvcc`, el runtime y las herramientas NVIDIA se utilizan exclusivamente en el módulo CUDA.
+CUDA es un tema obligatorio y dispone de seis sesiones propias. Incluye desde el modelo de programación y kernels correctos hasta tiling, primitivas jerárquicas y selección de bibliotecas aceleradas. El estudiante debe aprender qué función cumple cada biblioteca, su ciclo de integración y cuándo sus costos de preparación, transferencia o conversión pueden eliminar la ventaja. El compilador abierto principal continúa siendo GCC; `nvcc`, el runtime y las herramientas NVIDIA se utilizan exclusivamente en el módulo CUDA.
 
 ## Configuración global
 

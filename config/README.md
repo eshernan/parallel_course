@@ -7,6 +7,7 @@
 - OpenMP 5.2;
 - MPICH 5.0.1 / MPI 5.0;
 - CUDA 13.0 y arquitecturas `sm_75`, `sm_80`, `sm_86`, `sm_89`, `sm_90`, `sm_100` y `sm_120`;
+- bibliotecas CUDA importadas por CMake: cuBLAS/cuBLASLt, cuFFT, cuSPARSE, cuSOLVER y cuRAND; Thrust/CUB 3.0.1 como cabeceras de CCCL;
 - CPython 3.14.6 y el stack fijado en `requirements.lock`.
 
 El material extracurricular de `topicos_avanzados/` añade perfiles separados para ROCm/HIP 7.2.3, SYCL 2020 revisión 11 con AdaptiveCpp 25.10.0, Kokkos 5.1.1 y RAJA 2025.12.2. Sus versiones y rutas se centralizan en `advanced-topics.cmake`; permanecen deshabilitadas para no convertirlas en requisitos del curso base.

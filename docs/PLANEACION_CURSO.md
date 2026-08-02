@@ -41,7 +41,7 @@ El curso debe comenzar con una imagen Linux y una matriz de versiones inmutable 
 | MPICH | 5.0.1 | Implementación abierta de referencia con soporte completo de MPI 5.0. |
 | CMake | 3.31.x | Construcción fuera del árbol y CTest. |
 | Python | 3.14.6 | Orquestación de notebooks y gráficas; no se usa para implementar los kernels evaluados. |
-| CUDA, optativo | Toolkit 13.0.x | Itinerario NVIDIA. `nvcc` no es el compilador abierto principal; usa GCC 15 como compilador *host*. Hardware mínimo: Turing, `sm_75`. |
+| CUDA, obligatorio | Toolkit 13.0.x | Itinerario NVIDIA. `nvcc` no es el compilador abierto principal; usa GCC 15 como compilador *host*. Hardware mínimo: Turing, `sm_75`. |
 | OpenACC, optativo | 3.4 | Solo comparación con OpenMP target. |
 | OpenCL, optativo | 3.1 | Lectura de portabilidad, no API principal del curso. |
 
@@ -100,7 +100,7 @@ Gráficas mínimas según corresponda:
 | 03. OpenMP | `01_modelo_datos.ipynb`, `02_bucles_reducciones.ipynb`, `03_tareas_rendimiento.ipynb` | π, histograma, *stencil*, mergesort con tareas. |
 | 04. MPI | `01_punto_a_punto.ipynb`, `02_colectivas_topologias.ipynb`, `03_escalabilidad_slurm.ipynb` | hello, anillo, π, halo 1D/2D y E/S básica. |
 | 05. Aceleradores portables | `01_modelo_offload.ipynb`, `02_openmp_target.ipynb` | detección de dispositivo, vector add y reducción con OpenMP target y fallback validado en CPU. |
-| 06. CUDA C++ | `01_modelo_cuda.ipynb`, `02_memoria_tiling.ipynb`, `03_reducciones_perfiles.ipynb` | vector add, reducción y matrix multiply validados; errores, memoria, streams, ocupación y Nsight. |
+| 06. CUDA C++ | `01_modelo_cuda.ipynb`, `02_memoria_tiling.ipynb`, `03_bibliotecas_perfiles.ipynb` | vector add, reducción y GEMM ingenuo/tiled validados; Thrust/CUB, cuBLAS, cuFFT, cuSPARSE, cuSOLVER y cuRAND; errores, streams, ocupación y Nsight. |
 | 07. Híbrido | `01_mpi_openmp.ipynb`, `02_mpi_gpu.ipynb`, `03_perfilado_reproducible.ipynb` | stencil híbrido, afinidad, CPU+GPU, Roofline y Slurm. |
 | 08. Proyecto | `01_guia_proyecto.ipynb` | plantilla de proyecto con referencia serial, pruebas y exportación de métricas. |
 
@@ -134,10 +134,10 @@ Gráficas mínimas según corresponda:
 | 24 | OpenMP target aplicado | Reducción, transferencia/cómputo, validación y perfil. **Evaluación 5**. |
 | 25 | CUDA: entorno y modelo | CUDA 13, `nvcc`, SIMT, jerarquía hilo-bloque-grid, primer kernel y manejo obligatorio de errores. |
 | 26 | CUDA: memoria | Memoria host/device, transferencias, memoria unificada, coalescencia y medición con eventos. |
-| 27 | CUDA: localidad | Memoria compartida, bancos, *tiling* y multiplicación de matrices contra referencia CPU. |
-| 28 | CUDA: reducciones | Divergencia, atomics, primitivas de warp, sincronización y precisión numérica. |
-| 29 | CUDA: concurrencia | Streams, operaciones asíncronas, memoria *pinned*, solapamiento y nociones multi-GPU. |
-| 30 | CUDA: rendimiento | Ocupación, Nsight Systems/Compute, Compute Sanitizer, Roofline y defensa del laboratorio. **Evaluación 6**. |
+| 27 | CUDA: localidad y tiles | Memoria compartida, bancos, *tiling*, tratamiento de bordes y GEMM ingenuo/tiled contra referencia CPU. |
+| 28 | CUDA: primitivas | Divergencia, atomics, warp, reducciones, Thrust/CUB, sincronización y precisión numérica. |
+| 29 | CUDA: bibliotecas | Ciclo handle/plan/descriptor/workspace; cuBLAS/cuBLASLt, cuFFT y cuSPARSE con ejemplos guiados. |
+| 30 | CUDA: selección y rendimiento | cuSOLVER y cuRAND; streams, ocupación, Nsight, Compute Sanitizer y comparación kernel/biblioteca incluyendo costo extremo a extremo. **Evaluación 6**. |
 | 31 | Híbrido CPU | `MPI_Init_thread`, MPI+OpenMP, proceso/hilo/núcleo y afinidad. |
 | 32 | Híbrido CPU+GPU | MPI+CUDA/OpenMP target, asignación proceso-dispositivo y comunicación de halos. |
 | 33 | Rendimiento integral | Perfil de extremo a extremo, comunicación/cómputo, I/O, energía como extensión y reproducibilidad. |
@@ -157,7 +157,7 @@ Gráficas mínimas según corresponda:
 | 3. Laboratorio OpenMP | 15 % | Dos estrategias, `default(none)`, tareas o SIMD, validación y perfil. |
 | 4. Laboratorio MPI | 20 % | Halo/colectiva, ejecución Slurm, escalado fuerte/débil y análisis de comunicación. |
 | 5. Laboratorio de offload portable | 5 % | OpenMP target, fallback CPU, mapeo de datos y análisis transferencia/cómputo. |
-| 6. Laboratorio CUDA | 20 % | CUDA C++, validación serial, Compute Sanitizer, perfil Nsight y Roofline simplificado. |
+| 6. Laboratorio CUDA | 20 % | CUDA C++, GEMM tiled, una biblioteca acelerada, validación serial, Compute Sanitizer, perfil Nsight y análisis de tiempo de ejecución/extremo a extremo. |
 | Hito híbrido | 5 % | Diseño MPI+OpenMP, hipótesis, pruebas y plan experimental del proyecto. |
 | Proyecto final | 15 % | Código reproducible, referencia serial, pruebas, perfiles, informe y defensa. |
 
@@ -216,6 +216,8 @@ Las calificaciones comunitarias son una señal secundaria y cambian con el tiemp
 - David B. Kirk, Wen-mei W. Hwu e Izzat El Hajj, *Programming Massively Parallel Processors*, 4.ª ed., Morgan Kaufmann, 2022. Texto principal GPU; [recursos editoriales](https://shop.elsevier.com/books/book-companion/9780323912310) y [valoración comunitaria](https://www.goodreads.com/en/book/show/59856387-programming-massively-parallel-processors).
 - NVIDIA, [CUDA C++ Programming Guide 13.0](https://docs.nvidia.com/cuda/archive/13.0.0/cuda-c-programming-guide/), 2025. Referencia del itinerario propietario.
 - NVIDIA, [CUDA Toolkit 13.0 Release Notes](https://docs.nvidia.com/cuda/archive/13.0.0/cuda-toolkit-release-notes/), para compatibilidad, arquitecturas retiradas y herramientas vigentes.
+- NVIDIA, [cuBLAS](https://docs.nvidia.com/cuda/archive/13.0.0/cublas/), [cuFFT](https://docs.nvidia.com/cuda/archive/13.0.0/cufft/), [cuSPARSE](https://docs.nvidia.com/cuda/archive/13.0.0/cusparse/), [cuSOLVER](https://docs.nvidia.com/cuda/archive/13.0.0/cusolver/) y [cuRAND](https://docs.nvidia.com/cuda/archive/13.0.0/curand/), referencias oficiales de CUDA 13.0.
+- NVIDIA, [Thrust](https://nvidia.github.io/cccl/thrust/) y [CUB](https://nvidia.github.io/cccl/cub/), componentes de CUDA Core Compute Libraries. El curso fija la versión 3.0.1 incluida en CUDA 13.0.
 
 ### Híbrido y proyecto
 
