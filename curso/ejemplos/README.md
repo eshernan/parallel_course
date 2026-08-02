@@ -1,6 +1,8 @@
 # Ejemplos
 
-Esta carpeta contiene los programas compilables empleados en los notebooks. Cada subcarpeta temática incluye:
+Esta carpeta define la organización prevista para los programas compilables que acompañan los notebooks. En la edición actual no deben suponerse disponibles: cada ejemplo solo existe cuando su subcarpeta contiene las fuentes, la construcción y las pruebas descritas a continuación.
+
+Cuando se incorpore un ejemplo completo, su subcarpeta debe incluir:
 
 - `CMakeLists.txt` o integración con el CMake superior.
 - versión serial de referencia;

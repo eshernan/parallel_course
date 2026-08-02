@@ -9,21 +9,21 @@ Este documento es el punto de entrada al material de **Programación Paralela 20
 3. Siga los temas en el orden de este índice. Cada notebook indica los prerrequisitos adicionales de su práctica.
 4. Los ejemplos acompañan la explicación; los ejercicios son el trabajo del estudiante y las soluciones se administran por separado durante la evaluación.
 
-## Estado de los notebooks
+## Notebooks del curso
 
-La planeación define entre uno y tres notebooks por tema. En esta revisión todavía no se han incorporado archivos `.ipynb`; por ello no se publican enlaces que conduzcan a archivos inexistentes. La columna **Navegación actual** lleva a la guía disponible o a la planeación detallada. Cuando se incorpore un notebook, su nombre se convertirá aquí en un enlace directo y deberá incluir el enlace de retorno a este índice.
+La edición 2026 contiene los 23 notebooks definidos por la planeación. Cada enlace abre el archivo correspondiente y cada notebook ofrece navegación de regreso a este índice y a la guía de su tema.
 
-| Tema | Semanas | Notebooks definidos | Navegación actual |
+| Tema | Semanas | Notebooks | Guía del tema |
 |---:|---:|---|---|
-| 00. Entorno y lenguajes | 1 | `00_entorno_reproducible.ipynb`, `01_estandares_compiladores.ipynb` | [Descripción y fuentes previstas](docs/PLANEACION_CURSO.md#5-organización-de-notebooks-y-fuentes) · [Estándares C/C++](docs/ESTANDARES_C_CPP.md) |
-| 01. Fundamentos | 2–3 | `01_modelos.ipynb`, `02_escalabilidad.ipynb`, `03_memoria_roofline.ipynb` | [Descripción y fuentes previstas](docs/PLANEACION_CURSO.md#5-organización-de-notebooks-y-fuentes) |
-| 02. Memoria compartida | 4–5 | `01_pthreads.ipynb`, `02_sincronizacion.ipynb`, `03_cpp20_atomics.ipynb` | [Descripción y fuentes previstas](docs/PLANEACION_CURSO.md#5-organización-de-notebooks-y-fuentes) |
-| 03. OpenMP | 6–8 | `01_modelo_datos.ipynb`, `02_bucles_reducciones.ipynb`, `03_tareas_rendimiento.ipynb` | [Descripción y fuentes previstas](docs/PLANEACION_CURSO.md#5-organización-de-notebooks-y-fuentes) |
-| 04. MPI | 8–11 | `01_punto_a_punto.ipynb`, `02_colectivas_topologias.ipynb`, `03_escalabilidad_slurm.ipynb` | [Descripción y fuentes previstas](docs/PLANEACION_CURSO.md#5-organización-de-notebooks-y-fuentes) |
-| 05. OpenMP target | 11–12 | `01_modelo_offload.ipynb`, `02_openmp_target.ipynb` | [Descripción y fuentes previstas](docs/PLANEACION_CURSO.md#5-organización-de-notebooks-y-fuentes) |
-| 06. CUDA C++ | 13–15 | `01_modelo_cuda.ipynb`, `02_memoria_tiling.ipynb`, `03_bibliotecas_perfiles.ipynb` | [Guía detallada del tema CUDA](curso/notebooks/06_cuda/README.md) · [Ejemplos previstos](curso/ejemplos/06_cuda/README.md) · [Ejercicios previstos](curso/ejercicios/06_cuda/README.md) |
-| 07. Programación híbrida | 16–17 | `01_mpi_openmp.ipynb`, `02_mpi_gpu.ipynb`, `03_perfilado_reproducible.ipynb` | [Descripción y fuentes previstas](docs/PLANEACION_CURSO.md#5-organización-de-notebooks-y-fuentes) |
-| 08. Proyecto final | 18–19 | `01_guia_proyecto.ipynb` | [Descripción y fuentes previstas](docs/PLANEACION_CURSO.md#5-organización-de-notebooks-y-fuentes) |
+| 00. Entorno y lenguajes | 1 | [`Entorno reproducible`](curso/notebooks/00_entorno/00_entorno_reproducible.ipynb) · [`Estándares y compiladores`](curso/notebooks/00_entorno/01_estandares_compiladores.ipynb) | [Tema 00](curso/notebooks/00_entorno/README.md) |
+| 01. Fundamentos | 2–3 | [`Modelos`](curso/notebooks/01_fundamentos/01_modelos.ipynb) · [`Escalabilidad`](curso/notebooks/01_fundamentos/02_escalabilidad.ipynb) · [`Memoria y Roofline`](curso/notebooks/01_fundamentos/03_memoria_roofline.ipynb) | [Tema 01](curso/notebooks/01_fundamentos/README.md) |
+| 02. Memoria compartida | 4–5 | [`Pthreads`](curso/notebooks/02_memoria_compartida/01_pthreads.ipynb) · [`Sincronización`](curso/notebooks/02_memoria_compartida/02_sincronizacion.ipynb) · [`C++20 y atomics`](curso/notebooks/02_memoria_compartida/03_cpp20_atomics.ipynb) | [Tema 02](curso/notebooks/02_memoria_compartida/README.md) |
+| 03. OpenMP | 6–8 | [`Modelo de datos`](curso/notebooks/03_openmp/01_modelo_datos.ipynb) · [`Bucles y reducciones`](curso/notebooks/03_openmp/02_bucles_reducciones.ipynb) · [`Tareas`](curso/notebooks/03_openmp/03_tareas_rendimiento.ipynb) | [Tema 03](curso/notebooks/03_openmp/README.md) |
+| 04. MPI | 8–11 | [`Punto a punto`](curso/notebooks/04_mpi/01_punto_a_punto.ipynb) · [`Colectivas y topologías`](curso/notebooks/04_mpi/02_colectivas_topologias.ipynb) · [`Escalabilidad y Slurm`](curso/notebooks/04_mpi/03_escalabilidad_slurm.ipynb) | [Tema 04](curso/notebooks/04_mpi/README.md) |
+| 05. OpenMP target | 11–12 | [`Modelo de offload`](curso/notebooks/05_openmp_target/01_modelo_offload.ipynb) · [`OpenMP target`](curso/notebooks/05_openmp_target/02_openmp_target.ipynb) | [Tema 05](curso/notebooks/05_openmp_target/README.md) |
+| 06. CUDA C++ | 13–15 | [`Modelo CUDA`](curso/notebooks/06_cuda/01_modelo_cuda.ipynb) · [`Memoria y tiling`](curso/notebooks/06_cuda/02_memoria_tiling.ipynb) · [`Bibliotecas y perfiles`](curso/notebooks/06_cuda/03_bibliotecas_perfiles.ipynb) | [Tema 06](curso/notebooks/06_cuda/README.md) |
+| 07. Programación híbrida | 16–17 | [`MPI + OpenMP`](curso/notebooks/07_hibrido/01_mpi_openmp.ipynb) · [`MPI + GPU`](curso/notebooks/07_hibrido/02_mpi_gpu.ipynb) · [`Perfilado reproducible`](curso/notebooks/07_hibrido/03_perfilado_reproducible.ipynb) | [Tema 07](curso/notebooks/07_hibrido/README.md) |
+| 08. Proyecto final | 18–19 | [`Guía del proyecto`](curso/notebooks/08_proyecto/01_guia_proyecto.ipynb) | [Tema 08](curso/notebooks/08_proyecto/README.md) |
 
 La distribución sesión por sesión y las evaluaciones se consultan en la [planeación semestral](docs/PLANEACION_CURSO.md#6-calendario-de-38-sesiones). El [protocolo de reproducibilidad](docs/REPRODUCIBILIDAD_EJERCICIOS.md) explica cómo interpretar los informes de plataforma y compilación.
 
@@ -32,7 +32,7 @@ La distribución sesión por sesión y las evaluaciones se consultan en la [plan
 | Recurso | Ubicación | Uso |
 |---|---|---|
 | Notebooks | [`curso/notebooks/`](curso/notebooks/README.md) | Explicación conceptual, experimentos y gráficas. |
-| Ejemplos | [`curso/ejemplos/`](curso/ejemplos/README.md) | Fuentes completas invocadas por los notebooks. |
+| Ejemplos | [`curso/ejemplos/`](curso/ejemplos/README.md) | Especificación de las fuentes compilables que acompañarán las prácticas; su disponibilidad se comprueba antes de usarlas. |
 | Ejercicios | [`curso/ejercicios/`](curso/ejercicios/README.md) | Enunciados, código inicial, manifiestos y pruebas públicas. |
 | Soluciones | [`curso/ejercicios/soluciones/`](curso/ejercicios/soluciones/README.md) | Resolución docente y pruebas de referencia. |
 | Configuración | [`config/`](config/README.md) | Compiladores, MPI, CUDA, librerías y versiones fijadas. |

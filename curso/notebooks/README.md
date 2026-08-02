@@ -2,11 +2,25 @@
 
 [Volver al índice de navegación del curso](../../INDICE_CURSO.md)
 
-Cada tema se desarrolla en uno, dos o tres notebooks, organizados en subcarpetas `00_` a `08_`. La estructura académica se encuentra en `docs/PLANEACION_CURSO.md`; las gráficas se construyen con resultados producidos por los ejecutables de `curso/ejemplos/`.
+Cada tema se desarrolla en uno, dos o tres notebooks, organizados en subcarpetas `00_` a `08_`. Los 23 notebooks previstos por la planeación están incorporados y se consultan desde el [índice del curso](../../INDICE_CURSO.md).
 
 Las implementaciones extensas permanecen en archivos fuente y no se duplican en las celdas. Tampoco se guardan salidas voluminosas. En el itinerario CPU/MPI, la ejecución completa se podrá automatizar en integración continua.
 
-El tema 00 prevé `01_estandares_compiladores.ipynb`, una explicación breve de la evolución de C y C++, sus revisiones publicadas y el soporte observable en Linux, macOS y Windows. El notebook utilizará pruebas de características y los datos resumidos en [`docs/ESTANDARES_C_CPP.md`](../../docs/ESTANDARES_C_CPP.md); no inferirá conformidad completa a partir de que el compilador acepte una bandera `-std` o `/std`.
+## Inventario por tema
+
+| Tema | Guía | Cantidad |
+|---:|---|---:|
+| 00 | [`Entorno y lenguajes`](00_entorno/README.md) | 2 |
+| 01 | [`Fundamentos`](01_fundamentos/README.md) | 3 |
+| 02 | [`Memoria compartida`](02_memoria_compartida/README.md) | 3 |
+| 03 | [`OpenMP`](03_openmp/README.md) | 3 |
+| 04 | [`MPI`](04_mpi/README.md) | 3 |
+| 05 | [`OpenMP target`](05_openmp_target/README.md) | 2 |
+| 06 | [`CUDA C++`](06_cuda/README.md) | 3 |
+| 07 | [`Programación híbrida`](07_hibrido/README.md) | 3 |
+| 08 | [`Proyecto final`](08_proyecto/README.md) | 1 |
+
+Las celdas ejecutables utilizan la biblioteca estándar de Python para comprobar modelos, invariantes y cálculos en cualquier plataforma. Las prácticas que requieren MPI, OpenMP target o CUDA distinguen esas comprobaciones portables de la evidencia que debe obtenerse en el hardware real.
 
 ## Estilo visual
 
@@ -14,4 +28,4 @@ Las ilustraciones conceptuales toman como [referencia visual](../../docs/images/
 
 Las gráficas científicas se generan con los datos de cada experimento, sobre fondo claro y con una paleta compatible con la referencia. Las capturas de perfiles o depuradores se conservan sin alteraciones que puedan cambiar su significado técnico.
 
-Todo notebook incorporado debe enlazar el [índice del curso](../../INDICE_CURSO.md) en su primera y última celda Markdown. La comprobación previa valida esa regla y evita que un cambio de nombre deje rutas de navegación rotas.
+Todo notebook enlaza el [índice del curso](../../INDICE_CURSO.md) y la guía de su tema en su primera y última celda Markdown. La comprobación previa exige el inventario completo, ejecuta las celdas de código y evita que un cambio de nombre deje rutas de navegación rotas.
