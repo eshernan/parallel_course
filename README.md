@@ -6,7 +6,7 @@ Curso universitario completo de programación paralela, diseñado para estudiar 
 
 **Perfiles:** [LinkedIn — HPC Colombia](https://www.linkedin.com/in/hpccol/) · [Página personal](https://eshernan.github.io/)
 
-![Mapa técnico del curso de Programación Paralela](docs/images/programacion-paralela-curso-2026.png)
+![Mapa técnico del curso: fundamentos, CPU, OpenMP, MPI, offload, CUDA con tiles y bibliotecas, programación híbrida y proyecto](docs/images/programacion-paralela-curso-2026-v2.png)
 
 ## Descripción
 
