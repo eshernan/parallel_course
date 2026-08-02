@@ -1,5 +1,15 @@
 # Parallel computing course
-This repositorory containt  the resources used on the course 2020-3 of parallel computing 
+
+This repository contains historical resources from the 2020-3 parallel computing course. The current reconstruction is documented in:
+
+- [Repository audit](docs/AUDITORIA_REPOSITORIO.md)
+- [38-session course plan](docs/PLANEACION_CURSO.md)
+- [Global compiler and library configuration](config/course-toolchain.cmake)
+- [Target course structure](curso/README.md)
+
+The historical examples below have not yet been migrated or certified for teaching.
+
+## Historical prerequisites
 
 ## prerequisites
 

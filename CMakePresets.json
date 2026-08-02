@@ -1,0 +1,63 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 31,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "course-base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "toolchainFile": "${sourceDir}/config/course-toolchain.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "BUILD_TESTING": "ON",
+        "COURSE_STRICT_VERSIONS": "ON",
+        "COURSE_ENABLE_OPENMP": "ON",
+        "COURSE_ENABLE_MPI": "ON",
+        "COURSE_ENABLE_NOTEBOOKS": "ON"
+      }
+    },
+    {
+      "name": "course-cpu",
+      "displayName": "Curso CPU + OpenMP + MPI",
+      "inherits": "course-base",
+      "cacheVariables": {
+        "COURSE_ENABLE_CUDA": "OFF"
+      }
+    },
+    {
+      "name": "course-cuda",
+      "displayName": "Curso completo con CUDA 13",
+      "inherits": "course-base",
+      "cacheVariables": {
+        "COURSE_ENABLE_CUDA": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "course-cpu",
+      "configurePreset": "course-cpu"
+    },
+    {
+      "name": "course-cuda",
+      "configurePreset": "course-cuda"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "course-cpu",
+      "configurePreset": "course-cpu",
+      "output": { "outputOnFailure": true }
+    },
+    {
+      "name": "course-cuda",
+      "configurePreset": "course-cuda",
+      "output": { "outputOnFailure": true }
+    }
+  ]
+}
