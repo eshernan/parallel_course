@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="440" viewBox="0 0 960 440" role="img" aria-labelledby="title desc">
+<title id="title">Capas de una ejecución portable</title>
+<desc id="desc">Capas desde el código fuente y el estándar hasta el compilador, runtime, sistema operativo y hardware.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#50677a"/></marker>
+  <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#a95642"/></marker>
+</defs>
+<style>
+  .title { font: 700 28px system-ui, sans-serif; fill: #243447; }
+  .label { font: 600 18px system-ui, sans-serif; fill: #243447; }
+  .small { font: 15px system-ui, sans-serif; fill: #334155; }
+  .tiny { font: 13px system-ui, sans-serif; fill: #475569; }
+  .box { fill: #fdfbf5; stroke: #50677a; stroke-width: 2; rx: 12; }
+  .blue { fill: #dce9ef; stroke: #506f83; stroke-width: 2; rx: 12; }
+  .green { fill: #dfeadf; stroke: #5d7d65; stroke-width: 2; rx: 12; }
+  .accent { fill: #f3ddd4; stroke: #a95642; stroke-width: 2.5; rx: 12; }
+  .line { fill: none; stroke: #50677a; stroke-width: 2.5; marker-end: url(#arrow); }
+  .critical { fill: none; stroke: #a95642; stroke-width: 4; marker-end: url(#arrow-red); }
+  .dash { fill: none; stroke: #718096; stroke-width: 2; stroke-dasharray: 8 7; marker-end: url(#arrow); }
+</style>
+<rect width="960" height="440" fill="#fbf7ed"/>
+<text x="40" y="46" class="title">Capas de una ejecución portable</text>
+
+<rect x="90" y="90" width="780" height="55" class="blue"/><text x="480" y="125" text-anchor="middle" class="label">Código fuente + estándar seleccionado</text>
+<rect x="140" y="165" width="680" height="55" class="box"/><text x="480" y="200" text-anchor="middle" class="label">Compilador + biblioteca estándar</text>
+<rect x="190" y="240" width="580" height="55" class="green"/><text x="480" y="275" text-anchor="middle" class="label">Runtime y dependencias</text>
+<rect x="240" y="315" width="480" height="55" class="box"/><text x="480" y="350" text-anchor="middle" class="label">Sistema operativo + arquitectura + hardware</text>
+<path d="M480 145 V165 M480 220 V240 M480 295 V315" class="line"/>
+<text x="480" y="410" text-anchor="middle" class="small">Una macro describe una capa; una prueba reproducible registra todas.</text>
+
+</svg>

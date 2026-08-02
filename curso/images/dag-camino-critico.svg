@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="440" viewBox="0 0 960 440" role="img" aria-labelledby="title desc">
+<title id="title">DAG, trabajo y camino crítico</title>
+<desc id="desc">Grafo acíclico leer, partir, tareas A y B, y combinar; el camino crítico pasa por A.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#50677a"/></marker>
+  <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#a95642"/></marker>
+</defs>
+<style>
+  .title { font: 700 28px system-ui, sans-serif; fill: #243447; }
+  .label { font: 600 18px system-ui, sans-serif; fill: #243447; }
+  .small { font: 15px system-ui, sans-serif; fill: #334155; }
+  .tiny { font: 13px system-ui, sans-serif; fill: #475569; }
+  .box { fill: #fdfbf5; stroke: #50677a; stroke-width: 2; rx: 12; }
+  .blue { fill: #dce9ef; stroke: #506f83; stroke-width: 2; rx: 12; }
+  .green { fill: #dfeadf; stroke: #5d7d65; stroke-width: 2; rx: 12; }
+  .accent { fill: #f3ddd4; stroke: #a95642; stroke-width: 2.5; rx: 12; }
+  .line { fill: none; stroke: #50677a; stroke-width: 2.5; marker-end: url(#arrow); }
+  .critical { fill: none; stroke: #a95642; stroke-width: 4; marker-end: url(#arrow-red); }
+  .dash { fill: none; stroke: #718096; stroke-width: 2; stroke-dasharray: 8 7; marker-end: url(#arrow); }
+</style>
+<rect width="960" height="440" fill="#fbf7ed"/>
+<text x="40" y="46" class="title">DAG, trabajo y camino crítico</text>
+
+<rect x="55" y="170" width="120" height="70" class="accent"/><text x="115" y="200" text-anchor="middle" class="label">leer</text><text x="115" y="222" text-anchor="middle" class="small">2 unidades</text>
+<rect x="225" y="170" width="120" height="70" class="accent"/><text x="285" y="200" text-anchor="middle" class="label">partir</text><text x="285" y="222" text-anchor="middle" class="small">1 unidad</text>
+<rect x="420" y="95" width="120" height="70" class="accent"/><text x="480" y="125" text-anchor="middle" class="label">A</text><text x="480" y="147" text-anchor="middle" class="small">5 unidades</text>
+<rect x="420" y="250" width="120" height="70" class="box"/><text x="480" y="280" text-anchor="middle" class="label">B</text><text x="480" y="302" text-anchor="middle" class="small">4 unidades</text>
+<rect x="665" y="170" width="145" height="70" class="accent"/><text x="737" y="200" text-anchor="middle" class="label">combinar</text><text x="737" y="222" text-anchor="middle" class="small">2 unidades</text>
+<path d="M175 205 H225 M345 205 L420 130 M540 130 L665 200 M810 205 H895" class="critical"/>
+<path d="M345 205 L420 285 M540 285 L665 215" class="line"/>
+<text x="480" y="380" text-anchor="middle" class="small">Trabajo T₁=14 · span T∞=10 · paralelismo medio=1,4</text>
+
+</svg>

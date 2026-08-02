@@ -1,0 +1,26 @@
+cmake_minimum_required(VERSION 3.20)
+project(exercise_01_particion_reduccion LANGUAGES C)
+
+set(CMAKE_C_STANDARD 17)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_EXTENSIONS OFF)
+
+add_library(particion src/particion.c)
+target_include_directories(particion PUBLIC include)
+if(MSVC)
+  target_compile_options(particion PRIVATE /W4)
+else()
+  target_compile_options(particion PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+add_executable(exercise_01_particion_reduccion tests/test_particion.c)
+target_link_libraries(exercise_01_particion_reduccion PRIVATE particion)
+if(MSVC)
+  target_compile_options(exercise_01_particion_reduccion PRIVATE /W4)
+else()
+  target_compile_options(exercise_01_particion_reduccion PRIVATE -Wall -Wextra -Wpedantic)
+  target_link_libraries(exercise_01_particion_reduccion PRIVATE m)
+endif()
+
+enable_testing()
+add_test(NAME particion_reduccion_tests COMMAND exercise_01_particion_reduccion)

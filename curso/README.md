@@ -6,8 +6,9 @@ La navegación comienza en el [índice general del curso](../INDICE_CURSO.md), n
 
 ## Carpetas
 
-- `notebooks/`: desarrollo conceptual, experimentos y gráficas; de uno a tres notebooks por tema.
-- `ejemplos/`: programas compilables utilizados durante las explicaciones y prácticas.
+- `notebooks/`: ruta común de explicación, mapa visual, ejemplos razonados y ejercicios; de uno a tres notebooks por tema.
+- `images/`: diagramas SVG accesibles y reutilizables por todos los capítulos.
+- `ejemplos/`: organización prevista para programas compilables; cada fuente se considera disponible solo cuando su inventario, construcción y pruebas existen.
 - `ejercicios/`: enunciados, código inicial y pruebas públicas.
 - `ejercicios/soluciones/`: soluciones de referencia y pruebas reservadas para el equipo docente.
 

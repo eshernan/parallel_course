@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="440" viewBox="0 0 960 440" role="img" aria-labelledby="title desc">
+<title id="title">Ruta de trabajo reproducible</title>
+<desc id="desc">Secuencia desde la pregunta y la referencia serial hasta la validación, medición e informe.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#50677a"/></marker>
+  <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#a95642"/></marker>
+</defs>
+<style>
+  .title { font: 700 28px system-ui, sans-serif; fill: #243447; }
+  .label { font: 600 18px system-ui, sans-serif; fill: #243447; }
+  .small { font: 15px system-ui, sans-serif; fill: #334155; }
+  .tiny { font: 13px system-ui, sans-serif; fill: #475569; }
+  .box { fill: #fdfbf5; stroke: #50677a; stroke-width: 2; rx: 12; }
+  .blue { fill: #dce9ef; stroke: #506f83; stroke-width: 2; rx: 12; }
+  .green { fill: #dfeadf; stroke: #5d7d65; stroke-width: 2; rx: 12; }
+  .accent { fill: #f3ddd4; stroke: #a95642; stroke-width: 2.5; rx: 12; }
+  .line { fill: none; stroke: #50677a; stroke-width: 2.5; marker-end: url(#arrow); }
+  .critical { fill: none; stroke: #a95642; stroke-width: 4; marker-end: url(#arrow-red); }
+  .dash { fill: none; stroke: #718096; stroke-width: 2; stroke-dasharray: 8 7; marker-end: url(#arrow); }
+</style>
+<rect width="960" height="440" fill="#fbf7ed"/>
+<text x="40" y="46" class="title">Ruta de trabajo reproducible</text>
+
+<rect x="35" y="135" width="135" height="80" class="blue"/><text x="102" y="168" text-anchor="middle" class="label">Pregunta</text><text x="102" y="192" text-anchor="middle" class="small">e hipótesis</text>
+<rect x="195" y="135" width="135" height="80" class="box"/><text x="262" y="168" text-anchor="middle" class="label">Referencia</text><text x="262" y="192" text-anchor="middle" class="small">serial correcta</text>
+<rect x="355" y="135" width="135" height="80" class="box"/><text x="422" y="168" text-anchor="middle" class="label">Versión</text><text x="422" y="192" text-anchor="middle" class="small">paralela</text>
+<rect x="515" y="135" width="135" height="80" class="accent"/><text x="582" y="168" text-anchor="middle" class="label">Validar</text><text x="582" y="192" text-anchor="middle" class="small">salida y errores</text>
+<rect x="675" y="135" width="115" height="80" class="green"/><text x="732" y="180" text-anchor="middle" class="label">Medir</text>
+<rect x="815" y="135" width="110" height="80" class="blue"/><text x="870" y="168" text-anchor="middle" class="label">Informar</text><text x="870" y="192" text-anchor="middle" class="small">con evidencia</text>
+<path d="M170 175 H195 M330 175 H355 M490 175 H515 M650 175 H675 M790 175 H815" class="line"/>
+<path d="M870 235 C870 340 420 340 420 235" class="dash"/><text x="640" y="330" text-anchor="middle" class="small">una conclusión nueva genera otra hipótesis</text>
+<text x="480" y="95" text-anchor="middle" class="small">La velocidad se interpreta solo después de demostrar corrección.</text>
+
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="440" viewBox="0 0 960 440" role="img" aria-labelledby="title desc">
+<title id="title">Distribución, reducción y balance</title>
+<desc id="desc">Iteraciones repartidas entre cuatro trabajadores y combinación final de resultados parciales.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#50677a"/></marker>
+  <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#a95642"/></marker>
+</defs>
+<style>
+  .title { font: 700 28px system-ui, sans-serif; fill: #243447; }
+  .label { font: 600 18px system-ui, sans-serif; fill: #243447; }
+  .small { font: 15px system-ui, sans-serif; fill: #334155; }
+  .tiny { font: 13px system-ui, sans-serif; fill: #475569; }
+  .box { fill: #fdfbf5; stroke: #50677a; stroke-width: 2; rx: 12; }
+  .blue { fill: #dce9ef; stroke: #506f83; stroke-width: 2; rx: 12; }
+  .green { fill: #dfeadf; stroke: #5d7d65; stroke-width: 2; rx: 12; }
+  .accent { fill: #f3ddd4; stroke: #a95642; stroke-width: 2.5; rx: 12; }
+  .line { fill: none; stroke: #50677a; stroke-width: 2.5; marker-end: url(#arrow); }
+  .critical { fill: none; stroke: #a95642; stroke-width: 4; marker-end: url(#arrow-red); }
+  .dash { fill: none; stroke: #718096; stroke-width: 2; stroke-dasharray: 8 7; marker-end: url(#arrow); }
+</style>
+<rect width="960" height="440" fill="#fbf7ed"/>
+<text x="40" y="46" class="title">Distribución, reducción y balance</text>
+
+<text x="70" y="95" class="label">iteraciones</text>
+<g transform="translate(190 65)"><rect width="70" height="45" class="blue"/><rect x="75" width="70" height="45" class="green"/><rect x="150" width="70" height="45" class="accent"/><rect x="225" width="70" height="45" class="box"/><rect x="300" width="70" height="45" class="blue"/><rect x="375" width="70" height="45" class="green"/><rect x="450" width="70" height="45" class="accent"/><rect x="525" width="70" height="45" class="box"/></g>
+<rect x="90" y="180" width="150" height="60" class="blue"/><text x="165" y="217" text-anchor="middle" class="label">trabajador 0</text>
+<rect x="300" y="180" width="150" height="60" class="green"/><text x="375" y="217" text-anchor="middle" class="label">trabajador 1</text>
+<rect x="510" y="180" width="150" height="60" class="accent"/><text x="585" y="217" text-anchor="middle" class="label">trabajador 2</text>
+<rect x="720" y="180" width="150" height="60" class="box"/><text x="795" y="217" text-anchor="middle" class="label">trabajador 3</text>
+<path d="M165 240 L420 330 M375 240 L445 330 M585 240 L475 330 M795 240 L500 330" class="line"/>
+<rect x="370" y="330" width="220" height="65" class="green"/><text x="480" y="370" text-anchor="middle" class="label">reducción verificada</text>
+
+</svg>

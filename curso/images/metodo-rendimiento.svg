@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="440" viewBox="0 0 960 440" role="img" aria-labelledby="title desc">
+<title id="title">Método para interpretar rendimiento</title>
+<desc id="desc">Cadena de mediciones repetidas, resumen robusto, perfil por fases, hipótesis y nuevo experimento.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#50677a"/></marker>
+  <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#a95642"/></marker>
+</defs>
+<style>
+  .title { font: 700 28px system-ui, sans-serif; fill: #243447; }
+  .label { font: 600 18px system-ui, sans-serif; fill: #243447; }
+  .small { font: 15px system-ui, sans-serif; fill: #334155; }
+  .tiny { font: 13px system-ui, sans-serif; fill: #475569; }
+  .box { fill: #fdfbf5; stroke: #50677a; stroke-width: 2; rx: 12; }
+  .blue { fill: #dce9ef; stroke: #506f83; stroke-width: 2; rx: 12; }
+  .green { fill: #dfeadf; stroke: #5d7d65; stroke-width: 2; rx: 12; }
+  .accent { fill: #f3ddd4; stroke: #a95642; stroke-width: 2.5; rx: 12; }
+  .line { fill: none; stroke: #50677a; stroke-width: 2.5; marker-end: url(#arrow); }
+  .critical { fill: none; stroke: #a95642; stroke-width: 4; marker-end: url(#arrow-red); }
+  .dash { fill: none; stroke: #718096; stroke-width: 2; stroke-dasharray: 8 7; marker-end: url(#arrow); }
+</style>
+<rect width="960" height="440" fill="#fbf7ed"/>
+<text x="40" y="46" class="title">Método para interpretar rendimiento</text>
+
+<rect x="55" y="150" width="160" height="80" class="blue"/><text x="135" y="182" text-anchor="middle" class="label">Repetir</text><text x="135" y="208" text-anchor="middle" class="small">datos crudos</text>
+<rect x="270" y="150" width="160" height="80" class="green"/><text x="350" y="182" text-anchor="middle" class="label">Resumir</text><text x="350" y="208" text-anchor="middle" class="small">mediana + MAD</text>
+<rect x="485" y="150" width="160" height="80" class="box"/><text x="565" y="182" text-anchor="middle" class="label">Perfilar</text><text x="565" y="208" text-anchor="middle" class="small">fases y costos</text>
+<rect x="700" y="150" width="190" height="80" class="accent"/><text x="795" y="182" text-anchor="middle" class="label">Explicar</text><text x="795" y="208" text-anchor="middle" class="small">hipótesis verificable</text>
+<path d="M215 190 H270 M430 190 H485 M645 190 H700" class="line"/>
+<path d="M795 250 C795 345 135 345 135 250" class="dash"/><text x="465" y="335" text-anchor="middle" class="small">cambiar una variable y repetir el experimento</text>
+<text x="480" y="105" text-anchor="middle" class="small">Una captura aislada no sustituye datos, contexto ni incertidumbre.</text>
+
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="440" viewBox="0 0 960 440" role="img" aria-labelledby="title desc">
+<title id="title">Topología híbrida nodo–rank–hilo–GPU</title>
+<desc id="desc">Dos nodos conectados; cada uno aloja procesos MPI, hilos OpenMP y un dispositivo asignado.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#50677a"/></marker>
+  <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#a95642"/></marker>
+</defs>
+<style>
+  .title { font: 700 28px system-ui, sans-serif; fill: #243447; }
+  .label { font: 600 18px system-ui, sans-serif; fill: #243447; }
+  .small { font: 15px system-ui, sans-serif; fill: #334155; }
+  .tiny { font: 13px system-ui, sans-serif; fill: #475569; }
+  .box { fill: #fdfbf5; stroke: #50677a; stroke-width: 2; rx: 12; }
+  .blue { fill: #dce9ef; stroke: #506f83; stroke-width: 2; rx: 12; }
+  .green { fill: #dfeadf; stroke: #5d7d65; stroke-width: 2; rx: 12; }
+  .accent { fill: #f3ddd4; stroke: #a95642; stroke-width: 2.5; rx: 12; }
+  .line { fill: none; stroke: #50677a; stroke-width: 2.5; marker-end: url(#arrow); }
+  .critical { fill: none; stroke: #a95642; stroke-width: 4; marker-end: url(#arrow-red); }
+  .dash { fill: none; stroke: #718096; stroke-width: 2; stroke-dasharray: 8 7; marker-end: url(#arrow); }
+</style>
+<rect width="960" height="440" fill="#fbf7ed"/>
+<text x="40" y="46" class="title">Topología híbrida nodo–rank–hilo–GPU</text>
+
+<rect x="45" y="90" width="390" height="285" class="blue"/><text x="70" y="125" class="label">nodo 0</text>
+<rect x="525" y="90" width="390" height="285" class="green"/><text x="550" y="125" class="label">nodo 1</text>
+<rect x="80" y="155" width="195" height="90" class="box"/><text x="177" y="185" text-anchor="middle" class="label">rank 0</text><text x="177" y="218" text-anchor="middle" class="small">hilos 0…t−1</text>
+<rect x="560" y="155" width="195" height="90" class="box"/><text x="657" y="185" text-anchor="middle" class="label">rank 1</text><text x="657" y="218" text-anchor="middle" class="small">hilos 0…t−1</text>
+<rect x="300" y="155" width="105" height="150" class="accent"/><text x="352" y="215" text-anchor="middle" class="label">GPU 0</text><text x="352" y="242" text-anchor="middle" class="tiny">local</text>
+<rect x="780" y="155" width="105" height="150" class="accent"/><text x="832" y="215" text-anchor="middle" class="label">GPU 1</text><text x="832" y="242" text-anchor="middle" class="tiny">local</text>
+<path d="M275 200 H300 M755 200 H780 M435 230 H525" class="line"/><text x="480" y="215" text-anchor="middle" class="tiny">red MPI</text>
+<text x="480" y="410" text-anchor="middle" class="small">Afinidad y asignación explícita evitan sobresuscripción y dos ranks sobre la misma GPU.</text>
+
+</svg>

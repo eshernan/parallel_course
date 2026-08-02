@@ -67,6 +67,15 @@ def main() -> int:
         print("Preflight interrumpido: el repositorio contiene artefactos compilados rastreados.", file=sys.stderr)
         return 1
 
+    canonical_diagrams_command = [
+        python,
+        str(repository / "tools" / "generate_course_diagrams.py"),
+        "--check",
+    ]
+    if run(canonical_diagrams_command, repository) != 0:
+        print("Preflight interrumpido: las imágenes compartidas están ausentes o no son canónicas.", file=sys.stderr)
+        return 1
+
     canonical_notebooks_command = [
         python,
         str(repository / "tools" / "generate_course_notebooks.py"),
@@ -142,14 +151,20 @@ def main() -> int:
             "ejercicios",
             repository / "curso" / "ejercicios",
             repository / "validation" / "policy.json",
+            ("--compile",),
         ),
         (
             "soluciones",
             repository / "curso" / "ejercicios" / "soluciones",
             repository / "validation" / "solutions-policy.json",
+            ("--compile", "--test"),
         ),
     )
-    for name, exercises_root, policy in collections:
+    for name, exercises_root, policy, build_args in collections:
+        # `curso/ejercicios/` solo debe compilar: el código inicial de un
+        # ejercicio activo puede fallar sus pruebas hasta que el estudiante
+        # lo complete (ver curso/ejercicios/README.md). `soluciones/` debe
+        # compilar y pasar todas las pruebas.
         command = [
             python,
             str(repository / "validation" / "validate_exercises.py"),
@@ -163,8 +178,7 @@ def main() -> int:
             str(output / f"{name}.json"),
             *capability_args,
             *accelerator_args,
-            "--compile",
-            "--test",
+            *build_args,
         ]
         if run(command, repository) != 0:
             print(f"Preflight interrumpido durante la validación de {name}.", file=sys.stderr)

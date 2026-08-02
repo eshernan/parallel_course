@@ -74,6 +74,8 @@ def main() -> int:
     except (OSError, json.JSONDecodeError, ValueError) as exc:
         errors.append(f"No se pudo leer el manifiesto de notebooks: {exc}")
         manifest = {"topics": [], "total_notebooks": 0}
+    if manifest.get("schema_version") != "2.0":
+        errors.append("El manifiesto de notebooks debe usar schema_version 2.0")
 
     for topic in REQUIRED_TOPICS:
         if not re.search(rf"^\| {topic}\.", index_text, flags=re.MULTILINE):
@@ -191,24 +193,38 @@ def main() -> int:
             errors.append(f"{relative}: apertura y cierre deben enlazar INDICE_CURSO.md")
         if not opening_has_topic or not closing_has_topic:
             errors.append(f"{relative}: apertura y cierre deben enlazar README.md del tema")
-        if len(markdown) < 9:
-            errors.append(f"{relative}: contiene {len(markdown)} celdas Markdown; se esperaban al menos 9")
+        if len(markdown) < 17:
+            errors.append(f"{relative}: contiene {len(markdown)} celdas Markdown; se esperaban al menos 17")
         if len(code_cells) < 3:
             errors.append(f"{relative}: contiene {len(code_cells)} celdas de código; se esperaban al menos 3")
         complete_markdown = "\n".join(markdown)
         required_sections = (
             "# " + str(expected.get("title", "")),
             "**Pregunta guía:**",
+            "## Cómo usar este notebook",
+            "## Antes de empezar",
             "## Resultados de aprendizaje",
-            "## Modelo conceptual",
-            "## Práctica reproducible",
+            "## Explicación paso a paso",
+            "## Mapa visual",
+            "## Ejemplo resuelto:",
+            "## Ejemplo guiado:",
+            "## Comprueba tu comprensión",
+            "## Ejercicios progresivos",
             "## Errores frecuentes",
             "## Criterios de aceptación",
+            "## Síntesis",
             "## Referencias y material relacionado",
         )
         for section in required_sections:
             if section not in complete_markdown:
                 errors.append(f"{relative}: falta la sección o identidad `{section}`")
+        route_sections = required_sections[2:]
+        positions = [complete_markdown.find(section) for section in route_sections]
+        if positions != sorted(positions) or any(position < 0 for position in positions):
+            errors.append(f"{relative}: las secciones no siguen la ruta pedagógica declarada")
+        word_count = len(re.findall(r"\b[\wÁÉÍÓÚÜÑáéíóúüñ]+\b", complete_markdown))
+        if word_count < 500:
+            errors.append(f"{relative}: explicación demasiado breve ({word_count} palabras; mínimo 500)")
         if notebook.get("nbformat") != 4:
             errors.append(f"{relative}: nbformat debe ser 4")
         course = notebook.get("metadata", {}).get("course", {})
@@ -220,6 +236,24 @@ def main() -> int:
             errors.append(f"{relative}: metadata.course.title no coincide con el manifiesto")
         if course.get("sessions") != expected.get("sessions"):
             errors.append(f"{relative}: metadata.course.sessions no coincide con el manifiesto")
+        if course.get("pedagogy") != expected.get("pedagogy"):
+            errors.append(f"{relative}: metadata.course.pedagogy no coincide con el manifiesto")
+        expected_images = expected.get("images", [])
+        if not isinstance(expected_images, list) or not expected_images:
+            errors.append(f"{relative}: el manifiesto no declara imágenes pedagógicas")
+            expected_images = []
+        if course.get("images") != expected_images:
+            errors.append(f"{relative}: metadata.course.images no coincide con el manifiesto")
+        for image_name in expected_images:
+            if not isinstance(image_name, str) or not image_name.endswith(".svg"):
+                errors.append(f"{relative}: imagen inválida en manifiesto: {image_name!r}")
+                continue
+            image_reference = f"../../images/{image_name}"
+            if image_reference not in complete_markdown:
+                errors.append(f"{relative}: no incorpora la imagen declarada {image_name}")
+            image_path = repository / "curso" / "images" / image_name
+            if not image_path.is_file():
+                errors.append(f"{relative}: falta la imagen compartida {image_name}")
         for cell_index, cell in enumerate(code_cells):
             if cell.get("execution_count") is not None or cell.get("outputs"):
                 errors.append(f"{relative}: celda de código {cell_index} conserva ejecución o salidas")
@@ -237,6 +271,9 @@ def main() -> int:
                 "sessions": expected.get("sessions"),
                 "markdown_cells": len(markdown),
                 "code_cells": len(code_cells),
+                "word_count": word_count,
+                "images": expected_images,
+                "pedagogical_route": course.get("pedagogy"),
                 "opening_index_link": opening_has_index,
                 "closing_index_link": closing_has_index,
                 "opening_topic_link": opening_has_topic,
