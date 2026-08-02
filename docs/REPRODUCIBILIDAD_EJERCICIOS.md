@@ -20,6 +20,7 @@ Esta distinción debe conservarse en los informes. Un flujo satisfactorio en el 
 | `validation/templates/exercise.json` | Punto de partida para registrar un ejercicio. |
 | `validation/policy.json` | Número mínimo de ejercicios públicos activos, extensiones administradas y exclusiones. |
 | `validation/solutions-policy.json` | Política independiente para las soluciones docentes. |
+| `validation/validate_repository_hygiene.py` | Impide versionar outputs de compilación y conserva una excepción explícita para las bibliotecas vendorizadas de FreeImage. |
 | `validation/validate_exercises.py` | Detecta fuentes sin registrar, valida manifiestos, configura, compila, ejecuta CTest y escribe el informe JSON. |
 | `validation/platform_manifest.py` | Registra sistema, kernel, arquitectura, CPU, compiladores, MPI y aceleradores; también comprueba el perfil solicitado. |
 | `validation/preflight.py` | Punto de entrada que debe ejecutar el usuario antes de abrir los ejercicios. Coordina el inventario de plataforma, los controles C17/C++20 y la construcción de las actividades compatibles. |
@@ -65,7 +66,7 @@ La comprobación previa es un requisito de los laboratorios. Desde la raíz del 
 python3 validation/preflight.py
 ```
 
-El comando termina con estado satisfactorio únicamente cuando el índice conserva rutas válidas, la plataforma puede construir los controles C17/C++20 y todos los ejercicios activos compatibles. Los informes quedan en `build/validation/preflight/`. Si el comando retorna un error, primero se corrige la navegación, la plataforma o el perfil; no se continúa con el ejercicio.
+El comando termina con estado satisfactorio únicamente cuando el repositorio no rastrea salidas de compilación, el índice conserva rutas válidas, la plataforma puede construir los controles C17/C++20 y todos los ejercicios activos compatibles. Los informes quedan en `build/validation/preflight/`. Si el comando retorna un error, primero se corrige la higiene, la navegación, la plataforma o el perfil; no se continúa con el ejercicio.
 
 En una máquina institucional se fija el perfil que se desea comprobar:
 

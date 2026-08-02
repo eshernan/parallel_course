@@ -39,6 +39,7 @@ jobs:
         with:
           name: exercise-hardware-${{ inputs.target }}
           path: |
+            build/validation/${{ inputs.target }}/repository-hygiene.json
             build/validation/${{ inputs.target }}/navigation.json
             build/validation/${{ inputs.target }}/platform.json
             build/validation/${{ inputs.target }}/harness.json

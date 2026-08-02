@@ -71,6 +71,7 @@ jobs:
         with:
           name: exercise-validation-${{ matrix.platform }}
           path: |
+            build/validation/${{ matrix.platform }}/repository-hygiene.json
             build/validation/${{ matrix.platform }}/navigation.json
             build/validation/${{ matrix.platform }}/platform.json
             build/validation/${{ matrix.platform }}/harness.json
